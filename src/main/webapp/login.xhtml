@@ -1,0 +1,33 @@
+<ui:composition template="/WEB-INF/templates/template_login.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui">
+
+	<ui:define name="conteudo-principal">
+		<h:form id="loginForm" styleClass="form-horizontal">
+			<p:focus for="loginForm" />
+			<img class="profile-img" src="#{request.contextPath}/resources/imagens/avatar.png" alt="imagem avatar"/>
+			
+			<p:messages id="messages" showDetail="false" />
+			
+			<h:panelGrid>
+				<p:outputLabel value="#{bundle['login.label.usuario']}:" />
+				<p:inputText id="username" maxlength="50" style="width: 250px" value="#{loginController.credentials.login}"
+					required="true" requiredMessage="#{bundle['login.required.usuario']}"/>
+				
+				<p:outputLabel value="#{bundle['login.label.senha']}:"/> 
+				<p:password id="senha" value="#{loginController.credentials.senha}" style="width: 250px" maxlength="16"
+					required="true" requiredMessage="#{bundle['login.required.senha']}"/>
+			</h:panelGrid>
+
+			<div class="form-group">
+				<div class="col-lg-12 clearfix form-actions">
+					<h:commandLink value="#{bundle['login.button.entrar']}" 
+						id="loginBtn" update="@form" styleClass="btn btn-info right" action="#{loginController.autenticar}"/>
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>
