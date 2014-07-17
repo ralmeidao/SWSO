@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" 
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:of="http://omnifaces.org/functions">
+
+<h:head>
+	<title>Exemplo</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="application-name" content="Exemplo"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	
+	<h:outputStylesheet library="css" name="login.css"  />
+	<h:outputStylesheet library="css" name="estilo.css"  />
+
+	<h:outputScript library="js" name="renderAjax.js" />
+	<h:outputScript library="js" name="exemplo.js" />
+	<h:outputScript library="js" name="jquery.blockUI.js" />
+</h:head>
+<h:body styleClass="loginPage">
+	<!-- HEADER -->
+	<div class="container">
+        <div id="header">
+            <div class="row">
+                <div class="navbar">
+                    <div class="container" style="padding-top: 15px;" >
+                        <h2>EXEMPLO - Sistema de Exemplo</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+ 	<div class="container"> 	
+        <div class="loginContainer">
+             <ui:insert name="conteudo-principal" />
+        </div>
+		<!-- <div id="idLoad" class="carregando">
+			<span>Carregando</span>
+		</div>				
+		<p:ajaxStatus id="ajaxStatusPanel" onstart="showStatus();" oncomplete="hideStatus();"/> -->			    
+	</div>
+</h:body>
+</html>
