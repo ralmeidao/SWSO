@@ -1,11 +1,11 @@
-package br.com.lordmonssa.exemplo.validator;
+package br.edu.ifba.swso.validator;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import br.com.lordmonssa.exemplo.validator.CpfValidator;
+import br.edu.ifba.swso.validator.CpfValidator;
 
 public class CpfValidatorTest {
 

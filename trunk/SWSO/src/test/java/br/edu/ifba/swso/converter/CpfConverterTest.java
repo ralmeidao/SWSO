@@ -1,10 +1,10 @@
-package br.com.lordmonssa.exemplo.converter;
+package br.edu.ifba.swso.converter;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import br.com.lordmonssa.exemplo.converter.CpfConverter;
+import br.edu.ifba.swso.converter.CpfConverter;
 
 public class CpfConverterTest {
 

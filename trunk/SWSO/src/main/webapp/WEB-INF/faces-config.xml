@@ -13,13 +13,13 @@
 	</navigation-rule>
 
 	<lifecycle>
-		<phase-listener>br.com.lordmonssa.exemplo.listener.AuthorizationListener</phase-listener>
+		<phase-listener>br.edu.ifba.swso.listener.AuthorizationListener</phase-listener>
 	</lifecycle>
 	<lifecycle>
-		<phase-listener>br.com.lordmonssa.exemplo.listener.TimeListener</phase-listener>
+		<phase-listener>br.edu.ifba.swso.listener.TimeListener</phase-listener>
 	</lifecycle>
 	<lifecycle>
-		<phase-listener>br.com.lordmonssa.exemplo.listener.AjaxListener</phase-listener>
+		<phase-listener>br.edu.ifba.swso.listener.AjaxListener</phase-listener>
 	</lifecycle>
 
 	<application>
