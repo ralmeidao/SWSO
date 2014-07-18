@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" metadata-complete="false" version="3.0">
-  <display-name>EXEMPLO</display-name>
+  <display-name>SWSO</display-name>
   <context-param>
     <param-name>javax.faces.PROJECT_STAGE</param-name>
     <param-value>Development</param-value>
@@ -68,7 +68,7 @@
   </filter-mapping>
   <filter>
     <filter-name>NoCacheFilter</filter-name>
-    <filter-class>br.com.lordmonssa.exemplo.filter.NoCacheFilter</filter-class>
+    <filter-class>br.edu.ifba.swso.filter.NoCacheFilter</filter-class>
   </filter>
   <filter-mapping>
     <filter-name>NoCacheFilter</filter-name>
@@ -96,7 +96,7 @@
     <location>/WEB-INF/errorpages/bug.xhtml</location>
   </error-page>
   <listener>
-    <listener-class>br.com.lordmonssa.exemplo.listener.MyServletContextListener</listener-class>
+    <listener-class>br.edu.ifba.swso.listener.MyServletContextListener</listener-class>
   </listener>
   <session-config>
     <session-timeout>30</session-timeout>

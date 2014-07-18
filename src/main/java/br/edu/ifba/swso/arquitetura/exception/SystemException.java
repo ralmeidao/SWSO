@@ -3,7 +3,7 @@ package br.edu.ifba.swso.arquitetura.exception;
 import javax.inject.Inject;
 
 /**
- * Classe que trata as exceptions do exemplo 
+ * Classe que trata as exceptions do swso 
  * @author jsouzaa
  *
  */
@@ -21,7 +21,7 @@ public class SystemException extends Exception{
 	}
 	
     /**
-     * Exception que carrega todas as mensagens de exception do exemplo.
+     * Exception que carrega todas as mensagens de exception do swso.
      * @param e
      */
 	public SystemException(String e) {
@@ -30,7 +30,7 @@ public class SystemException extends Exception{
 	}
 	
     /**
-     * Exception que carrega todas as mensagens de exception do exemplo.
+     * Exception que carrega todas as mensagens de exception do swso.
      * @param e
      */
 	public SystemException(Throwable e) {
@@ -41,7 +41,7 @@ public class SystemException extends Exception{
 	}
 	
     /**
-     * Exception que carrega todas as mensagens de exception do exemplo.
+     * Exception que carrega todas as mensagens de exception do swso.
      * @param message
      * @param e
      */

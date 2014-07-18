@@ -27,7 +27,7 @@ public class Resources {
 
 	@Produces
 	@DataRepository
-    @PersistenceContext(unitName="exemploPU")
+    @PersistenceContext(unitName="swsoPU")
 	private EntityManager em;
 
 	@Produces

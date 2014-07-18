@@ -13,9 +13,9 @@ package br.edu.ifba.swso.util;
 public class Constantes {
 	
 	
-	public static final String CAMINHO_JASPER = "br/com/lordmonssa/exemplo/reports/";
+	public static final String CAMINHO_JASPER = "br/edu/ifba/swso/reports/";
 	
-	public static final String CAMINHO_IMG = "br/com/lordmonssa/exemplo/reports/images/";
+	public static final String CAMINHO_IMG = "br/edu/ifba/swso/reports/images/";
 	
 	public static final String CONTENT_TYPE_JPG = "image/jpeg";
 	

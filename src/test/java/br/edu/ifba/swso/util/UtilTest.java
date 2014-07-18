@@ -1,4 +1,4 @@
-package br.com.lordmonssa.exemplo.util;
+package br.edu.ifba.swso.util;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -10,7 +10,7 @@ import java.util.List;
 
 import org.junit.Test;
 
-import br.com.lordmonssa.exemplo.arquitetura.util.Util;
+import br.edu.ifba.swso.arquitetura.util.Util;
 
 public class UtilTest {
 
