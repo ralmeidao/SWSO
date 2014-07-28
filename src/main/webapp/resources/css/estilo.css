@@ -95,3 +95,39 @@ body {
 .panelgrid label {
 	font-weight: bold;
 }
+
+.icon-grid-margin {
+	margin-right: 10px !important;	
+}
+
+.column-align-center {
+	text-align: center !important;
+}
+
+.column-align-left {
+	text-align: left !important;
+}
+
+.column-align-right {
+	text-align: right !important;
+}
+
+.column-align-justify {
+	text-align: justify !important;
+}
+
+/*pick-list*/
+.altura-ul-120px ul{
+	height: 120px !important;
+}
+
+.pick-list td{
+	padding: 5px 0px !important;
+} 
+
+/*fieldset*/
+legend {
+	padding: 0.4em 0.4em !important;
+	border: none !important;
+	background: none !important;
+}

@@ -1,0 +1,54 @@
+<ui:composition template="/WEB-INF/templates/template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+	<ui:define name="breadcrumb">
+<!-- 		<h:form id="formBreadcrumb" styleClass="breadcrumb">
+			<p:breadCrumb>
+			    <p:menuitem value="Home" url="/home.xhtml" />
+			    <p:menuitem value="Cadastro" url="#"/>
+			    <p:menuitem value="Cadastro de Usuário"/>
+			</p:breadCrumb>
+		</h:form> -->
+	</ui:define>
+	
+	<ui:define name="content-main-page">
+		<h3>Simulação</h3>	
+		<h:form id="formSimulacao">
+			<p:focus for="formSimulacao"/>
+			<p:tabView>
+		        <p:tab title="Processos">
+					
+					<p:commandButton value="Novo Processo" style="margin-bottom: 15px;"/>
+					
+					<p:dataTable var="processo" value="#{processosController.listaProcessos}">
+					    <p:column headerText="PID" width="10%">
+					        <h:outputText value="#{processo.id}" />
+					    </p:column>
+					    <p:column headerText="Nome" width="40%">
+					        <h:outputText value="#{processo.nome}"/>
+					    </p:column>
+					    <p:column headerText="Nº de Instruções" width="20%">
+					        <h:outputText value="#{processo.nInstrucoes}" />
+					    </p:column>
+					    <p:column headerText="Estado" width="20%">
+					        <h:outputText value="#{processo.estado}" />
+					    </p:column>
+					    <p:column headerText="Ações" width="10%" styleClass="column-align-center">
+					    	<p:commandButton icon="ui-icon-cancel"  title="Finalizar" styleClass="icon-grid-margin"/>
+							<p:commandButton icon="ui-icon-pause" title="Pausar" styleClass="icon-grid-margin"/>
+					    </p:column>
+					</p:dataTable>
+		        </p:tab>
+		        <p:tab title="Memória">
+		        </p:tab>
+		        <p:tab title="Disco">
+		        </p:tab>
+		    </p:tabView>
+		</h:form>
+	</ui:define>
+</ui:composition>
