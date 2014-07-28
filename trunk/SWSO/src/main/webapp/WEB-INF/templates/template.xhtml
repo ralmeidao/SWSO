@@ -41,17 +41,17 @@
 		<div class="menu">
 			<h:form id="formMenu">
 				 <p:menubar>
+		            <p:menuitem value="Home" url="/home.xhtml" />
+		            <p:menuitem value="Simulação" url="/paginas/simulacao/escolher-simulacao.xhtml" />
 			        <p:submenu label="Cadastro">
 			            <p:menuitem value="Cadastro Usuário" url="/paginas/cadastro/cadastro-usuario.xhtml" />
 			        </p:submenu>
 			    </p:menubar>
 			</h:form>
 		</div>
-		
 		<div>
 			<ui:insert name="breadcrumb" />
 		</div>
-		
 		<div class="conteudo"> 	
 	        <div id="barra-content">
 	             <ui:insert name="content-main-page">
