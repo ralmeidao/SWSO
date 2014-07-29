@@ -7,6 +7,11 @@ body {
 	height: 95%;
 }
 
+label {
+	font-weight: bold;
+}
+
+
 .header {
     height: 85px;
     top: 0px;
@@ -78,6 +83,10 @@ body {
 	font-size: 0.9em !important;
 }
 
+.ui-widget .ui-widget{
+	font-size: 1.0em !important;
+}
+
 .panelgrid tr{
     border: none !important;
     background: none !important;
@@ -90,10 +99,6 @@ body {
 .panelgrid td {
     border: none !important;
     padding: 4px 10px;
-}
-
-.panelgrid label {
-	font-weight: bold;
 }
 
 .icon-grid-margin {
@@ -117,8 +122,8 @@ body {
 }
 
 /*pick-list*/
-.altura-ul-120px ul{
-	height: 120px !important;
+.altura-ul-160px ul{
+	height: 160px !important;
 }
 
 .pick-list td{
@@ -130,4 +135,38 @@ legend {
 	padding: 0.4em 0.4em !important;
 	border: none !important;
 	background: none !important;
+}
+
+/* select-box */
+.tempo-simulacao {
+	margin-right: 50px;
+}
+
+.tempo-simulacao label {
+	font-weight: bold;
+	font-size: 1.3em;
+}
+
+.align-left{
+	align: left;
+}
+
+/* Tamanhos */
+.tam_p {
+	width: 64px !important; 
+}
+
+.tam_m {
+	width: 128px !important; 
+}
+
+.tam_g {
+	width: 256px !important; 
+}
+
+
+.btn {
+	margin-top: 10px;
+	margin-bottom: 15px;
+	margin-left: 5px;
 }

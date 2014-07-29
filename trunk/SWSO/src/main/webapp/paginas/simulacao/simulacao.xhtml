@@ -6,30 +6,74 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:c="http://java.sun.com/jsp/jstl/core">
 
-	<ui:define name="breadcrumb">
-<!-- 		<h:form id="formBreadcrumb" styleClass="breadcrumb">
-			<p:breadCrumb>
-			    <p:menuitem value="Home" url="/home.xhtml" />
-			    <p:menuitem value="Cadastro" url="#"/>
-			    <p:menuitem value="Cadastro de Usuário"/>
-			</p:breadCrumb>
-		</h:form> -->
-	</ui:define>
 	
 	<ui:define name="content-main-page">
-		<h3>Simulação</h3>	
+		<h3 style="margin-bottom: 5px;">Simulação</h3>	
 		<h:form id="formSimulacao">
 			<p:focus for="formSimulacao"/>
+
+		    <p:panelGrid columns="3" styleClass="panelgrid" id="simulaProcessosPanel">
+        		
+        		<h:panelGroup>
+        			<label><h:outputText value="Controle do tempo" style="vertical-align: super;"/></label>
+        		
+        			<p:spacer width="10" />
+					<p:selectOneMenu id="selectTrocaContexto" styleClass="tam_m">
+		            	<f:selectItem itemLabel="Auto" itemValue="1" />
+		            	<f:selectItem itemLabel="Manual" itemValue="2" />
+		            	<f:selectItem itemLabel="Por Incremento" itemValue="3" />
+					</p:selectOneMenu>
+				</h:panelGroup>
+				
+				<h:panelGroup id="groupAuto" rendered="true">	
+					<p:commandButton icon="ui-icon-play" value="Iniciar" styleClass="btn"/>
+					<p:commandButton icon="ui-icon-stop" value="Parar" styleClass="btn"/>
+				</h:panelGroup>
+				
+				<h:panelGroup id="groupManual" rendered="false">	
+					<p:commandButton value="Avançar" styleClass="btn"/>
+				</h:panelGroup>
+				
+				<h:panelGroup id="groupIncremento" rendered="false">
+					Quantidade de tempo <p:inputText styleClass="tam_p"/> 
+					<p:commandButton value="Avançar" styleClass="btn"/>
+				</h:panelGroup>
+        	</p:panelGrid>
+	        
 			<p:tabView>
 		        <p:tab title="Processos">
 					
-					<p:commandButton value="Novo Processo" style="margin-bottom: 15px;"/>
+		        	<div align="right" class="tempo-simulacao" >
+			        	<label><h:outputText value="Tempo: 10"/></label>
+			        </div>
+					
+		        	<p:fieldset legend="CPU" rendered="#{simulacaoController.simulaProcessos}">
+		        		<p:panelGrid columns="4" styleClass="panelgrid" id="simulaProcessosPanel">
+			        		<p:outputLabel value="IR">
+			        			<br/>
+				        		<p:inputText value="#{40}" disabled="true" styleClass="tam_p"/>
+			        		</p:outputLabel>
+	
+			        		<p:outputLabel value="PC">
+			        			<br/>
+				        		<p:inputText value="#{15}" disabled="true" styleClass="tam_p"/>
+			        		</p:outputLabel>
+			        		
+			        		<p:outputLabel value="PID - Processo Atual">
+			        			<br/>
+				        		<p:inputText value="1 - Firefox" disabled="true" styleClass="tam_g"/>
+			        		</p:outputLabel>
+			        		
+			        	</p:panelGrid>
+		        	</p:fieldset>	
+					
+					<p:commandButton value="Novo Processo" styleClass="btn"/>
 					
 					<p:dataTable var="processo" value="#{processosController.listaProcessos}">
 					    <p:column headerText="PID" width="10%">
 					        <h:outputText value="#{processo.id}" />
 					    </p:column>
-					    <p:column headerText="Nome" width="40%">
+					    <p:column headerText="Nome" width="35%">
 					        <h:outputText value="#{processo.nome}"/>
 					    </p:column>
 					    <p:column headerText="Nº de Instruções" width="20%">
@@ -38,17 +82,24 @@
 					    <p:column headerText="Estado" width="20%">
 					        <h:outputText value="#{processo.estado}" />
 					    </p:column>
-					    <p:column headerText="Ações" width="10%" styleClass="column-align-center">
+					    <p:column headerText="Ações" width="15%" styleClass="column-align-center">
 					    	<p:commandButton icon="ui-icon-cancel"  title="Finalizar" styleClass="icon-grid-margin"/>
 							<p:commandButton icon="ui-icon-pause" title="Pausar" styleClass="icon-grid-margin"/>
 					    </p:column>
 					</p:dataTable>
 		        </p:tab>
 		        <p:tab title="Memória">
+		        	<div align="right" class="tempo-simulacao" >
+			        	<label><h:outputText value="Tempo: 10"/></label>
+			        </div>
 		        </p:tab>
 		        <p:tab title="Disco">
+		        	<div align="right" class="tempo-simulacao" >
+			        	<label><h:outputText value="Tempo: 10"/></label>
+			        </div>
 		        </p:tab>
 		    </p:tabView>
+        	
 		</h:form>
 	</ui:define>
 </ui:composition>

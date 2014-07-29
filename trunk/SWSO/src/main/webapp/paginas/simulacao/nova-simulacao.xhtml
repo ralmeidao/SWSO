@@ -20,100 +20,98 @@
 		<h3>Configurar Simulação</h3>	
 		<h:form id="formConfiguraSimulacao">
 			<p:focus for="formConfiguraSimulacao"/>
-			<p:panel>
-				<p:fieldset legend="Escolher simulações">
-					<p:pickList id="pickListTipoSimulacao"
-						value="#{simulacaoController.simulacoesDualList}"
-						var="tipoSimulacao" itemLabel="#{tipoSimulacao}"
-						itemValue="#{tipoSimulacao}" 
-						styleClass="pick-list altura-ul-120px">
-						<p:ajax event="transfer" listener="#{simulacaoController.atualizaDualList}" update="formConfiguraSimulacao" process="@form"/>
-					</p:pickList>
-				</p:fieldset>
-				
-				<p:fieldset legend="Simulação de Processos" rendered="#{simulacaoController.simulaProcessos}">
-					<p:panelGrid columns="3" styleClass="panelgrid" id="simulaProcessosPanel">
-						<p:outputLabel value="Algoritmo:">
-							<br/>
-							<p:selectOneMenu style="width: 120px;" value="#{simulacaoController.simulacaoProcesso.algoritmo}">
-								<p:ajax event="change" update="simulaProcessosPanel"/>	
-								<f:selectItem itemLabel="Selecione"   noSelectionOption="true" />
-	           					<f:selectItem itemLabel="FC-FS"       itemValue="1" />
-					            <f:selectItem itemLabel="SJF"         itemValue="2" />
-					            <f:selectItem itemLabel="SRT"         itemValue="3" />
-					            <f:selectItem itemLabel="Round-Robin" itemValue="4" />
-							</p:selectOneMenu>
-						</p:outputLabel>
-						
-						
-						<p:outputLabel value="Troca de contexto:" rendered="#{simulacaoController.exibeTrocaContexto}">
-							<br/>
-							<p:selectOneMenu id="selectTrocaContexto" style="width: 120px;" value="#{simulacaoController.simulacaoProcesso.trocaContexto}">
-								<f:selectItem itemLabel="Selecione"   noSelectionOption="true" />
-	           					<f:selectItem itemLabel="1 t"  itemValue="1" />
-					            <f:selectItem itemLabel="2 t" itemValue="2" />
-					            <f:selectItem itemLabel="3 t" itemValue="3" />
-					            <f:selectItem itemLabel="4 t" itemValue="4" />
-					            <f:selectItem itemLabel="5 t" itemValue="5" />
-					            <f:selectItem itemLabel="6 t" itemValue="6" />
-					            <f:selectItem itemLabel="7 t" itemValue="7" />
-					            <f:selectItem itemLabel="8 t" itemValue="8" />
-					            <f:selectItem itemLabel="9 t" itemValue="9" />
-							</p:selectOneMenu>
-						</p:outputLabel>
-												
-						<p:outputLabel value="Tempo de corte:" rendered="#{simulacaoController.exibeTempoCorte}">
-							<br/>
-							<p:selectOneMenu id="selectTempoCorte" style="width: 120px;" value="#{simulacaoController.simulacaoProcesso.tempoCorte}">
-								<f:selectItem itemLabel="Selecione"   noSelectionOption="true" />
-	           					<f:selectItem itemLabel="1 t"  itemValue="1" />
-					            <f:selectItem itemLabel="2 t" itemValue="2" />
-					            <f:selectItem itemLabel="3 t" itemValue="3" />
-					            <f:selectItem itemLabel="4 t" itemValue="4" />
-					            <f:selectItem itemLabel="5 t" itemValue="5" />
-					            <f:selectItem itemLabel="6 t" itemValue="6" />
-					            <f:selectItem itemLabel="7 t" itemValue="7" />
-					            <f:selectItem itemLabel="8 t" itemValue="8" />
-					            <f:selectItem itemLabel="9 t" itemValue="9" />
-							</p:selectOneMenu>
-						</p:outputLabel>
-					</p:panelGrid>
-				</p:fieldset>
-	
-				<p:fieldset legend="Simulação de Memória" rendered="#{simulacaoController.simulaMemoria}">
-					<p:panelGrid columns="3" styleClass="panelgrid">
-						<p:outputLabel value="Algoritmo:">
-							<br/>
-							<p:selectOneMenu style="width: 120px;">
-								<f:selectItem itemLabel="Selecione"	noSelectionOption="true" />
-	           					<f:selectItem itemLabel="FIFO" itemValue="1" />
-					            <f:selectItem itemLabel="LRU"  itemValue="2" />
-					            <f:selectItem itemLabel="MRU"  itemValue="3" />
-					            <f:selectItem itemLabel="OPT"  itemValue="4" />
-							</p:selectOneMenu>
-						</p:outputLabel>
-					</p:panelGrid>
-				</p:fieldset>
-
-				<p:fieldset legend="Simulação de Disco" rendered="#{simulacaoController.simulaDisco}">
-					<p:panelGrid columns="3" styleClass="panelgrid">
-						<p:outputLabel value="Algoritmo:">
-							<br/>
-							<p:selectOneMenu style="width: 120px;">
-								<f:selectItem itemLabel="Selecione"   noSelectionOption="true" />
-					            <f:selectItem itemLabel="FC-FS" itemValue="1" />
-								<f:selectItem itemLabel="SSTF"  itemValue="2" />
-								<f:selectItem itemLabel="CSCAN" itemValue="3" />
-								<f:selectItem itemLabel="SCAN"  itemValue="4" />
-								<f:selectItem itemLabel="LOOK"  itemValue="5" />
-							</p:selectOneMenu>
-						</p:outputLabel>
-					</p:panelGrid>
-				</p:fieldset>
+			<p:fieldset legend="Escolher simulações">
+				<p:pickList id="pickListTipoSimulacao"
+					value="#{simulacaoController.simulacoesDualList}"
+					var="tipoSimulacao" itemLabel="#{tipoSimulacao}"
+					itemValue="#{tipoSimulacao}" 
+					styleClass="pick-list altura-ul-160px">
+					<p:ajax event="transfer" listener="#{simulacaoController.atualizaDualList}" update="formConfiguraSimulacao" process="@form"/>
+				</p:pickList>
+			</p:fieldset>
+			
+			<p:fieldset legend="Simulação de Processos" rendered="#{simulacaoController.simulaProcessos}">
+				<p:panelGrid columns="3" styleClass="panelgrid" id="simulaProcessosPanel">
+					<p:outputLabel value="Algoritmo:">
+						<br/>
+						<p:selectOneMenu styleClass="tam_m" value="#{simulacaoController.simulacaoProcesso.algoritmo}">
+							<p:ajax event="change" update="simulaProcessosPanel"/>	
+							<f:selectItem itemLabel="Selecione"   noSelectionOption="true" />
+           					<f:selectItem itemLabel="FC-FS"       itemValue="1" />
+				            <f:selectItem itemLabel="SJF"         itemValue="2" />
+				            <f:selectItem itemLabel="SRT"         itemValue="3" />
+				            <f:selectItem itemLabel="Round-Robin" itemValue="4" />
+						</p:selectOneMenu>
+					</p:outputLabel>
 					
-				<p:commandButton id="startSimulacao" value="Iniciar Simulação" style="margin-top: 15px" action="/paginas/simulacao/simulacao.xhtml"
-					rendered="#{simulacaoController.simulaProcessos || simulacaoController.simulaMemoria || simulacaoController.simulaDisco}"/>
-			</p:panel>
+					
+					<p:outputLabel value="Troca de contexto:" rendered="#{simulacaoController.exibeTrocaContexto}">
+						<br/>
+						<p:selectOneMenu id="selectTrocaContexto" styleClass="tam_m" value="#{simulacaoController.simulacaoProcesso.trocaContexto}">
+							<f:selectItem itemLabel="Selecione"   noSelectionOption="true" />
+           					<f:selectItem itemLabel="1 tempo" itemValue="1" />
+				            <f:selectItem itemLabel="2 tempo" itemValue="2" />
+				            <f:selectItem itemLabel="3 tempo" itemValue="3" />
+				            <f:selectItem itemLabel="4 tempo" itemValue="4" />
+				            <f:selectItem itemLabel="5 tempo" itemValue="5" />
+				            <f:selectItem itemLabel="6 tempo" itemValue="6" />
+				            <f:selectItem itemLabel="7 tempo" itemValue="7" />
+				            <f:selectItem itemLabel="8 tempo" itemValue="8" />
+				            <f:selectItem itemLabel="9 tempo" itemValue="9" />
+						</p:selectOneMenu>
+					</p:outputLabel>
+											
+					<p:outputLabel value="Tempo de corte:" rendered="#{simulacaoController.exibeTempoCorte}">
+						<br/>
+						<p:selectOneMenu id="selectTempoCorte" styleClass="tam_m" value="#{simulacaoController.simulacaoProcesso.tempoCorte}">
+							<f:selectItem itemLabel="Selecione"   noSelectionOption="true" />
+           					<f:selectItem itemLabel="1 tempo" itemValue="1" />
+				            <f:selectItem itemLabel="2 tempo" itemValue="2" />
+				            <f:selectItem itemLabel="3 tempo" itemValue="3" />
+				            <f:selectItem itemLabel="4 tempo" itemValue="4" />
+				            <f:selectItem itemLabel="5 tempo" itemValue="5" />
+				            <f:selectItem itemLabel="6 tempo" itemValue="6" />
+				            <f:selectItem itemLabel="7 tempo" itemValue="7" />
+				            <f:selectItem itemLabel="8 tempo" itemValue="8" />
+				            <f:selectItem itemLabel="9 tempo" itemValue="9" />
+						</p:selectOneMenu>
+					</p:outputLabel>
+				</p:panelGrid>
+			</p:fieldset>
+
+			<p:fieldset legend="Simulação de Memória" rendered="#{simulacaoController.simulaMemoria}">
+				<p:panelGrid columns="3" styleClass="panelgrid">
+					<p:outputLabel value="Algoritmo:">
+						<br/>
+						<p:selectOneMenu styleClass="tam_m">
+							<f:selectItem itemLabel="Selecione"	noSelectionOption="true" />
+           					<f:selectItem itemLabel="FIFO" itemValue="1" />
+				            <f:selectItem itemLabel="LRU"  itemValue="2" />
+				            <f:selectItem itemLabel="MRU"  itemValue="3" />
+				            <f:selectItem itemLabel="OPT"  itemValue="4" />
+						</p:selectOneMenu>
+					</p:outputLabel>
+				</p:panelGrid>
+			</p:fieldset>
+
+			<p:fieldset legend="Simulação de Disco" rendered="#{simulacaoController.simulaDisco}">
+				<p:panelGrid columns="3" styleClass="panelgrid">
+					<p:outputLabel value="Algoritmo:">
+						<br/>
+						<p:selectOneMenu styleClass="tam_m" >
+							<f:selectItem itemLabel="Selecione"   noSelectionOption="true" />
+				            <f:selectItem itemLabel="FC-FS" itemValue="1" />
+							<f:selectItem itemLabel="SSTF"  itemValue="2" />
+							<f:selectItem itemLabel="CSCAN" itemValue="3" />
+							<f:selectItem itemLabel="SCAN"  itemValue="4" />
+							<f:selectItem itemLabel="LOOK"  itemValue="5" />
+						</p:selectOneMenu>
+					</p:outputLabel>
+				</p:panelGrid>
+			</p:fieldset>
+				
+			<p:commandButton id="startSimulacao" value="Iniciar Simulação" styleClass="btn" action="/paginas/simulacao/simulacao.xhtml"
+				rendered="#{simulacaoController.simulaProcessos || simulacaoController.simulaMemoria || simulacaoController.simulaDisco}"/>
 		</h:form>
 	</ui:define>
 </ui:composition>
