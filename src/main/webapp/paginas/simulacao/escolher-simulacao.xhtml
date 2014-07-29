@@ -5,16 +5,6 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:c="http://java.sun.com/jsp/jstl/core">
-
-	<ui:define name="breadcrumb">
-<!-- 		<h:form id="formBreadcrumb" styleClass="breadcrumb">
-			<p:breadCrumb>
-			    <p:menuitem value="Home" url="/home.xhtml" />
-			    <p:menuitem value="Cadastro" url="#"/>
-			    <p:menuitem value="Cadastro de Usuário"/>
-			</p:breadCrumb>
-		</h:form> -->
-	</ui:define>
 	
 	<ui:define name="content-main-page">
 		<h3>Iniciar Simulação</h3>
@@ -22,9 +12,9 @@
 		<h:form id="formConfiguraSimulacao">
 			<p:focus for="formConfiguraSimulacao"/>
 			
-		   	<p:commandButton id="novaSimulacao" value="Nova Simulação" action="/paginas/simulacao/nova-simulacao.xhtml" style="margin-right: 5px;" />
+		   	<p:commandButton id="novaSimulacao" value="Nova Simulação" action="/paginas/simulacao/nova-simulacao.xhtml" styleClass="btn" />
 		   	
-		   	<p:commandButton id="carregarSimulacao" value="Carregar Simulação" action="/paginas/simulacao/carregar-simulacao.xhtml" />
+		   	<p:commandButton id="carregarSimulacao" value="Carregar Simulação" action="/paginas/simulacao/carregar-simulacao.xhtml" styleClass="btn"/>
 		   	
 		</h:form>
 	</ui:define>
