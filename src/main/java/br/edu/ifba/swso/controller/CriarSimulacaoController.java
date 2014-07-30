@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
+import org.omnifaces.cdi.ViewScoped;
 import org.primefaces.model.DualListModel;
 
 import br.edu.ifba.swso.vo.SimulacaoProcessoVO;
@@ -18,8 +18,8 @@ import br.edu.ifba.swso.vo.SimulacaoProcessoVO;
  *
  */
 @Named
-@SessionScoped
-public class SimulacaoController implements Serializable {
+@ViewScoped
+public class CriarSimulacaoController implements Serializable {
 
 	/**
 	 * 
