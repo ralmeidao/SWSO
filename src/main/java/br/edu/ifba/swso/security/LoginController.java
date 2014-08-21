@@ -18,9 +18,8 @@ import br.edu.ifba.swso.arquitetura.exception.BusinessException;
 import br.edu.ifba.swso.arquitetura.exception.RequiredException;
 import br.edu.ifba.swso.arquitetura.util.MensagemUtil;
 import br.edu.ifba.swso.arquitetura.util.Util;
-import br.edu.ifba.swso.service.interfaces.MenuService;
-import br.edu.ifba.swso.vo.Menu;
-import br.edu.ifba.swso.vo.Usuario;
+import br.edu.ifba.swso.negocio.Menu;
+import br.edu.ifba.swso.negocio.Usuario;
 
 /**
  * Classe de controle de acesso
@@ -35,9 +34,6 @@ public class LoginController extends BaseController implements Serializable {
 
 	private Usuario usuario;
 
-	@Inject
-	private MenuService menuService;
-	
 	@Inject
 	private ContextoController contextoController;
 		
@@ -144,26 +140,6 @@ public class LoginController extends BaseController implements Serializable {
 	 */	
 	private void montarMenu() {
 
-	}
-	
-	public String abrirMenu(Long pCodigoPai) throws Exception {
-		Menu menu = menuService.findById(pCodigoPai);
-		montarMenuVertical(menu);
-		if (Util.isNullOuVazio(menu)) {
-			return redirectHome();
-		} else {
-			return menu.getLink().trim() + "?faces-redirect=true";			
-		}
-	}
-	
-	/**
-	 * Monta o menu vertical(filho), de acordo com o perfil do usuário
-	 * 
-	 * @param pLista
-	 * @throws Exception
-	 */
-	private void montarMenuVertical(Menu menuPai) {
-		menuVerticalSistema = menuService.consultarFilhosPorUsuario(menuPai, usuario.getId());
 	}
 	
 	//MÉT0D0S DE ACESSO

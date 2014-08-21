@@ -10,25 +10,25 @@ import javax.enterprise.context.RequestScoped;
 import javax.enterprise.inject.Produces;
 import javax.enterprise.inject.spi.InjectionPoint;
 import javax.faces.context.FacesContext;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+/*import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;*/
 
 import org.apache.log4j.Logger;
-import org.hibernate.Session;
+/*import org.hibernate.Session;*/
 
 import br.edu.ifba.swso.arquitetura.exception.SystemException;
 import br.edu.ifba.swso.repository.ConfigurationRepository;
-import br.edu.ifba.swso.repository.DataRepository;
+/*import br.edu.ifba.swso.repository.DataRepository;*/
 
 /**
  * Classe responsavel pela producao de recursos uteis para utilizacao na aplicacao
  */
 public class Resources {
 
-	@Produces
+	/*@Produces
 	@DataRepository
     @PersistenceContext(unitName="swsoPU")
-	private EntityManager em;
+	private EntityManager em;*/
 
 	@Produces
 	public Logger produceLog(InjectionPoint injectionPoint) {
@@ -41,10 +41,10 @@ public class Resources {
 		return FacesContext.getCurrentInstance();
 	}
 
-	@Produces
+/*	@Produces
 	public Session produceSession() {
 		return em.unwrap(Session.class);
-	}
+	}*/
 	
 	 @Produces @ConfigurationRepository("")
 	 public Properties produceProperties(InjectionPoint ip) {
