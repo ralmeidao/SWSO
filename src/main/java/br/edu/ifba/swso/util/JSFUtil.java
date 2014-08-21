@@ -1,4 +1,4 @@
-package br.edu.ifba.swso.arquitetura.util;
+package br.edu.ifba.swso.util;
 
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletRequestWrapper;

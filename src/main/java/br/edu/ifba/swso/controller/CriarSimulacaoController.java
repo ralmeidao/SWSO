@@ -7,7 +7,6 @@ import javax.inject.Named;
 
 import org.omnifaces.cdi.ViewScoped;
 
-import br.edu.ifba.swso.arquitetura.controller.BaseController;
 import br.edu.ifba.swso.negocio.simulacao.Simulacao;
 
 /**

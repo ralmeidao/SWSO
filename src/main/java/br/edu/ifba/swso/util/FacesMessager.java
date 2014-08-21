@@ -1,4 +1,4 @@
-package br.edu.ifba.swso.arquitetura.controller;
+package br.edu.ifba.swso.util;
 
 import java.text.MessageFormat;
 import java.util.Iterator;
@@ -8,8 +8,6 @@ import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
-
-import br.edu.ifba.swso.arquitetura.util.MensagemUtil;
 
 /**
  * Classe utilitaria para gerencimento de mensagens <br>

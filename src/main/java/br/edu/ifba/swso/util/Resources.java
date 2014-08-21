@@ -1,4 +1,4 @@
-package br.edu.ifba.swso.arquitetura.util;
+package br.edu.ifba.swso.util;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -13,10 +13,12 @@ import javax.faces.context.FacesContext;
 /*import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;*/
 
+
 import org.apache.log4j.Logger;
 /*import org.hibernate.Session;*/
 
-import br.edu.ifba.swso.arquitetura.exception.SystemException;
+
+import br.edu.ifba.swso.exception.SystemException;
 import br.edu.ifba.swso.repository.ConfigurationRepository;
 /*import br.edu.ifba.swso.repository.DataRepository;*/
 

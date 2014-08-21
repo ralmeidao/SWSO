@@ -8,6 +8,12 @@ package br.edu.ifba.swso.util;
 
 public class Constantes {
 	
+	public static final String PARTIAL_AJAX = "partial/ajax";
+	
+	public static final String FACES_REQUEST = "Faces-Request";
+	
+	public static final String OMNI_PARTIAL_VIEW_CONTEXT = "org.omnifaces.context.OmniPartialViewContext";
+	
 	public static final String CAMINHO_JASPER = "br/edu/ifba/swso/reports/";
 	
 	public static final String CAMINHO_IMG = "br/edu/ifba/swso/reports/images/";

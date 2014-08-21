@@ -10,8 +10,6 @@ import java.util.List;
 
 import org.junit.Test;
 
-import br.edu.ifba.swso.arquitetura.util.Util;
-
 public class UtilTest {
 
 	public static final String STRING_VAZIA = "";

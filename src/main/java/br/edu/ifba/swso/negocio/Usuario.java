@@ -5,8 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import br.edu.ifba.swso.arquitetura.util.Util;
 import br.edu.ifba.swso.security.Credentials;
+import br.edu.ifba.swso.util.Util;
 
 public class Usuario {
 

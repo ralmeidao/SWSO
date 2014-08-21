@@ -1,4 +1,4 @@
-package br.edu.ifba.swso.arquitetura.exception;
+package br.edu.ifba.swso.exception;
 
 import java.util.List;
 /**
