@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.omnifaces.context.OmniPartialViewContext;
 
-import br.edu.ifba.swso.arquitetura.util.Constantes;
+import br.edu.ifba.swso.util.Constantes;
 
 
 public class AjaxListener implements PhaseListener {

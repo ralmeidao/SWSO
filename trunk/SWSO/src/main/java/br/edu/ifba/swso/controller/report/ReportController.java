@@ -10,9 +10,9 @@ import javax.inject.Inject;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 
-import br.edu.ifba.swso.arquitetura.controller.FacesMessager;
-import br.edu.ifba.swso.arquitetura.util.ReportUtils;
 import br.edu.ifba.swso.security.JsfUtil;
+import br.edu.ifba.swso.util.FacesMessager;
+import br.edu.ifba.swso.util.ReportUtils;
 
 public abstract class ReportController {
 	

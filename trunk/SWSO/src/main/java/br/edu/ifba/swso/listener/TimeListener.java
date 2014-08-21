@@ -6,8 +6,8 @@ import javax.faces.event.PhaseEvent;
 import javax.faces.event.PhaseId;
 import javax.faces.event.PhaseListener;
 
-import br.edu.ifba.swso.arquitetura.util.Util;
 import br.edu.ifba.swso.security.JsfUtil;
+import br.edu.ifba.swso.util.Util;
 
 /**
  * Classe que atualiza a hora do servidor

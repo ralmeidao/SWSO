@@ -1,4 +1,4 @@
-package br.edu.ifba.swso.arquitetura.exception;
+package br.edu.ifba.swso.exception;
 
 import java.util.Date;
 
@@ -6,7 +6,7 @@ import javax.inject.Inject;
 
 import org.apache.log4j.Logger;
 
-import br.edu.ifba.swso.arquitetura.util.Util;
+import br.edu.ifba.swso.util.Util;
 
 /**
  * Classe que trata todas as exceptions de banco 

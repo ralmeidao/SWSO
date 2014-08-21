@@ -5,21 +5,19 @@ import java.util.List;
 
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletResponse;
 
 import org.primefaces.model.menu.DefaultMenuModel;
 import org.primefaces.model.menu.MenuModel;
 
-import br.edu.ifba.swso.arquitetura.controller.BaseController;
-import br.edu.ifba.swso.arquitetura.controller.ContextoController;
-import br.edu.ifba.swso.arquitetura.exception.BusinessException;
-import br.edu.ifba.swso.arquitetura.exception.RequiredException;
-import br.edu.ifba.swso.arquitetura.util.MensagemUtil;
-import br.edu.ifba.swso.arquitetura.util.Util;
+import br.edu.ifba.swso.controller.BaseController;
+import br.edu.ifba.swso.exception.BusinessException;
+import br.edu.ifba.swso.exception.RequiredException;
 import br.edu.ifba.swso.negocio.Menu;
 import br.edu.ifba.swso.negocio.Usuario;
+import br.edu.ifba.swso.util.MensagemUtil;
+import br.edu.ifba.swso.util.Util;
 
 /**
  * Classe de controle de acesso
@@ -34,9 +32,6 @@ public class LoginController extends BaseController implements Serializable {
 
 	private Usuario usuario;
 
-	@Inject
-	private ContextoController contextoController;
-		
 	private Credentials credentials;
 		
 	private MenuModel menuBarraHorizontal;
@@ -126,10 +121,6 @@ public class LoginController extends BaseController implements Serializable {
 	 * @return
 	 */
 	public String redirecionarTela(){
-		contextoController.setCrudMessage(null);
-		contextoController.setObject(null);
-		contextoController.setObjectFilter(null);
-		contextoController.setTelaOrigem(null);		 
 		return getLinkMenu() + "?faces-redirect=true" ;
 	}
 	

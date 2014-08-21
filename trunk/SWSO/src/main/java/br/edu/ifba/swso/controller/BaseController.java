@@ -1,4 +1,4 @@
-package br.edu.ifba.swso.arquitetura.controller;
+package br.edu.ifba.swso.controller;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -13,9 +13,10 @@ import javax.validation.ConstraintViolation;
 import org.apache.log4j.Logger;
 import org.primefaces.context.RequestContext;
 
-import br.edu.ifba.swso.arquitetura.util.JSFUtil;
-import br.edu.ifba.swso.arquitetura.util.MensagemUtil;
-import br.edu.ifba.swso.arquitetura.util.ReportUtils;
+import br.edu.ifba.swso.util.FacesMessager;
+import br.edu.ifba.swso.util.JSFUtil;
+import br.edu.ifba.swso.util.MensagemUtil;
+import br.edu.ifba.swso.util.ReportUtils;
 
 /**
  * Classe base para qualquer outro controller
@@ -79,6 +80,29 @@ public abstract class BaseController implements Serializable {
 		}
 	}
 
+	/**
+	 * Método usado para guardar o id do componente que chamou o evento.
+	 * Esse método será usado normalmente em botões que chamam dialogs
+	 */
+	public void guardarIdComponente(){
+		FacesContext context = FacesContext.getCurrentInstance();
+	    Map<String, String> map = context.getExternalContext().getRequestParameterMap();
+	    JSFUtil.setSessionMapValue("idComponente", (String) map.get("idComponente"));
+	}
+	
+	/**
+	 * Este método trabalha em conjunto com o método guardarIdComponente. Também será usado normalmente junto com os dialogs.
+	 * Quando o dialog for fechado este método dará foco no botão que chamou o dialog.
+	 * @throws InterruptedException 
+	 */
+	public void giveFocus() throws InterruptedException {
+		Thread.sleep(250);
+		String idComponente = (String) JSFUtil.getSessionMapValue("idComponente");
+		if (idComponente != null) {
+			RequestContext.getCurrentInstance().execute("giveFocus('"+idComponente+"')");
+		}
+	}
+	
 	protected String includeRedirect(String url) {
 		String formatedUrl = url.concat(facesRedirect);
 		return formatedUrl;
