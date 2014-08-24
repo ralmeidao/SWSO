@@ -2,16 +2,15 @@ package br.edu.ifba.swso.negocio.filemanager;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import br.edu.ifba.swso.negocio.abstracoes.ByteSWSO;
 import br.edu.ifba.swso.negocio.abstracoes.File;
 import br.edu.ifba.swso.negocio.abstracoes.FileInput;
-import br.edu.ifba.swso.negocio.abstracoes.Word;
 import br.edu.ifba.swso.negocio.harddisk.HardDisk;
-import br.edu.ifba.swso.negocio.harddisk.Plate;
-import br.edu.ifba.swso.negocio.harddisk.Track;
 import br.edu.ifba.swso.util.Constantes;
 
 /**
@@ -23,27 +22,27 @@ public class XFat implements ISistemaArquivo {
 
 	private final Map<Integer, File> listaFile;
 	private final HardDisk hardDisk;
+	private final List<Integer> listaSetoresLivres;
 	private int ultimoId = 0;
-
+	private final int nSetores = Constantes.DISK_SIZE * Constantes.PLATE_SIZE * Constantes.TRACK_SIZE;
+	
 	public XFat(HardDisk hardDisk) {
 		this.listaFile = new HashMap<Integer, File>();
 		this.hardDisk = hardDisk;
+		this.listaSetoresLivres = createListOfBlankSpaces();
 	}
-
-	public void carregarProcesso(byte[] arquivo, String name) {
-		FileInput fileInput = new FileInput(name);
-
-		for (String instrucao : new String(arquivo).split(";")) {
-			Word word = new Word(instrucao);
-			for (int i = 0; i < Constantes.WORD_SIZE; i++) {
-				fileInput.writeBytes(word.getIoWord()[i]);
-			}
+	
+	private List<Integer> createListOfBlankSpaces() {
+		List<Integer> listaSetoresLivres = new ArrayList<Integer>(nSetores);
+		for (int i = 0; i < nSetores; i++) {
+			listaSetoresLivres.add(i);
 		}
-		allocateFile(fileInput);
+		return listaSetoresLivres;
 	}
 
 	public void allocateFile(FileInput fileinput) {
 		File newFile = new File(fileinput.getFileName());
+		newFile.setColor(fileinput.getColor());
 		newFile.setFileID(getNewIdFile());
 		
 		ByteSWSO[] newSector = null;
@@ -73,6 +72,11 @@ public class XFat implements ISistemaArquivo {
 	}
 
 	public void deallocateFile(int index) {
+		File file = this.listaFile.get(index);
+		for (Integer setor : file.getAllocatedSectors()) {
+			listaSetoresLivres.add(setor);
+		}
+		Collections.sort(listaSetoresLivres);
 		this.listaFile.remove(index);
 	}
 
@@ -82,8 +86,16 @@ public class XFat implements ISistemaArquivo {
 
 	private int buscarSetorLivreDisco() {
 		int nSector;
-
-		for (int i = 0; i < hardDisk.getHd().length; i++) {
+		
+		if (listaSetoresLivres.size() > 0){
+			nSector = listaSetoresLivres.get(0);
+			listaSetoresLivres.remove(0);
+			return nSector;
+		} else {
+			return -1;
+		}
+		
+/*		for (int i = 0; i < hardDisk.getHd().length; i++) {
 			Plate plate = hardDisk.getHd()[i];
 
 			for (int j = 0; j < plate.getTracks().length; j++) {
@@ -100,7 +112,7 @@ public class XFat implements ISistemaArquivo {
 
 		}
 
-		return -1;
+		return -1;*/
 	}
 	
 	public int seekIdFilePerSector(int nSector) {

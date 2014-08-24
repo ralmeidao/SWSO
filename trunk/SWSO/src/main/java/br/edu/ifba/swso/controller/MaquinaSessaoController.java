@@ -13,13 +13,14 @@ import br.edu.ifba.swso.negocio.filemanager.ISistemaArquivo;
 import br.edu.ifba.swso.negocio.filemanager.XFat;
 import br.edu.ifba.swso.negocio.virtualmachine.CoreVirtualMachine;
 import br.edu.ifba.swso.util.Constantes;
+import br.edu.ifba.swso.util.Util;
 
 /**
  * @author Ramon
  */
 @Named
 @SessionScoped
-public class MaquinaSessaoController implements Serializable {
+public class MaquinaSessaoController extends BaseController implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -28,6 +29,8 @@ public class MaquinaSessaoController implements Serializable {
 	private ISistemaArquivo sistemaArquivo;
 	
 	private UploadedFile uploadFile;
+	
+	private String color;
 	
 	private int activeAba;
 	
@@ -40,16 +43,23 @@ public class MaquinaSessaoController implements Serializable {
 		coreVirtualMachine.getCentralProcessingUnit().execute();
 	}
 	
-    public void carregarProcesso() {
-    	FileInput fileInput = criarInputFile();
-		sistemaArquivo.allocateFile(fileInput);
+    public void doUploadFile() {
+    	if (validarUploadArquivo()) {
+    		FileInput fileInput = criarInputFile();
+    		sistemaArquivo.allocateFile(fileInput);
+    		clearUpload();
+    	}
+    }
+    
+    public void deleteFile(Integer id) {
+    	sistemaArquivo.deallocateFile(id);
     }
     
 	private FileInput criarInputFile() {
 		byte[] arquivo = uploadFile.getContents();
 		int lastIndexOf = uploadFile.getFileName().lastIndexOf('.');
 		
-		FileInput fileInput = new FileInput(uploadFile.getFileName().substring(0, lastIndexOf));
+		FileInput fileInput = new FileInput(uploadFile.getFileName().substring(0, lastIndexOf), color);
 		
 		String arqString = new String(arquivo);
 		arqString = arqString.replace("\r\n", "");
@@ -62,6 +72,26 @@ public class MaquinaSessaoController implements Serializable {
 		}
 		return fileInput;
 	}
+
+	private void clearUpload() {
+		uploadFile = null;
+		color = null;
+	}
+	
+	private boolean validarUploadArquivo(){
+		String message = "";
+		if(uploadFile == null || Util.isNullOuVazio(uploadFile.getFileName())) {
+			message += "É necessário selecionar um arquivo! "; 
+		} 
+		if(color == null || color.equals("")) {
+			message += "É necessário selecionar uma cor!";
+		}
+		if (!Util.isNullOuVazio(message)) {
+			facesMessager.addMessageError(message);
+		}
+		return Util.isNullOuVazio(message);
+	}
+	
 
 	//MÉT0D0S DE ACESSO
 	public CoreVirtualMachine getCoreVirtualMachine() {
@@ -88,4 +118,12 @@ public class MaquinaSessaoController implements Serializable {
 		this.activeAba = activeAba;
 	}
 
+	public String getColor() {
+		return color;
+	}
+
+	public void setColor(String cor) {
+		this.color = cor;
+	}
+	
 }
