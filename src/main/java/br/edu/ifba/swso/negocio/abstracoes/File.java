@@ -2,7 +2,7 @@ package br.edu.ifba.swso.negocio.abstracoes;
 
 import java.util.ArrayList;
 import java.util.List;
-
+ 
 
 public class File {
     private String fileName;
@@ -10,6 +10,8 @@ public class File {
     private int fileSize;
     private int fileID;
     private List<Integer> allocatedSectors;
+    
+    private String color;
 	
     public File(String fileName) {
 		this.fileName = fileName;
@@ -51,4 +53,13 @@ public class File {
     public List<Integer> getAllocatedSectors() {
         return this.allocatedSectors;
     }
+
+	public String getColor() {
+		return color;
+	}
+
+	public void setColor(String color) {
+		this.color = color;
+	}
+    
 }
