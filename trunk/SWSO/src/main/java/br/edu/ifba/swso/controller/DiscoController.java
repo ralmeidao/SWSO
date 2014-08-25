@@ -54,18 +54,18 @@ public class DiscoController implements Serializable {
 	}
 
 	public String drawPlates(Plate plate, int i) {
-		String script = "plateDraw(\"canvas"+i+"\"";
+		String script = "plateDraw(\"canvas"+i+"\", new Array(";
 		int j = 0;
 		for (Track track : plate.getTracks()) {
 			String color = "new Array(";
 			for (int k = 0; k < track.getSectors().length; k++) {
-				color += "\"#"+obterArquivo((i*8) + (j*4) + k).getColor()+"\"";
+				color += "\"#"+obterArquivo((i * Constantes.PLATE_SIZE * Constantes.TRACK_SIZE ) + (j*Constantes.TRACK_SIZE) + k).getColor()+"\"";
 				color+= (track.getSectors().length == k+1) ? ")" : ",";
 			}
-			script+= ", "+color;
+			script+= color + ", ";
 			j++;
 		}
-		script += ")";
+		script = script.subSequence(0, script.length() - 2) + "))";
 		
 		return script;
 		
