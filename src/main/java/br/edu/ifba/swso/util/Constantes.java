@@ -27,8 +27,8 @@ public class Constantes {
 	public static int BYTE_PER_PAGE = 512; // quantidade de bytes por páginas
 	
 	public static int DISK_SIZE = 32; // tamanho do disco. (32 pratos)
-	public static int PLATE_SIZE = 2; // tamanho do prato. (2 trilhas) 
-	public static int TRACK_SIZE = 4;// tamanho da trilha. (4 setores)
+	public static int PLATE_SIZE = 4; // tamanho do prato. (4 trilhas) 
+	public static int TRACK_SIZE = 8;// tamanho da trilha. (8 setores)
 	public static int SECTOR_SIZE = 256; // tamanho do setor.(256 bytes)
 	
 	public static int MEMORY_SIZE = 32; // quantidade total da memória.
