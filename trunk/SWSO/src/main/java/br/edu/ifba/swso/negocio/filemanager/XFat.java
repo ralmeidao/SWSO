@@ -47,6 +47,7 @@ public class XFat implements ISistemaArquivo {
 		
 		ByteSWSO[] newSector = null;
 		int i = 0;
+		
 		for (ByteSWSO byTe : fileinput.getListaInstrucoes()) {
 			if (newSector == null) {
 				newSector = new ByteSWSO[Constantes.SECTOR_SIZE];

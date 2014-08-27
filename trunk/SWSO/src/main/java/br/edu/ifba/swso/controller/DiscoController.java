@@ -7,6 +7,7 @@ import javax.faces.bean.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import br.edu.ifba.swso.display.MovimentoCabecoteHD;
 import br.edu.ifba.swso.negocio.abstracoes.File;
 import br.edu.ifba.swso.negocio.filemanager.ISistemaArquivo;
 import br.edu.ifba.swso.negocio.harddisk.HardDisk;
@@ -29,12 +30,12 @@ public class DiscoController implements Serializable {
 	@Inject
 	private MaquinaSessaoController maquinaSessaoController;
 	
-	private HardDisk hardDisck;
+	private HardDisk hardDisk;
 	private ISistemaArquivo sistemaArquivo;
 	
 	@PostConstruct
 	private void init(){
-		hardDisck = maquinaSessaoController.getCoreVirtualMachine().getHardDisk();
+		hardDisk = maquinaSessaoController.getCoreVirtualMachine().getHardDisk();
 		sistemaArquivo = maquinaSessaoController.getSistemaArquivo();
 	}
 	
@@ -70,11 +71,28 @@ public class DiscoController implements Serializable {
 		return script;
 		
 	}
+	public String drawCanvasMoveReaderHead() {
+		String script = "";
+		if (hardDisk.getListMoveReaderHead().size() > 0) {
+			script = "movesDraw(\"canvasMoveReaderHead\", new Array(";
+			
+			for (MovimentoCabecoteHD move : hardDisk.getListMoveReaderHead()) {
+				script += "new Array( \"" + move.getPosicaoDe() + "\", \"" + move.getPosicaoPara() + "\"), "; 
+			}
+			script = script.subSequence(0, script.length() - 2) + "))";
+		}
+		
+		return script;
+		
+	}
 	
-	public HardDisk getHardDisck() {
-		return hardDisck;
+	public HardDisk getHardDisk() {
+		return hardDisk;
 	}
 
+	public int getDiskSizeKB(){
+		return getDiskSize()/1024;
+	}
 	public int getDiskSize(){
 		return Constantes.DISK_SIZE * Constantes.PLATE_SIZE * Constantes.TRACK_SIZE * Constantes.SECTOR_SIZE;
 	}
