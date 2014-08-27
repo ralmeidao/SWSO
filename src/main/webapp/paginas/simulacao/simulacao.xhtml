@@ -8,6 +8,7 @@
 
 	<ui:define name="html-head">
 		<h:outputScript library="js" name="plateDraw.js" />
+		<h:outputScript library="js" name="moveReaderHeadDraw.js" />
 
 		<script type="text/javascript" src="https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization',
 			   'version':'1','packages':['timeline']}]}"></script>
@@ -157,7 +158,7 @@
 						Tamanho do setor: #{discoController.sectorSize} bytes | Tamanho do disco: #{discoController.diskSize/1024} KB. | Quantidade de setores: #{discoController.qtdSectors}
 					</div>
 					
-	        	   	<p:dataGrid var="prato" value="#{discoController.hardDisck.hd}" rows="9" paginator="true" id="dataPrato"
+	        	   	<p:dataGrid var="prato" value="#{discoController.hardDisk.hd}" rows="9" paginator="true" id="dataPrato"
 				        paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 				        paginatorPosition="bottom"
 				        rowsPerPageTemplate="9,18,32" rowIndexVar="index">
@@ -165,34 +166,30 @@
 				        <f:facet name="header">Disco Rígido</f:facet>
 				        
 				        <p:panel header="Prato #{index+1}" style="text-align:center">
-				        
 				        	<canvas id="canvas#{index}" width="200px" height="200px" />
-							
-							<!-- <script>plateDraw('canvas#{index}', new Array('#f70808','#f70808','#f70808','#f70808'), new Array('#f70808','#f70808','#f70808','#f70808'));</script> -->												        	
-				        	<script>#{discoController.drawPlates(prato, index)}</script>
-				        	
-				        	
-				        	<!-- <table border="1" style="width: 100%;">
-				        		<tr>
-				        			<td></td>
-				        			<td><b>Setor 1</b></td>
-				        			<td><b>Setor 2</b></td>
-				        			<td><b>Setor 3</b></td>
-				        			<td><b>Setor 4</b></td>
-				        		</tr>
-					        	<ui:repeat varStatus="status" var="track" value="#{prato.tracks}">
-					        		<tr>
-					        			<td><b>Trilha #{status.index}</b></td>
-					        			<ui:repeat varStatus="k" var="sector" value="#{track.sectors}">
-					        				<td style="background-color: ##{(discoController.obterArquivo((index*8)+ (status.index *4) + k.index)).getColor()}">
-					        					#{(discoController.obterArquivo((index*8)+ (status.index *4) + k.index)).getFileName()}
-					        				</td>
-					        			</ui:repeat>		
-					        		</tr>
-					        	</ui:repeat>
-				        	</table> -->
+				        	<script>#{discoController.drawPlates(prato, index)}</script>				        	
 				        </p:panel>
 				    </p:dataGrid>
+				    <p:panel header="Movimentação do cabeçote de leitura" style="text-align:center">
+					    <table style="width: 500px">
+					    	<thead>
+					    		<tr>
+						    		<th align="center" style="border: solid; border-color: black;">0</th>
+						    		<th align="center" style="border: solid; border-color: black;">1</th>
+						    		<th align="center" style="border: solid; border-color: black;">2</th>
+						    		<th align="center" style="border: solid; border-color: black;">3</th>
+						    	</tr>
+					    	</thead>
+						    <tbody>
+						    	<tr>
+						    		<td colspan="4">
+							        	<canvas id="canvasMoveReaderHead" width="500" height="500px" />
+							        	<script>#{discoController.drawCanvasMoveReaderHead()}</script>
+							        </td>
+							     </tr>				        	
+						   	</tbody>
+					    </table>
+				    </p:panel>
 		        </p:tab>
 		        <p:tab title="Gráficos">
 		        </p:tab>
