@@ -103,4 +103,8 @@ public class DiscoController implements Serializable {
 	public int getQtdSectors(){
 		return getDiskSize()/getSectorSize();
 	}
+	
+	public int getCanvasHeight(){
+		return 50 + getHardDisk().getListMoveReaderHead().size() * 20;
+	}
 }

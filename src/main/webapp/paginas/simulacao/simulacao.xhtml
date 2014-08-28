@@ -158,10 +158,11 @@
 						Tamanho do setor: #{discoController.sectorSize} bytes | Tamanho do disco: #{discoController.diskSize/1024} KB. | Quantidade de setores: #{discoController.qtdSectors}
 					</div>
 					
+					<!-- GRID PRATOS -->
 	        	   	<p:dataGrid var="prato" value="#{discoController.hardDisk.hd}" rows="9" paginator="true" id="dataPrato"
 				        paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 				        paginatorPosition="bottom"
-				        rowsPerPageTemplate="9,18,32" rowIndexVar="index">
+				        rowsPerPageTemplate="3,9,18" rowIndexVar="index">
 				 
 				        <f:facet name="header">Disco Rígido</f:facet>
 				        
@@ -170,26 +171,31 @@
 				        	<script>#{discoController.drawPlates(prato, index)}</script>				        	
 				        </p:panel>
 				    </p:dataGrid>
+				    
+				    <!-- MOVIMENTAÇÃO DO CABEÇOTE DE LEITURA -->
 				    <p:panel header="Movimentação do cabeçote de leitura" style="text-align:center">
-					    <table style="width: 500px">
-					    	<thead>
-					    		<tr>
-						    		<th align="center" style="border: solid; border-color: black;">0</th>
-						    		<th align="center" style="border: solid; border-color: black;">1</th>
-						    		<th align="center" style="border: solid; border-color: black;">2</th>
-						    		<th align="center" style="border: solid; border-color: black;">3</th>
-						    	</tr>
-					    	</thead>
-						    <tbody>
-						    	<tr>
-						    		<td colspan="4">
-							        	<canvas id="canvasMoveReaderHead" width="500" height="500px" />
-							        	<script>#{discoController.drawCanvasMoveReaderHead()}</script>
-							        </td>
-							     </tr>				        	
-						   	</tbody>
-					    </table>
+				    	<div align="center">
+						    <table style="width: 500px;">
+						    	<thead>
+						    		<tr>
+							    		<th align="center" style="border: solid; border-color: black;">0</th>
+							    		<th align="center" style="border: solid; border-color: black;">1</th>
+							    		<th align="center" style="border: solid; border-color: black;">2</th>
+							    		<th align="center" style="border: solid; border-color: black;">3</th>
+							    	</tr>
+						    	</thead>
+							    <tbody>
+							    	<tr>
+							    		<td colspan="4">
+								        	<canvas id="canvasMoveReaderHead" width="500px" height="#{discoController.canvasHeight}px" />
+								        	<script>#{discoController.drawCanvasMoveReaderHead()}</script>
+								        </td>
+								     </tr>				        	
+							   	</tbody>
+						    </table>
+						</div>
 				    </p:panel>
+
 		        </p:tab>
 		        <p:tab title="Gráficos">
 		        </p:tab>
@@ -197,6 +203,8 @@
 		    <br/>
 		</h:form>
 		
+		
+		<!-- MODAL UPLOAD -->
 		<p:dialog id="novo-processo" widgetVar="modalNovoProcesso" header="Upload de Arquivo" width="600px" height="auto" resizable="false" modal="true">
 			<h:form enctype="multipart/form-data">
 				<p:panelGrid columns="1" styleClass="panelgrid" id="criarProcesso">
