@@ -136,7 +136,7 @@
 					
 					<p:dataTable var="arquivo" value="#{maquinaSessaoController.sistemaArquivo.allFiles}" id="dataFat">
 						<f:facet name="header">
-					        Tabela de Arquivos
+					        #{bundle['simulacao.title.tabela.arquivo']}
 					    </f:facet>
 				        <p:column headerText="ID">
 				        	<h:outputText value="#{arquivo.fileID}" />
