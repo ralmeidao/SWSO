@@ -32,6 +32,8 @@ public class MaquinaSessaoController extends BaseController implements Serializa
 	
 	private String color;
 	
+	private String colorPersonalizar;
+	
 	private int activeAba;
 	
 	public MaquinaSessaoController() {
@@ -59,7 +61,9 @@ public class MaquinaSessaoController extends BaseController implements Serializa
 		byte[] arquivo = uploadFile.getContents();
 		int lastIndexOf = uploadFile.getFileName().lastIndexOf('.');
 		
-		FileInput fileInput = new FileInput(uploadFile.getFileName().substring(0, lastIndexOf), color);
+		String colorReal = "XXXXXX".equals(color) ? colorPersonalizar : color;
+		
+		FileInput fileInput = new FileInput(uploadFile.getFileName().substring(0, lastIndexOf), colorReal);
 		
 		String arqString = new String(arquivo);
 		arqString = arqString.replace("\r\n", "");
@@ -83,7 +87,8 @@ public class MaquinaSessaoController extends BaseController implements Serializa
 		if(uploadFile == null || Util.isNullOuVazio(uploadFile.getFileName())) {
 			message += "É necessário selecionar um arquivo! "; 
 		} 
-		if(color == null || color.equals("")) {
+		if (color == null || color.equals("")
+				|| (color.equals("XXXXXX") && (colorPersonalizar == null || colorPersonalizar.equals("")))) {
 			message += "É necessário selecionar uma cor!";
 		}
 		if (!Util.isNullOuVazio(message)) {
@@ -92,6 +97,10 @@ public class MaquinaSessaoController extends BaseController implements Serializa
 		return Util.isNullOuVazio(message);
 	}
 	
+	
+	public void updateComboColor() {
+		updateComponentes(":uploadForm:selectColors");
+	}
 
 	//MÉT0D0S DE ACESSO
 	public CoreVirtualMachine getCoreVirtualMachine() {
@@ -125,5 +134,12 @@ public class MaquinaSessaoController extends BaseController implements Serializa
 	public void setColor(String cor) {
 		this.color = cor;
 	}
-	
+
+	public String getColorPersonalizar() {
+		return colorPersonalizar;
+	}
+
+	public void setColorPersonalizar(String colorPersonalizar) {
+		this.colorPersonalizar = colorPersonalizar;
+	}
 }
