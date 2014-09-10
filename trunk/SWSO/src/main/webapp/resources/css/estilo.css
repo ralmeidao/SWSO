@@ -164,9 +164,63 @@ legend {
 	width: 256px !important; 
 }
 
-
 .btn {
 	margin-top: 10px;
 	margin-bottom: 15px;
 	margin-left: 5px;
+}
+
+.listColor .ui-selectonemenu-items-wrapper ul li:nth-child(2){
+	color: yellow;
+	font-weight: bold;
+}
+.listColor .ui-selectonemenu-items-wrapper ul li:nth-child(3){
+	color: blue;
+	font-weight: bold;
+}
+.listColor .ui-selectonemenu-items-wrapper ul li:nth-child(4){
+	color: orange;
+	font-weight: bold;
+}
+.listColor .ui-selectonemenu-items-wrapper ul li:nth-child(5){
+	color: pink;
+	font-weight: bold;
+}
+.listColor .ui-selectonemenu-items-wrapper ul li:nth-child(6){
+	color: red;
+	font-weight: bold;
+}
+.listColor .ui-selectonemenu-items-wrapper ul li:nth-child(7){
+	color: green;
+	font-weight: bold;
+}
+
+.SFFFF00 label {
+	color: #FFFF00 !important;
+	font-weight: bold !important;
+}
+
+.S0000FF label {
+	color: #0000FF !important;
+	font-weight: bold !important;
+}
+
+.SFF8000 label {
+	color: #FF8000 !important;
+	font-weight: bold !important;
+}
+
+.SFF00FF label {
+	color: #FF00FF !important;
+	font-weight: bold !important;
+}
+
+.SFF0000 label {
+	color: #FF0000 !important;
+	font-weight: bold !important;
+}
+
+.S00FF00 label {
+	color: #00FF00 !important;
+	font-weight: bold !important;
 }
