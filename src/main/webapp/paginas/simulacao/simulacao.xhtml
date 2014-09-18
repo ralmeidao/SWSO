@@ -10,7 +10,7 @@
 		<h:outputScript library="js" name="plateDraw.js" />
 		<h:outputScript library="js" name="moveReaderHeadDraw.js" />
 
-		<script type="text/javascript" src="https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization',
+	<!-- <script type="text/javascript" src="https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization',
 			   'version':'1','packages':['timeline']}]}"></script>
 		
 		<script type="text/javascript">
@@ -33,7 +33,7 @@
 	
 			  chart.draw(dataTable);
 			}
-		</script>
+		</script> -->
 	</ui:define>
 	
 	<ui:define name="content-main-page">
@@ -73,133 +73,19 @@
         	</p:panelGrid>
 	        
 			<p:tabView activeIndex="#{maquinaSessaoController.activeAba}">
+		        <!-- PROCESSOS -->
 		        <p:tab title="Processos">
-					
-		        	<div align="right" class="tempo-simulacao" >
-			        	<label><h:outputText value="Tempo: 28"/></label>
-			        </div>
-					
-		        	<p:fieldset legend="CPU">
-		        		<p:panelGrid columns="4" styleClass="panelgrid" id="simulaProcessosPanel">
-			        		<p:outputLabel value="IR">
-			        			<br/>
-				        		<p:inputText value="#{40}" disabled="true" styleClass="tam_p"/>
-			        		</p:outputLabel>
-	
-			        		<p:outputLabel value="PC">
-			        			<br/>
-				        		<p:inputText value="#{15}" disabled="true" styleClass="tam_p"/>
-			        		</p:outputLabel>
-			        		
-			        		<p:outputLabel value="PID - Processo Atual">
-			        			<br/>
-				        		<p:inputText value="1 - Firefox" disabled="true" styleClass="tam_g"/>
-			        		</p:outputLabel>
-			        		
-			        	</p:panelGrid>
-		        	</p:fieldset>	
-<!-- 					
-					<p:dataTable var="processo" value="#{fatController.listaProcessos}">
-					    <p:column headerText="PID" width="10%">
-					        <h:outputText value="#{processo.id}" />
-					    </p:column>
-					    <p:column headerText="Nome" width="35%">
-					        <h:outputText value="#{processo.nome}"/>
-					    </p:column>
-					    <p:column headerText="Nº de Instruções" width="20%">
-					        <h:outputText value="#{processo.nInstrucoes}" />
-					    </p:column>
-					    <p:column headerText="Estado" width="20%">
-					        <h:outputText value="#{processo.estado}" />
-					    </p:column>
-					    <p:column headerText="Ações" width="15%" styleClass="column-align-center">
-					    	<p:commandButton icon="ui-icon-cancel"  title="Finalizar" styleClass="icon-grid-margin"/>
-							<p:commandButton icon="ui-icon-pause" title="Pausar" styleClass="icon-grid-margin"/>
-					    </p:column>
-					</p:dataTable> -->
-					
-					<br/>
-					<div id="example1" style="width: 100%; height: 180px;"></div>
-					
-		        </p:tab>
-		        <p:tab title="Memória">
-		        	<div align="right" class="tempo-simulacao" >
-			        	<label><h:outputText value="Tempo: 10"/></label>
-			        </div>
+					<ui:include src="/paginas/simulacao/processos/aba-processos.xhtml" />
 		        </p:tab>
 		        
+		        <!-- MEMÓRIA -->
+		        <p:tab title="Memória">
+		        	<ui:include src="/paginas/simulacao/memoria/aba-memoria.xhtml" />
+		        </p:tab>
 		        
 		        <!-- DISCO -->
 		        <p:tab title="Disco">
-		        	<div align="right" class="tempo-simulacao" >
-			        	<label><h:outputText value="Tempo: 10"/></label>
-			        </div>
-					<p:commandButton value="Adicionar Arquivo" styleClass="btn" onclick="modalNovoProcesso.show()"/>
-					
-					
-					<p:dataTable var="arquivo" value="#{maquinaSessaoController.sistemaArquivo.allFiles}" id="dataFat">
-						<f:facet name="header">
-					        #{bundle['simulacao.title.tabela.arquivo']}
-					    </f:facet>
-				        <p:column headerText="ID">
-				        	<h:outputText value="#{arquivo.fileID}" />
-				        </p:column>
-				        <p:column headerText="Nome">
-				        	<b><h:outputText value="#{arquivo.fileName}" style="color: ##{arquivo.color}"/></b>
-				        </p:column>
-				        <p:column headerText="Setores alocados">
-				        	<h:outputText value="#{arquivo.allocatedSectors}" />
-				        </p:column>
-				        <p:column headerText="Iniciar">
-				        	<p:commandButton icon="ui-icon-play"  title="Inicializar" styleClass="icon-grid-margin"/>
-				        	<p:commandButton icon="ui-icon-trash" title="Excluir" actionListener="#{maquinaSessaoController.deleteFile(arquivo.fileID)}" update=":formSimulacao :formSimulacaoMessage" />
-				        </p:column>
-				    </p:dataTable>
-				    
-				    
-					
-					<!-- GRID PRATOS -->
-				    <p:spacer height="15px"/>
-					<div class="tempo-simulacao" >
-						Tamanho do setor: #{discoController.sectorSize} bytes | Tamanho do disco: #{discoController.diskSize/1024} KB. | Quantidade de setores: #{discoController.qtdSectors}
-					</div>
-					
-	        	   	<p:dataGrid var="prato" value="#{discoController.hardDisk.hd}" rows="3" paginator="true" id="dataPrato"
-				        paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-				        paginatorPosition="bottom"
-				        rowsPerPageTemplate="3,9,18" rowIndexVar="index">
-				 
-				        <f:facet name="header">Disco Rígido</f:facet>
-				        
-				        <p:panel header="Prato #{index+1}" style="text-align:center">
-				        	<canvas id="canvas#{index}" width="200px" height="200px" />
-				        	<script>#{discoController.drawPlates(prato, index)}</script>				        	
-				        </p:panel>
-				    </p:dataGrid>
-				    
-				    <!-- MOVIMENTAÇÃO DO CABEÇOTE DE LEITURA -->
-				    <p:panel header="Movimentação do cabeçote de leitura" style="text-align:center">
-				    	<div align="center">
-						    <table style="width: 500px;">
-						    	<thead>
-						    		<tr>
-							    		<th align="center" style="border: solid; border-color: black;">0</th>
-							    		<th align="center" style="border: solid; border-color: black;">1</th>
-							    		<th align="center" style="border: solid; border-color: black;">2</th>
-							    		<th align="center" style="border: solid; border-color: black;">3</th>
-							    	</tr>
-						    	</thead>
-							    <tbody>
-							    	<tr>
-							    		<td colspan="4">
-								        	<canvas id="canvasMoveReaderHead" width="500px" height="#{discoController.canvasHeight}px" />
-								        	<script>#{discoController.drawCanvasMoveReaderHead()}</script>
-								        </td>
-								     </tr>				        	
-							   	</tbody>
-						    </table>
-						</div>
-				    </p:panel>
+				    <ui:include src="/paginas/simulacao/disco/aba-disco.xhtml" />
 		        </p:tab>
 		    </p:tabView>
 		    <br/>
@@ -208,39 +94,7 @@
 		
 		<!-- MODAL UPLOAD -->
 		<p:dialog id="novo-processo" widgetVar="modalNovoProcesso" header="Upload de Arquivo" width="600px" height="auto" resizable="false" modal="true">
-			<h:form id="uploadForm" enctype="multipart/form-data">
-				<p:panelGrid columns="1" styleClass="panelgrid" id="criarProcesso">
-					
-			    	<p:outputLabel value="Arquivo">
-			    		<br/>
-			    		<p:fileUpload value="#{maquinaSessaoController.uploadFile}" mode="simple" />
-			    	</p:outputLabel>
-			    	
-			    	<p:outputLabel value="Cor de exibição">
-			    		#{maquinaSessaoController.color}
-			    		<br/>
-			    		<p:selectOneMenu id="selectColors" styleClass="tam_m S#{maquinaSessaoController.color}" value="#{maquinaSessaoController.color}" panelStyleClass="listColor" >
-			    			<p:ajax event="change" update=":#{p:component('colorPickerId')} @this" />
-							<f:selectItem itemLabel="Selecione" 	noSelectionOption="true" />
-				            <f:selectItem itemLabel="Amarelo" 		itemValue="FFFF00" />
-				            <f:selectItem itemLabel="Azul" 			itemValue="0000FF" />
-				            <f:selectItem itemLabel="Laranja"		itemValue="FF8000" />
-				            <f:selectItem itemLabel="Rosa" 			itemValue="FF00FF" />
-	          				<f:selectItem itemLabel="Vermelho" 		itemValue="FF0000" />
-				            <f:selectItem itemLabel="Verde" 		itemValue="00FF00" />
-				            <f:selectItem itemLabel="Personalizar"	itemValue="XXXXXX" />
-						</p:selectOneMenu>
-						<h:panelGroup id="colorPickerId" >
-							<p:spacer width="10" />
-	        				<p:colorPicker value="#{maquinaSessaoController.colorPersonalizar}"  immediate="true"
-	        					rendered="#{maquinaSessaoController.color.equals('XXXXXX')}" />
-	        			</h:panelGroup> 
-			    	</p:outputLabel>
-			    	
-    				<p:commandButton value="Criar" ajax="false" actionListener="#{maquinaSessaoController.doUploadFile}" 
-    					update=":formSimulacao :formSimulacaoMessage" />
-    			</p:panelGrid>
-			</h:form>
+			<ui:include src="/paginas/simulacao/disco/dialog-upload.xhtml" />
 		</p:dialog>
 		
 	</ui:define>
