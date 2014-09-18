@@ -50,6 +50,7 @@ public class MaquinaSessaoController extends BaseController implements Serializa
     		FileInput fileInput = criarInputFile();
     		sistemaArquivo.allocateFile(fileInput);
     		clearUpload();
+    		updateComponentes(":formSimulacao");
     	}
     }
     
@@ -85,7 +86,7 @@ public class MaquinaSessaoController extends BaseController implements Serializa
 	private boolean validarUploadArquivo(){
 		String message = "";
 		if(uploadFile == null || Util.isNullOuVazio(uploadFile.getFileName())) {
-			message += "É necessário selecionar um arquivo! "; 
+			message += "É necessário selecionar um arquivo! <br/>";
 		} 
 		if (color == null || color.equals("")
 				|| (color.equals("XXXXXX") && (colorPersonalizar == null || colorPersonalizar.equals("")))) {

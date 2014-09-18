@@ -86,6 +86,10 @@ public class DiscoController implements Serializable {
 		
 	}
 	
+	public void limparListMoveReaderHead() {
+		hardDisk.getListMoveReaderHead().clear();
+	}
+	
 	public HardDisk getHardDisk() {
 		return hardDisk;
 	}

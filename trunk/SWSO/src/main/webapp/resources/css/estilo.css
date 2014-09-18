@@ -171,26 +171,22 @@ legend {
 }
 
 .listColor .ui-selectonemenu-items-wrapper ul li:nth-child(2){
-	color: yellow;
-	font-weight: bold;
-}
+	color: blue;                                            
+	font-weight: bold;                                      
+}                                                           
 .listColor .ui-selectonemenu-items-wrapper ul li:nth-child(3){
-	color: blue;
-	font-weight: bold;
-}
+	color: orange;                                          
+	font-weight: bold;                                      
+}                                                           
 .listColor .ui-selectonemenu-items-wrapper ul li:nth-child(4){
-	color: orange;
-	font-weight: bold;
-}
+	color: pink;                                            
+	font-weight: bold;                                      
+}                                                           
 .listColor .ui-selectonemenu-items-wrapper ul li:nth-child(5){
-	color: pink;
-	font-weight: bold;
-}
+	color: red;                                             
+	font-weight: bold;                                      
+}                                                           
 .listColor .ui-selectonemenu-items-wrapper ul li:nth-child(6){
-	color: red;
-	font-weight: bold;
-}
-.listColor .ui-selectonemenu-items-wrapper ul li:nth-child(7){
 	color: green;
 	font-weight: bold;
 }
