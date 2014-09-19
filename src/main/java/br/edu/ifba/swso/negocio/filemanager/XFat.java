@@ -95,25 +95,6 @@ public class XFat implements ISistemaArquivo {
 		} else {
 			return -1;
 		}
-		
-/*		for (int i = 0; i < hardDisk.getHd().length; i++) {
-			Plate plate = hardDisk.getHd()[i];
-
-			for (int j = 0; j < plate.getTracks().length; j++) {
-				Track track = plate.getTracks()[j];
-
-				for (int k = 0; k < track.getSectors().length; k++) {
-					nSector = (i * Constantes.PLATE_SIZE * Constantes.TRACK_SIZE) + (j * Constantes.TRACK_SIZE) + k;
-
-					if (track.getSectors()[k].isEmpty()) {
-						return nSector;
-					}
-				}
-			}
-
-		}
-
-		return -1;*/
 	}
 	
 	public int seekIdFilePerSector(int nSector) {

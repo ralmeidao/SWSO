@@ -2,8 +2,7 @@ package br.edu.ifba.swso.controller;
 
 import java.io.Serializable;
 
-import javax.annotation.PostConstruct;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -19,7 +18,7 @@ import br.edu.ifba.swso.util.Constantes;
  * @author Ramon
  */
 @Named
-@ViewScoped
+@RequestScoped
 public class DiscoController implements Serializable {
 
 	/**
@@ -30,20 +29,17 @@ public class DiscoController implements Serializable {
 	@Inject
 	private MaquinaSessaoController maquinaSessaoController;
 	
-	private HardDisk hardDisk;
-	private ISistemaArquivo sistemaArquivo;
-	
-	@PostConstruct
-	private void init(){
-		hardDisk = maquinaSessaoController.getCoreVirtualMachine().getHardDisk();
-		sistemaArquivo = maquinaSessaoController.getSistemaArquivo();
-	}
-	
-	public File obterArquivo(int nSector){
-		int idFile = sistemaArquivo.seekIdFilePerSector(nSector);
+	/**
+	 * Utilizado para obter o arquivo por meio do número inicial do setor
+	 * 
+	 * @param nSector
+	 * @return File
+	 */
+	private File obterArquivo(int nSector){
+		int idFile = getMaquinaSessaoController().seekIdFilePerSector(nSector);
 		File arquivo = null;
 		if(idFile != -1) {
-			arquivo = sistemaArquivo.seekFilePerId(idFile);
+			arquivo = getMaquinaSessaoController().seekFilePerId(idFile);
 		}
 		
 		if (arquivo == null) {
@@ -54,6 +50,13 @@ public class DiscoController implements Serializable {
 				
 	}
 
+	/**
+	 * Usado pela camada web para desenhar os pratos
+	 * 
+	 * @param plate
+	 * @param i
+	 * @return String
+	 */
 	public String drawPlates(Plate plate, int i) {
 		String script = "plateDraw(\"canvas"+i+"\", new Array(";
 		int j = 0;
@@ -71,12 +74,18 @@ public class DiscoController implements Serializable {
 		return script;
 		
 	}
+	
+	/**
+	 * Utilizado para desenhar o movimento do cabeçote
+	 * 
+	 * @return String
+	 */
 	public String drawCanvasMoveReaderHead() {
 		String script = "";
-		if (hardDisk.getListMoveReaderHead().size() > 0) {
+		if (getHardDisk().getListMoveReaderHead().size() > 0) {
 			script = "movesDraw(\"canvasMoveReaderHead\", new Array(";
 			
-			for (MovimentoCabecoteHD move : hardDisk.getListMoveReaderHead()) {
+			for (MovimentoCabecoteHD move : getHardDisk().getListMoveReaderHead()) {
 				script += "new Array( \"" + move.getPosicaoDe() + "\", \"" + move.getPosicaoPara() + "\"), "; 
 			}
 			script = script.subSequence(0, script.length() - 2) + "))";
@@ -86,29 +95,75 @@ public class DiscoController implements Serializable {
 		
 	}
 	
+	/**
+	 * Método utilizado para limpar a lista de movimentos
+	 */
 	public void limparListMoveReaderHead() {
-		hardDisk.getListMoveReaderHead().clear();
+		getHardDisk().getListMoveReaderHead().clear();
 	}
 	
+	/**
+	 * Obtém ao HD
+	 * 
+	 * @return HardDisk
+	 */
 	public HardDisk getHardDisk() {
-		return hardDisk;
+		return maquinaSessaoController.getCoreVirtualMachine().getHardDisk();
 	}
 
+	/**
+	 * Obtém SistemaArquivo
+	 * 
+	 * @return ISistemaArquivo
+	 */
+	public ISistemaArquivo getMaquinaSessaoController() {
+		return maquinaSessaoController.getSistemaArquivo();
+	}
+		
+	/**
+	 * Obtém o tamanho do disco em KB
+	 * 
+	 * @return
+	 */
 	public int getDiskSizeKB(){
 		return getDiskSize()/1024;
 	}
+	
+	/**
+	 * Obtém o tamanho do disco em bytes
+	 * 
+	 * @return
+	 */
 	public int getDiskSize(){
 		return Constantes.DISK_SIZE * Constantes.PLATE_SIZE * Constantes.TRACK_SIZE * Constantes.SECTOR_SIZE;
 	}
+	
+	
+	/**
+	 * Obtém o tamanho do setor em bytes
+	 * 
+	 * @return
+	 */
 	public int getSectorSize(){
 		return Constantes.SECTOR_SIZE;
 	}
 	
+	/**
+	 * Obtém a quantidade de setores do disco
+	 * 
+	 * @return
+	 */
 	public int getQtdSectors(){
 		return getDiskSize()/getSectorSize();
 	}
 	
+	/**
+	 * Obtém a altura do canvas baseado na quantidade de movimentos
+	 * 
+	 * @return
+	 */
 	public int getCanvasHeight(){
 		return 50 + getHardDisk().getListMoveReaderHead().size() * 20;
 	}
+	
 }
