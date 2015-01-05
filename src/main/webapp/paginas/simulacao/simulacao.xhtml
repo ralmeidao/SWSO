@@ -43,36 +43,20 @@
 			
 		<h:form id="formSimulacao">
 			<p:focus for="formSimulacao"/>
-
-		    <p:panelGrid columns="3" styleClass="panelgrid" id="simulaProcessosPanel">
         		
-        		<h:panelGroup>
-        			<label><h:outputText value="#{bundle['simulacao.label.controle.tempo']}" style="vertical-align: super;"/></label>
-        		
-        			<p:spacer width="10" />
-					<p:selectOneMenu id="selectTrocaContexto" styleClass="tam_m">
-		            	<f:selectItem itemLabel="Auto" itemValue="1" />
-		            	<f:selectItem itemLabel="Manual" itemValue="2" />
-		            	<f:selectItem itemLabel="Por Incremento" itemValue="3" />
-					</p:selectOneMenu>
-				</h:panelGroup>
-				
-				<h:panelGroup id="groupAuto" rendered="true">
-					<p:commandButton icon="ui-icon-play" value="Iniciar" styleClass="btn" onclick="drawChart();"/>
-					<p:commandButton icon="ui-icon-stop" value="Parar" styleClass="btn" onclick="clearChart();"/>
-				</h:panelGroup>
-				
-				<h:panelGroup id="groupManual" rendered="false">	
-					<p:commandButton value="Avançar" styleClass="btn"/>
-				</h:panelGroup>
-				
-				<h:panelGroup id="groupIncremento" rendered="false">
-					Quantidade de tempo <p:inputText styleClass="tam_p"/> 
-					<p:commandButton value="Avançar" styleClass="btn"/>
-				</h:panelGroup>
-        	</p:panelGrid>
+			<h:panelGroup id="groupAuto" rendered="true">
+				<p:commandButton icon="ui-icon-play" value="Iniciar" actionListener="#{maquinaSessaoController.executarCiclo()}" 
+					styleClass="btn" onclick="drawChart();"/>
+				<p:commandButton icon="ui-icon-stop" value="Parar" styleClass="btn" onclick="clearChart();"/>
+				<!-- <p:poll interval="1" listener="#{maquinaSessaoController.executarCiclo()}" update="@form" /> -->
+			</h:panelGroup>
 	        
 			<p:tabView activeIndex="#{maquinaSessaoController.activeAba}">
+		        <!-- DISCO -->
+		        <p:tab title="Disco">
+				    <ui:include src="/paginas/simulacao/disco/aba-disco.xhtml" />
+		        </p:tab>
+		        
 		        <!-- PROCESSOS -->
 		        <p:tab title="Processos">
 					<ui:include src="/paginas/simulacao/processos/aba-processos.xhtml" />
@@ -82,15 +66,9 @@
 		        <p:tab title="Memória">
 		        	<ui:include src="/paginas/simulacao/memoria/aba-memoria.xhtml" />
 		        </p:tab>
-		        
-		        <!-- DISCO -->
-		        <p:tab title="Disco">
-				    <ui:include src="/paginas/simulacao/disco/aba-disco.xhtml" />
-		        </p:tab>
 		    </p:tabView>
 		    <br/>
 		</h:form>
-		
 		
 		<!-- MODAL UPLOAD -->
 		<p:dialog id="novo-processo" widgetVar="modalNovoProcesso" header="Upload de Arquivo" width="600px" height="auto" resizable="false" modal="true">

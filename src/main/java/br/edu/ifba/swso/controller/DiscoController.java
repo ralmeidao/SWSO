@@ -6,12 +6,12 @@ import javax.faces.bean.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import br.edu.ifba.swso.business.abstractions.File;
+import br.edu.ifba.swso.business.filemanager.IFileSystem;
+import br.edu.ifba.swso.business.harddisk.HardDisk;
+import br.edu.ifba.swso.business.harddisk.Plate;
+import br.edu.ifba.swso.business.harddisk.Track;
 import br.edu.ifba.swso.display.MovimentoCabecoteHD;
-import br.edu.ifba.swso.negocio.abstracoes.File;
-import br.edu.ifba.swso.negocio.filemanager.ISistemaArquivo;
-import br.edu.ifba.swso.negocio.harddisk.HardDisk;
-import br.edu.ifba.swso.negocio.harddisk.Plate;
-import br.edu.ifba.swso.negocio.harddisk.Track;
 import br.edu.ifba.swso.util.Constantes;
 
 /**
@@ -47,7 +47,6 @@ public class DiscoController implements Serializable {
 			arquivo.setColor("FFFFFF");
 		}
 		return arquivo;
-				
 	}
 
 	/**
@@ -116,7 +115,7 @@ public class DiscoController implements Serializable {
 	 * 
 	 * @return ISistemaArquivo
 	 */
-	public ISistemaArquivo getMaquinaSessaoController() {
+	public IFileSystem getMaquinaSessaoController() {
 		return maquinaSessaoController.getSistemaArquivo();
 	}
 		
