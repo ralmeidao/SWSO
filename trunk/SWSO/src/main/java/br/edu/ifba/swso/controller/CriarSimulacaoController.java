@@ -7,7 +7,7 @@ import javax.inject.Named;
 
 import org.omnifaces.cdi.ViewScoped;
 
-import br.edu.ifba.swso.negocio.simulacao.Simulacao;
+import br.edu.ifba.swso.business.simulacao.Simulacao;
 
 /**
  * Classe de controle de acesso

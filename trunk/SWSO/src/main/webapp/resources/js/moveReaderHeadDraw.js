@@ -3,7 +3,7 @@ function movesDraw(canvasID, arrayMoves) {
 	var canvas = document.getElementById(canvasID);
 	var ctx = canvas.getContext("2d");
 	
-	var distancia = canvas.width/4;
+	var distancia = canvas.width/10;
 
 	for (var int = 0; int < arrayMoves.length; int++) {
 		move = arrayMoves[int];

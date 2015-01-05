@@ -7,11 +7,12 @@ import javax.inject.Named;
 
 import org.primefaces.model.UploadedFile;
 
-import br.edu.ifba.swso.negocio.abstracoes.FileInput;
-import br.edu.ifba.swso.negocio.abstracoes.Word;
-import br.edu.ifba.swso.negocio.filemanager.ISistemaArquivo;
-import br.edu.ifba.swso.negocio.filemanager.XFat;
-import br.edu.ifba.swso.negocio.virtualmachine.CoreVirtualMachine;
+import br.edu.ifba.swso.algorithms.impl.disk.SSTF;
+import br.edu.ifba.swso.business.abstractions.FileInput;
+import br.edu.ifba.swso.business.abstractions.Word;
+import br.edu.ifba.swso.business.filemanager.IFileSystem;
+import br.edu.ifba.swso.business.filemanager.XIndexedAllocation;
+import br.edu.ifba.swso.business.virtualmachine.CoreVirtualMachine;
 import br.edu.ifba.swso.util.Constantes;
 import br.edu.ifba.swso.util.Util;
 
@@ -26,8 +27,9 @@ public class MaquinaSessaoController extends BaseController implements Serializa
 	
 	private final CoreVirtualMachine coreVirtualMachine;
 	
-	private ISistemaArquivo sistemaArquivo;
+	private IFileSystem fileSystem;
 	
+	// DATE OF VIEW - START
 	private UploadedFile uploadFile;
 	
 	private String color;
@@ -35,10 +37,11 @@ public class MaquinaSessaoController extends BaseController implements Serializa
 	private String colorPersonalizar;
 	
 	private int activeAba;
-	
+	// DATE OF VIEW - END
+
 	public MaquinaSessaoController() {
 		coreVirtualMachine = new CoreVirtualMachine();
-		sistemaArquivo = new XFat(coreVirtualMachine.getHardDisk());
+		fileSystem = new XIndexedAllocation(coreVirtualMachine.getHardDisk());
 	}
 	
 	public void executarCiclo() {
@@ -48,14 +51,14 @@ public class MaquinaSessaoController extends BaseController implements Serializa
     public void doUploadFile() {
     	if (validarUploadArquivo()) {
     		FileInput fileInput = criarInputFile();
-    		sistemaArquivo.allocateFile(fileInput);
+    		fileSystem.allocateFile(fileInput, new SSTF());
     		clearUpload();
     		updateComponentes(":formSimulacao");
     	}
     }
     
     public void deleteFile(Integer id) {
-    	sistemaArquivo.deallocateFile(id);
+    	fileSystem.deallocateFile(id);
     }
     
 	private FileInput criarInputFile() {
@@ -108,8 +111,8 @@ public class MaquinaSessaoController extends BaseController implements Serializa
 		return coreVirtualMachine;
 	}
 	
-	public ISistemaArquivo getSistemaArquivo() {
-		return sistemaArquivo;
+	public IFileSystem getSistemaArquivo() {
+		return fileSystem;
 	}
 	
 	public UploadedFile getUploadFile() {

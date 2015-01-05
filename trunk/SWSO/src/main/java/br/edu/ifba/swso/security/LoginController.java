@@ -11,11 +11,11 @@ import javax.servlet.http.HttpServletResponse;
 import org.primefaces.model.menu.DefaultMenuModel;
 import org.primefaces.model.menu.MenuModel;
 
+import br.edu.ifba.swso.business.Menu;
+import br.edu.ifba.swso.business.Usuario;
 import br.edu.ifba.swso.controller.BaseController;
 import br.edu.ifba.swso.exception.BusinessException;
 import br.edu.ifba.swso.exception.RequiredException;
-import br.edu.ifba.swso.negocio.Menu;
-import br.edu.ifba.swso.negocio.Usuario;
 import br.edu.ifba.swso.util.MensagemUtil;
 import br.edu.ifba.swso.util.Util;
 
