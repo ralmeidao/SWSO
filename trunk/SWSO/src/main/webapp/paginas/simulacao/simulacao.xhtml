@@ -9,31 +9,6 @@
 	<ui:define name="html-head">
 		<h:outputScript library="js" name="plateDraw.js" />
 		<h:outputScript library="js" name="moveReaderHeadDraw.js" />
-
-	<!-- <script type="text/javascript" src="https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization',
-			   'version':'1','packages':['timeline']}]}"></script>
-		
-		<script type="text/javascript">
-			function drawChart() {
-			  var container = document.getElementById('example1');
-	
-			  var chart = new google.visualization.Timeline(container);
-	
-			  var dataTable = new google.visualization.DataTable();
-	
-			  dataTable.addColumn({ type: 'string', id: 'Processo' });
-			  dataTable.addColumn({ type: 'number', id: 'Start' });
-			  dataTable.addColumn({ type: 'number', id: 'End' });
-	
-			  dataTable.addRows([
-				[ 'Firefox', 0, 5000 ],
-				[ 'Chrome',  6000, 10000],
-				[ 'Safari',  11000, 24000 ],
-				[ 'Firefox', 25000, 28000 ],]);
-	
-			  chart.draw(dataTable);
-			}
-		</script> -->
 	</ui:define>
 	
 	<ui:define name="content-main-page">
@@ -42,13 +17,14 @@
 		<p:messages id="formSimulacaoMessage" autoUpdate="false"/>
 			
 		<h:form id="formSimulacao">
+			<p:poll id="auto-update" update="@form" interval="5" />
+			
 			<p:focus for="formSimulacao"/>
         		
 			<h:panelGroup id="groupAuto" rendered="true">
 				<p:commandButton icon="ui-icon-play" value="Iniciar" actionListener="#{maquinaSessaoController.executarCiclo()}" 
 					styleClass="btn" onclick="drawChart();"/>
 				<p:commandButton icon="ui-icon-stop" value="Parar" styleClass="btn" onclick="clearChart();"/>
-				<!-- <p:poll interval="1" listener="#{maquinaSessaoController.executarCiclo()}" update="@form" /> -->
 			</h:panelGroup>
 	        
 			<p:tabView activeIndex="#{maquinaSessaoController.activeAba}">
@@ -73,6 +49,34 @@
 		<!-- MODAL UPLOAD -->
 		<p:dialog id="novo-processo" widgetVar="modalNovoProcesso" header="Upload de Arquivo" width="600px" height="auto" resizable="false" modal="true">
 			<ui:include src="/paginas/simulacao/disco/dialog-upload.xhtml" />
+		</p:dialog>
+		
+		<!-- CONFIGURAÇÕES DE DISCO -->
+		<p:dialog id="configuracoes-disco" widgetVar="modalConfigDisk" header="Configurações de Disco" width="250px" height="auto" resizable="false" modal="true">
+			<h:form id="configDiskForm">
+				<p:panelGrid columns="1" styleClass="panelgrid" id="panelConfigDisk">
+					<p:outputLabel value="Algoritmo">
+						<br/>
+						<p:selectOneMenu id="selectDiskSchedule" value="#{maquinaSessaoController.diskSchedule}" styleClass="tam_m" converter="omnifaces.SelectItemsConverter">
+							<f:selectItems value="#{maquinaSessaoController.arrayDiskSchedule}" var="algorithm" itemLabel="#{algorithm}" itemValue="#{algorithm}"/>
+						</p:selectOneMenu>			
+					</p:outputLabel>
+					<p:commandButton value="Ok" ajax="false" id="btnOk" actionListener="#{maquinaSessaoController.salvarConfiguracoes}" />
+				</p:panelGrid>
+			</h:form>
+		</p:dialog>
+		
+		<!-- SIMULAÇÃO DE DISCO -->
+		<p:dialog id="simulacao-disco" widgetVar="modalSimulationDisk" header="Simulação de Disco" width="300px" height="auto" resizable="false" modal="true">
+			<h:form id="simulDiskForm">
+				<p:panelGrid columns="1" styleClass="panelgrid" id="panelSimulDisk">
+					<p:outputLabel value="Simulação">
+						<br/>
+						<p:inputText value="#{maquinaSessaoController.movimentacaoSimulada}" styleClass="tam_g" />
+					</p:outputLabel>
+					<p:commandButton value="Simular" ajax="false" id="btnSimular" actionListener="#{maquinaSessaoController.simularMovimentacao}" />
+				</p:panelGrid>
+			</h:form>
 		</p:dialog>
 		
 	</ui:define>

@@ -13,4 +13,5 @@ public interface IFileSystem extends Serializable {
 	public int seekIdFilePerSector(int nSector);
 	public File seekFilePerId(int id);
 	public Collection<File> getAllFiles();
+	public void simularMovimentacao(String movimento, IDiskScheduler diskScheduler);
 }

@@ -7,9 +7,9 @@
 	xmlns:c="http://java.sun.com/jsp/jstl/core">
 
 	<ui:define name="content-main-page">
-		<h3>Configurar Simulação</h3>
+		<h3>Acessar Simulação</h3>
 		
-		<p:messages id="formConfigurarMessage" autoUpdate="false"/>
+		<p:messages id="formAcessarMessage" autoUpdate="false"/>
 		
 		<h:form id="formConfiguraSimulacao">
 			<p:focus for="formConfiguraSimulacao"/>
@@ -98,7 +98,7 @@
 					<p:outputLabel value="Nome da Máquina:"/>
 					<p:inputText style="width: 250px" maxlength="25" value="#{maquinaSessaoController.name}"/>
 				</p:panelGrid>	
-			<p:commandButton id="startSimulacao" value="Iniciar Simulação" styleClass="btn" update=":#{p:component('formConfigurarMessage')}" action="#{maquinaSessaoController.initSimulation}"/>
+			<p:commandButton id="startSimulacao" value="Acessar Simulação" styleClass="btn" update=":#{p:component('formAcessarMessage')}" action="#{maquinaSessaoController.searchSimulation}"/>
 		</h:form>
 	</ui:define>
 </ui:composition>

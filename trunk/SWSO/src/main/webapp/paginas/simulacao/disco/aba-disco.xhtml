@@ -7,10 +7,10 @@
 	xmlns:c="http://java.sun.com/jsp/jstl/core">
 	
 	<div align="right" class="tempo-simulacao" >
-        <label><h:outputText value="Tempo: 10"/></label>
+		<p:commandButton value="Configurações" styleClass="btn" onclick="modalConfigDisk.show()" rendered="#{!viewOnly}"/>
 	</div>
 	
-	<p:commandButton value="Adicionar Arquivo" styleClass="btn" onclick="modalNovoProcesso.show()"/>
+	<p:commandButton value="Adicionar Arquivo" styleClass="btn" onclick="modalNovoProcesso.show()" rendered="#{!viewOnly}"/>
 		
 	<p:dataTable var="arquivo" value="#{maquinaSessaoController.sistemaArquivo.allFiles}" id="dataFat" emptyMessage="Nenhum item encontrado.">
 		<f:facet name="header">
@@ -22,7 +22,7 @@
         <p:column headerText="Nome" width="65%">
         	<b><h:outputText value="#{arquivo.fileName}" style="color: ##{arquivo.color}"/></b>
         </p:column>
-        <p:column headerText="Iniciar" width="15%">
+        <p:column headerText="Iniciar" width="15%" rendered="#{!viewOnly}">
         	<p:commandButton icon="ui-icon-play"  title="Inicializar" styleClass="icon-grid-margin"/>
         	<p:commandButton icon="ui-icon-trash" title="Excluir" actionListener="#{maquinaSessaoController.deleteFile(arquivo.fileID)}" update=":formSimulacao :formSimulacaoMessage" />
         </p:column>
@@ -48,6 +48,7 @@
 	    
     <!-- MOVIMENTAÇÃO DO CABEÇOTE DE LEITURA -->
     <p:panel id="panelMoveCabecote" header="Movimentação do cabeçote" style="text-align:center" styleClass="min-width750px">
+    	<p:commandButton value="Simular" styleClass="btn" onclick="modalSimulationDisk.show()" id="simular" rendered="#{!viewOnly}"/>
     	<div align="center">
 		    <table style="width: 700px;">
 		    	<thead>
