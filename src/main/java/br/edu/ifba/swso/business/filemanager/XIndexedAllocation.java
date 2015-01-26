@@ -41,6 +41,23 @@ public class XIndexedAllocation implements IFileSystem {
 		return listaSetoresLivres;
 	}
 
+	public void simularMovimentacao(String movimento, IDiskScheduler diskScheduler) {
+		if (movimento != null) {
+			String[] array = movimento.split(",");
+			int[] simulatorSectorsList = new int[array.length]; 
+
+			for (int i = 0; i < array.length; i++) {
+				simulatorSectorsList[i] = Integer.parseInt(array[i]) * Constantes.TRACK_SIZE;
+			}
+			
+			int[] sectorsReordered = diskScheduler.reordenaLista(simulatorSectorsList, hardDisk.getPositionReaderHead());
+			
+			for (int sector : sectorsReordered) {
+				hardDisk.moveReaderHead(sector/8);
+			}
+		}
+	}
+	
 	public void allocateFile(FileInput fileinput, IDiskScheduler diskScheduler) {
 		File newFile = new File(fileinput.getFileName());
 		newFile.setColor(fileinput.getColor());

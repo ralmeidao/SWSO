@@ -1,0 +1,49 @@
+<ui:composition template="/WEB-INF/templates/template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+	<ui:define name="html-head">
+		<h:outputScript library="js" name="plateDraw.js" />
+		<h:outputScript library="js" name="moveReaderHeadDraw.js" />
+	</ui:define>
+	
+	<ui:define name="content-main-page">
+		<h3 style="margin-bottom: 5px;">Simulação</h3>
+		
+		<p:messages id="formSimulacaoMessage" autoUpdate="false"/>
+			
+		<h:form id="formSimulacao">
+			<p:poll id="auto-update" update="@form" interval="5" />
+			
+			<p:focus for="formSimulacao"/>
+	        
+			<p:tabView activeIndex="#{maquinaSessaoController.activeAba}">
+		        <!-- DISCO -->
+		        <p:tab title="Disco">
+				    <ui:include src="/paginas/simulacao/disco/aba-disco.xhtml">
+				    	<ui:param name="viewOnly" value="true"/>
+				    </ui:include>
+		        </p:tab>
+		        
+		        <!-- PROCESSOS -->
+		        <p:tab title="Processos">
+					<ui:include src="/paginas/simulacao/processos/aba-processos.xhtml" >
+				    	<ui:param name="viewOnly" value="true"/>
+				    </ui:include>
+		        </p:tab>
+		        
+		        <!-- MEMÓRIA -->
+		        <p:tab title="Memória">
+		        	<ui:include src="/paginas/simulacao/memoria/aba-memoria.xhtml" >
+				    	<ui:param name="viewOnly" value="true"/>
+				    </ui:include>
+		        </p:tab>
+		    </p:tabView>
+		    <br/>
+		</h:form>
+	</ui:define>
+</ui:composition>
