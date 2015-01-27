@@ -23,7 +23,6 @@
         	<b><h:outputText value="#{arquivo.fileName}" style="color: ##{arquivo.color}"/></b>
         </p:column>
         <p:column headerText="Iniciar" width="15%" rendered="#{!viewOnly}">
-        	<p:commandButton icon="ui-icon-play"  title="Inicializar" styleClass="icon-grid-margin"/>
         	<p:commandButton icon="ui-icon-trash" title="Excluir" actionListener="#{maquinaSessaoController.deleteFile(arquivo.fileID)}" update=":formSimulacao :formSimulacaoMessage" />
         </p:column>
     </p:dataTable>
@@ -78,7 +77,7 @@
 			   	</tbody>
 		    </table>
 	   		<p:commandButton value="Limpar"  title="Limpar" actionListener="#{discoController.limparListMoveReaderHead}" update=":#{p:component('panelMoveCabecote')}" 
-	   			rendered="#{!empty discoController.hardDisk.listMoveReaderHead}"/>
+	   			rendered="#{!empty discoController.hardDisk.listMoveReaderHead and !viewOnly}"/>
 		</div>
     </p:panel>
 </html>

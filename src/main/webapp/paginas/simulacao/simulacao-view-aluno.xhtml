@@ -12,7 +12,7 @@
 	</ui:define>
 	
 	<ui:define name="content-main-page">
-		<h3 style="margin-bottom: 5px;">Simulação</h3>
+		<h3 style="margin-bottom: 5px;">Simulação  - #{maquinaSessaoController.name}</h3>
 		
 		<p:messages id="formSimulacaoMessage" autoUpdate="false"/>
 			
@@ -21,7 +21,7 @@
 			
 			<p:focus for="formSimulacao"/>
 	        
-			<p:tabView activeIndex="#{maquinaSessaoController.activeAba}">
+			<p:tabView activeIndex="#{maquinaSessaoController.activeAba}" style="">
 		        <!-- DISCO -->
 		        <p:tab title="Disco">
 				    <ui:include src="/paginas/simulacao/disco/aba-disco.xhtml">

@@ -12,20 +12,18 @@
 	</ui:define>
 	
 	<ui:define name="content-main-page">
-		<h3 style="margin-bottom: 5px;">Simulação</h3>
+		<h3 style="margin-bottom: 5px;">Simulação - #{maquinaSessaoController.name}</h3>
 		
 		<p:messages id="formSimulacaoMessage" autoUpdate="false"/>
 			
 		<h:form id="formSimulacao">
-			<p:poll id="auto-update" update="@form" interval="5" />
-			
 			<p:focus for="formSimulacao"/>
         		
-			<h:panelGroup id="groupAuto" rendered="true">
+			<!-- <h:panelGroup id="groupAuto" rendered="true">
 				<p:commandButton icon="ui-icon-play" value="Iniciar" actionListener="#{maquinaSessaoController.executarCiclo()}" 
 					styleClass="btn" onclick="drawChart();"/>
-				<p:commandButton icon="ui-icon-stop" value="Parar" styleClass="btn" onclick="clearChart();"/>
-			</h:panelGroup>
+				<p:commandButton icon="ui-icon-stop" value="Parar" styleClass="btn"/>
+			</h:panelGroup> -->
 	        
 			<p:tabView activeIndex="#{maquinaSessaoController.activeAba}">
 		        <!-- DISCO -->
