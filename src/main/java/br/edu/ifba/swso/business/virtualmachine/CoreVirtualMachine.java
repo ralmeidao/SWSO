@@ -1,7 +1,7 @@
 package br.edu.ifba.swso.business.virtualmachine;
 
-import br.edu.ifba.swso.business.cpu.RandomAccessMemory;
-import br.edu.ifba.swso.business.harddisk.HardDisk;
+import br.edu.ifba.swso.business.virtualmachine.cpu.RandomAccessMemory;
+import br.edu.ifba.swso.business.virtualmachine.harddisk.HardDisk;
 
 public class CoreVirtualMachine  {
 

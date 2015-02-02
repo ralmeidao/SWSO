@@ -8,9 +8,9 @@ import javax.inject.Named;
 
 import br.edu.ifba.swso.business.abstractions.File;
 import br.edu.ifba.swso.business.filemanager.IFileSystem;
-import br.edu.ifba.swso.business.harddisk.HardDisk;
-import br.edu.ifba.swso.business.harddisk.Plate;
-import br.edu.ifba.swso.business.harddisk.Track;
+import br.edu.ifba.swso.business.virtualmachine.harddisk.HardDisk;
+import br.edu.ifba.swso.business.virtualmachine.harddisk.Plate;
+import br.edu.ifba.swso.business.virtualmachine.harddisk.Track;
 import br.edu.ifba.swso.display.MovimentoCabecoteHD;
 import br.edu.ifba.swso.util.Constantes;
 

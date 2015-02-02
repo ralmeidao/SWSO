@@ -1,4 +1,4 @@
-package br.edu.ifba.swso.business.harddisk;
+package br.edu.ifba.swso.business.virtualmachine.harddisk;
 
 import java.util.LinkedList;
 import java.util.List;

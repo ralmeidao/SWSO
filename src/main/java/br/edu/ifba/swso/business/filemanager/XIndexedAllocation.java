@@ -11,7 +11,7 @@ import br.edu.ifba.swso.algorithms.interfaces.IDiskScheduler;
 import br.edu.ifba.swso.business.abstractions.ByteSWSO;
 import br.edu.ifba.swso.business.abstractions.File;
 import br.edu.ifba.swso.business.abstractions.FileInput;
-import br.edu.ifba.swso.business.harddisk.HardDisk;
+import br.edu.ifba.swso.business.virtualmachine.harddisk.HardDisk;
 import br.edu.ifba.swso.util.Constantes;
 
 /**

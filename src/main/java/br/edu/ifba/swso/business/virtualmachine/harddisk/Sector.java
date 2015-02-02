@@ -1,4 +1,4 @@
-package br.edu.ifba.swso.business.harddisk;
+package br.edu.ifba.swso.business.virtualmachine.harddisk;
 
 import br.edu.ifba.swso.business.abstractions.ByteSWSO;
 import br.edu.ifba.swso.util.Constantes;

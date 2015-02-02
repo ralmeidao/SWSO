@@ -19,11 +19,9 @@
 		<h:form id="formSimulacao">
 			<p:focus for="formSimulacao"/>
         		
-			<!-- <h:panelGroup id="groupAuto" rendered="true">
-				<p:commandButton icon="ui-icon-play" value="Iniciar" actionListener="#{maquinaSessaoController.executarCiclo()}" 
-					styleClass="btn" onclick="drawChart();"/>
-				<p:commandButton icon="ui-icon-stop" value="Parar" styleClass="btn"/>
-			</h:panelGroup> -->
+			 <h:panelGroup id="groupAuto" rendered="true">
+				<p:commandButton icon="ui-icon-play" value="Executar" actionListener="#{maquinaSessaoController.executarCiclo()}" styleClass="btn"/>
+			</h:panelGroup>
 	        
 			<p:tabView activeIndex="#{maquinaSessaoController.activeAba}">
 		        <!-- DISCO -->
@@ -45,9 +43,15 @@
 		</h:form>
 		
 		<!-- MODAL UPLOAD -->
-		<p:dialog id="novo-processo" widgetVar="modalNovoProcesso" header="Upload de Arquivo" width="600px" height="auto" resizable="false" modal="true">
+		<p:dialog id="novo-arquivo" widgetVar="modalNovoArquivo" header="Upload de Arquivo" width="600px" height="auto" resizable="false" modal="true">
 			<ui:include src="/paginas/simulacao/disco/dialog-upload.xhtml" />
 		</p:dialog>
+		
+		<!-- MODAL CRIAR PROCESSO -->
+		<p:dialog id="novo-processo" widgetVar="modalNovoProcesso" header="Criar Processo" width="auto" height="auto" resizable="false" modal="true">
+			<ui:include src="/paginas/simulacao/processos/dialog-processo.xhtml" />
+		</p:dialog>
+		
 		
 		<!-- CONFIGURAÇÕES DE DISCO -->
 		<p:dialog id="configuracoes-disco" widgetVar="modalConfigDisk" header="Configurações de Disco" width="250px" height="auto" resizable="false" modal="true">

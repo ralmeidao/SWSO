@@ -1,4 +1,4 @@
-package br.edu.ifba.swso.business.cpu;
+package br.edu.ifba.swso.business.virtualmachine.cpu;
 
 public class ArithmeticLogicUnit {
     protected  void execute()   {

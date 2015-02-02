@@ -12,6 +12,7 @@ import org.primefaces.model.UploadedFile;
 import br.edu.ifba.swso.algorithms.impl.disk.FCFS;
 import br.edu.ifba.swso.algorithms.impl.disk.SSTF;
 import br.edu.ifba.swso.algorithms.interfaces.IDiskScheduler;
+import br.edu.ifba.swso.business.abstractions.File;
 import br.edu.ifba.swso.business.abstractions.FileInput;
 import br.edu.ifba.swso.business.abstractions.Word;
 import br.edu.ifba.swso.business.filemanager.IFileSystem;
@@ -54,6 +55,8 @@ public class MaquinaSessaoController extends BaseController implements Serializa
 	
 	private IDiskScheduler diskSchedule;
 	
+	private File file;
+	
 	private IDiskScheduler[] arrayDiskSchedule = {new SSTF(), new FCFS()};
 	// DATE OF VIEW - END
 
@@ -90,6 +93,7 @@ public class MaquinaSessaoController extends BaseController implements Serializa
 	}
 	
 	public void executarCiclo() {
+		operatingSystem.execute();
 		coreVirtualMachine.getCentralProcessingUnit().execute();
 	}
 	
@@ -100,6 +104,12 @@ public class MaquinaSessaoController extends BaseController implements Serializa
     		clearUpload();
     		updateComponentes(":formSimulacao");
     	}
+    }
+    
+    public void newProcess() {
+    	operatingSystem.criarProcesso(file);
+    	file = null;
+    	updateComponentes(":formSimulacao");
     }
     
     public void salvarConfiguracoes() {
@@ -254,5 +264,15 @@ public class MaquinaSessaoController extends BaseController implements Serializa
 	public OperatingSystem getOperatingSystem() {
 		return operatingSystem;
 	}
+
+	public File getFile() {
+		return file;
+	}
+
+	public void setFile(File file) {
+		this.file = file;
+	}
+	
+	
 	
 }

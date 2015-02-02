@@ -10,7 +10,7 @@
 		<p:commandButton value="Configurações" styleClass="btn" onclick="modalConfigDisk.show()" rendered="#{!viewOnly}"/>
 	</div>
 	
-	<p:commandButton value="Adicionar Arquivo" styleClass="btn" onclick="modalNovoProcesso.show()" rendered="#{!viewOnly}"/>
+	<p:commandButton value="Adicionar Arquivo" styleClass="btn" onclick="modalNovoArquivo.show()" rendered="#{!viewOnly}"/>
 		
 	<p:dataTable var="arquivo" value="#{maquinaSessaoController.sistemaArquivo.allFiles}" id="dataFat" emptyMessage="Nenhum item encontrado.">
 		<f:facet name="header">
