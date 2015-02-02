@@ -1,4 +1,4 @@
-package br.edu.ifba.swso.business.cpu;
+package br.edu.ifba.swso.business.virtualmachine.cpu;
 
 import br.edu.ifba.swso.business.abstractions.ByteSWSO;
 import br.edu.ifba.swso.business.abstractions.Word;

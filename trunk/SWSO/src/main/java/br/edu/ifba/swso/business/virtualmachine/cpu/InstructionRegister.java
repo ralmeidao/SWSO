@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package br.edu.ifba.swso.business.cpu;
+package br.edu.ifba.swso.business.virtualmachine.cpu;
 
 import br.edu.ifba.swso.business.abstractions.ByteSWSO;
 import br.edu.ifba.swso.business.abstractions.Word;
@@ -16,7 +16,7 @@ public class InstructionRegister {
 
 	private static Word instruction;
 
-	protected void refreshInstruction(Word argNewWord) {
+	public void refreshInstruction(Word argNewWord) {
 		instruction = argNewWord;
 	}
 

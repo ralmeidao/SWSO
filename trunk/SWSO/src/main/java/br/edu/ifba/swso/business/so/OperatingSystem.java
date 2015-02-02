@@ -6,6 +6,7 @@ import br.edu.ifba.swso.business.filemanager.IFileSystem;
 import br.edu.ifba.swso.business.filemanager.XIndexedAllocation;
 import br.edu.ifba.swso.business.memorymanager.IMemoryManager;
 import br.edu.ifba.swso.business.processmanager.ProcessManager;
+import br.edu.ifba.swso.business.processmanager.Processo;
 import br.edu.ifba.swso.business.virtualmachine.CoreVirtualMachine;
 
 public class OperatingSystem {
@@ -18,14 +19,15 @@ public class OperatingSystem {
 	
 	private ProcessManager processManager;
 	
-	
 	public OperatingSystem(CoreVirtualMachine coreVirtualMachine){
 		fileSystem = new XIndexedAllocation(coreVirtualMachine.getHardDisk());
+		processManager = new ProcessManager(coreVirtualMachine); 
 	}
 	
 	//CHAMADAS AO SISTEMA
 	public void criarProcesso(File file) {
-		//Processo process = processManager.criarProcesso(file);
+		Processo process = processManager.criarProcesso(file);
+		System.out.println("Processo criado - PID:" + process.getPid());
 	}
 	
 	//METHODS OF ACCESS
@@ -48,6 +50,19 @@ public class OperatingSystem {
 
 	public void setDiskSchedule(IDiskScheduler diskSchedule) {
 		this.diskSchedule = diskSchedule;
+	}
+
+	public void execute() {
+		Processo running = processManager.getEmExecucao();
+		
+		if (running.getTimeRunning() == running.getTimeSlice() || running.getPid() == -1) {
+			//TROCA DE CONTEXTO
+			running = processManager.escalonamento();
+		}
+		
+		running.incrementTimeCPU();
+		running.incrementTimeRunning();
+		
 	}
 	
 }

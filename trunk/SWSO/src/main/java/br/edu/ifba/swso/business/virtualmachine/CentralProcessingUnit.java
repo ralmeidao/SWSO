@@ -2,11 +2,11 @@ package br.edu.ifba.swso.business.virtualmachine;
 
 
 import br.edu.ifba.swso.business.abstractions.Word;
-import br.edu.ifba.swso.business.cpu.ArithmeticLogicUnit;
-import br.edu.ifba.swso.business.cpu.ControlUnit;
-import br.edu.ifba.swso.business.cpu.InstructionDecoder;
-import br.edu.ifba.swso.business.cpu.RandomAccessMemory;
-import br.edu.ifba.swso.business.cpu.Registers;
+import br.edu.ifba.swso.business.virtualmachine.cpu.ArithmeticLogicUnit;
+import br.edu.ifba.swso.business.virtualmachine.cpu.ControlUnit;
+import br.edu.ifba.swso.business.virtualmachine.cpu.InstructionDecoder;
+import br.edu.ifba.swso.business.virtualmachine.cpu.RandomAccessMemory;
+import br.edu.ifba.swso.business.virtualmachine.cpu.Registers;
 
 
 public class CentralProcessingUnit {
@@ -22,6 +22,7 @@ public class CentralProcessingUnit {
 		this.registers = new Registers();
 		this.arithmeticLogicUnit = new ArithmeticLogicUnit();
 		this.controlUnit = new ControlUnit();
+		this.instructionDecoder = new InstructionDecoder();
 	}
     
     public void execute() {
