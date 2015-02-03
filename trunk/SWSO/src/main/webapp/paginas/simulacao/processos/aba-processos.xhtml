@@ -10,16 +10,16 @@
 		<label><h:outputText value="Tempo: 28"/></label>
 	</div>
 		
-    <p:fieldset legend="CPU">
+    <p:fieldset legend="CPU" rendered="#{maquinaSessaoController.coreVirtualMachine.centralProcessingUnit.registers.programCounter.realValue() != -1}">
     	<p:panelGrid columns="4" styleClass="panelgrid" id="simulaProcessosPanel">
-        	<p:outputLabel value="IR">
+<!--         	<p:outputLabel value="IR">
         		<br/>
-	        	<p:inputText value="#{40}" disabled="true" styleClass="tam_p"/>
+	        	<p:inputText value="#{maquinaSessaoController.coreVirtualMachine.centralProcessingUnit.registers.instructionRegister.realValue()}" disabled="true" styleClass="tam_p"/>
 			</p:outputLabel>
 			<p:outputLabel value="PC">
         		<br/>
-	        	<p:inputText value="#{15}" disabled="true" styleClass="tam_p"/>
-       		</p:outputLabel>
+	        	<p:inputText value="#{maquinaSessaoController.coreVirtualMachine.centralProcessingUnit.registers.programCounter.realValue()}" disabled="true" styleClass="tam_p"/>
+       		</p:outputLabel> -->
         		
 			<p:outputLabel value="PID - Processo Atual">
         		<br/>

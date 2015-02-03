@@ -16,6 +16,7 @@ public class CentralProcessingUnit {
     private ControlUnit controlUnit;
     private RandomAccessMemory randomAccessMemory;
     private InstructionDecoder instructionDecoder;
+    private long cpuTime;
     
 	public CentralProcessingUnit(RandomAccessMemory ram) {
 		this.randomAccessMemory = ram;
@@ -23,6 +24,7 @@ public class CentralProcessingUnit {
 		this.arithmeticLogicUnit = new ArithmeticLogicUnit();
 		this.controlUnit = new ControlUnit();
 		this.instructionDecoder = new InstructionDecoder();
+		this.cpuTime = 0;
 	}
     
     public void execute() {
@@ -42,6 +44,7 @@ public class CentralProcessingUnit {
 					break;
 			}
     	}
+    	cpuTime++;
 	}
     
     //MÉT0D0S DE ACESSO
@@ -63,6 +66,10 @@ public class CentralProcessingUnit {
 
 	public InstructionDecoder getInstructionDecoder() {
 		return instructionDecoder;
+	}
+
+	public long getCpuTime() {
+		return cpuTime;
 	}
     
 }
