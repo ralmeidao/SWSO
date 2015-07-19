@@ -2,11 +2,11 @@ package br.edu.ifba.swso.business.so;
 
 import br.edu.ifba.swso.algorithms.interfaces.IDiskScheduler;
 import br.edu.ifba.swso.business.abstractions.File;
-import br.edu.ifba.swso.business.filemanager.IFileSystem;
-import br.edu.ifba.swso.business.filemanager.XIndexedAllocation;
-import br.edu.ifba.swso.business.memorymanager.IMemoryManager;
-import br.edu.ifba.swso.business.processmanager.ProcessManager;
-import br.edu.ifba.swso.business.processmanager.Processo;
+import br.edu.ifba.swso.business.so.filemanager.IFileSystem;
+import br.edu.ifba.swso.business.so.filemanager.XIndexedAllocation;
+import br.edu.ifba.swso.business.so.memorymanager.MemoryManager;
+import br.edu.ifba.swso.business.so.processmanager.ProcessManager;
+import br.edu.ifba.swso.business.so.processmanager.Processo;
 import br.edu.ifba.swso.business.virtualmachine.CoreVirtualMachine;
 
 public class OperatingSystem {
@@ -15,13 +15,14 @@ public class OperatingSystem {
 	
 	private IDiskScheduler diskSchedule;
 	
-	private IMemoryManager memoryManager;
+	private MemoryManager memoryManager;
 	
 	private ProcessManager processManager;
 	
 	public OperatingSystem(CoreVirtualMachine coreVirtualMachine){
 		fileSystem = new XIndexedAllocation(coreVirtualMachine.getHardDisk());
-		processManager = new ProcessManager(coreVirtualMachine); 
+		processManager = new ProcessManager(coreVirtualMachine);
+		memoryManager = new MemoryManager(coreVirtualMachine.getRandomAccessMemory());
 	}
 	
 	//CHAMADAS AO SISTEMA
@@ -35,7 +36,7 @@ public class OperatingSystem {
 		return fileSystem;
 	}
 
-	public IMemoryManager getMemoryManager() {
+	public MemoryManager getMemoryManager() {
 		return memoryManager;
 	}
 

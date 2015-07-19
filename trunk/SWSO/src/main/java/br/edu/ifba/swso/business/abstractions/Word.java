@@ -3,7 +3,7 @@ package br.edu.ifba.swso.business.abstractions;
 import br.edu.ifba.swso.util.Constantes;
 
 /**
- * @author ICAROJ
+ * @author Ramon
  */
 public class Word {
 

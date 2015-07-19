@@ -1,7 +1,7 @@
 package br.edu.ifba.swso.business.simulacao;
 
 public class Processo {
-	private Long id;
+	private int id;
 	private String nome;
 	private Integer nInstrucoes;
 	private String estado;
@@ -12,7 +12,7 @@ public class Processo {
 		
 	}
 	
-	public Processo(Long id, String nome, Integer nInstrucoes, String estado) {
+	public Processo(int id, String nome, Integer nInstrucoes, String estado) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -20,11 +20,11 @@ public class Processo {
 		this.estado = estado;
 	}
 
-	public Long getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 

@@ -1,12 +1,13 @@
 package br.edu.ifba.swso.business.virtualmachine.cpu;
 
 import br.edu.ifba.swso.business.abstractions.Word;
+import br.edu.ifba.swso.business.virtualmachine.MemoryManagementUnit;
 
 public class ControlUnit {
 
-	public Word seekInstruction(Registers registers, RandomAccessMemory ram) {
+	public Word seekInstruction(Registers registers, MemoryManagementUnit mmu) {
 		System.out.println("Buscando Instrução");
-		Word instruction = ram.getWord(registers.getProgramCounter().realValue());
+		Word instruction = mmu.getWord(registers.getProgramCounter().realValue());
 		
 		System.out.println("Atualizando RI");
 		registers.getInstructionRegister().refreshInstruction(instruction);
