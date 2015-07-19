@@ -7,7 +7,7 @@
 	xmlns:c="http://java.sun.com/jsp/jstl/core">
 	
 	<div align="right" class="tempo-simulacao" >
-		<label><h:outputText value="Tempo: 28"/></label>
+		<label><h:outputText value="Tempo: #{maquinaSessaoController.coreVirtualMachine.centralProcessingUnit.cpuTime}"/></label>
 	</div>
 		
     <p:fieldset legend="CPU" rendered="#{maquinaSessaoController.coreVirtualMachine.centralProcessingUnit.registers.programCounter.realValue() != -1}">

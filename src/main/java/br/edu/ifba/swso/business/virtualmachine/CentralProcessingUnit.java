@@ -11,15 +11,16 @@ import br.edu.ifba.swso.business.virtualmachine.cpu.Registers;
 
 public class CentralProcessingUnit {
     
+	private MemoryManagementUnit memoryManagementUnit;
 	private Registers registers;
     private ArithmeticLogicUnit arithmeticLogicUnit;
     private ControlUnit controlUnit;
-    private RandomAccessMemory randomAccessMemory;
     private InstructionDecoder instructionDecoder;
+    
     private long cpuTime;
     
 	public CentralProcessingUnit(RandomAccessMemory ram) {
-		this.randomAccessMemory = ram;
+		this.memoryManagementUnit = new MemoryManagementUnit(ram);
 		this.registers = new Registers();
 		this.arithmeticLogicUnit = new ArithmeticLogicUnit();
 		this.controlUnit = new ControlUnit();
@@ -29,8 +30,7 @@ public class CentralProcessingUnit {
     
     public void execute() {
     	if(registers.getProgramCounter().realValue() != -1) {
-    		Word instruction = controlUnit.seekInstruction(registers, randomAccessMemory);
-        
+    		Word instruction = controlUnit.seekInstruction(registers, memoryManagementUnit);
     		int tipoInstrucao = controlUnit.decode(instruction, instructionDecoder);
 	        switch (tipoInstrucao) {
 				case 1:
@@ -60,8 +60,8 @@ public class CentralProcessingUnit {
 		return controlUnit;
 	}
 
-	public RandomAccessMemory getRandomAccessMemory() {
-		return randomAccessMemory;
+	public MemoryManagementUnit getMemoryManagementUnit() {
+		return memoryManagementUnit;
 	}
 
 	public InstructionDecoder getInstructionDecoder() {
