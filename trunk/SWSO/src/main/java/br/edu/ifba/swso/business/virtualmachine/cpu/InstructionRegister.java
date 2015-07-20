@@ -14,7 +14,7 @@ import br.edu.ifba.swso.business.abstractions.Word;
  */
 public class InstructionRegister {
 
-	private static Word instruction;
+	private Word instruction;
 
 	public void refreshInstruction(Word argNewWord) {
 		instruction = argNewWord;

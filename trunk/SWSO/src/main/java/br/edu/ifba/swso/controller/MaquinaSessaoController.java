@@ -170,7 +170,11 @@ public class MaquinaSessaoController extends BaseController implements Serializa
 			message += "É necessário informar o nome da máquina!";
 			facesMessager.addMessageError(message);
 			return false;
-		} 
+		} else if (applicationController.getMaquinasAtivas().containsKey(name)) {
+			message += "Já existe uma máquina executando com o nome informado.";
+			facesMessager.addMessageError(message);
+			return false;
+		}
 		return true;
 	}
 	

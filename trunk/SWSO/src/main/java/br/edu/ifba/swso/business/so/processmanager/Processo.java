@@ -8,43 +8,42 @@ public class Processo {
 	private String nome;
 
 	private int prioridade;
-	private int estado; //TODO CRIAR ENUM
+	private int estado; // TODO CRIAR ENUM
 	private int tempoCpu;
 
 	private int timeSlice;
 	private int timeRunning;
-	
+
 	private int pc;
 	private Word ri;
-	
+
 	private int tamanhoProcessoByte;
 	private int tamanhoProcessoBit;
 	private int quantidadeInstrucoes;
-	
+
 	public Processo() {
-		this.prioridade = Constantes.PRIORITY_INITIAL;          
+		this.prioridade = Constantes.PRIORITY_INITIAL;
 		this.estado = 0;
 		this.tempoCpu = 0;
 		this.timeSlice = 5;
 		this.timeRunning = 0;
-		this.pc = 0;                  
+		this.pc = 0;
 		this.ri = null;
 	}
-	
-	public void incrementTimeCPU(){
+
+	public void incrementTimeCPU() {
 		tempoCpu++;
 	}
 
 	public void incrementTimeRunning() {
 		this.timeRunning++;
 	}
-	
+
 	public void clearTimeRunning() {
 		this.timeRunning = 0;
 	}
-	
-	
-	//METHODS OF ACCESS
+
+	// METHODS OF ACCESS
 	public int getPid() {
 		return pid;
 	}
@@ -96,7 +95,7 @@ public class Processo {
 	public int getTimeRunning() {
 		return timeRunning;
 	}
-	
+
 	public int getPc() {
 		return pc;
 	}
