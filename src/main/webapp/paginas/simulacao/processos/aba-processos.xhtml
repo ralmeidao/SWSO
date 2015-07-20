@@ -12,19 +12,18 @@
 		
     <p:fieldset legend="CPU" rendered="#{maquinaSessaoController.coreVirtualMachine.centralProcessingUnit.registers.programCounter.realValue() != -1}">
     	<p:panelGrid columns="4" styleClass="panelgrid" id="simulaProcessosPanel">
-<!--         	<p:outputLabel value="IR">
+        	<p:outputLabel value="IR">
         		<br/>
 	        	<p:inputText value="#{maquinaSessaoController.coreVirtualMachine.centralProcessingUnit.registers.instructionRegister.realValue()}" disabled="true" styleClass="tam_p"/>
 			</p:outputLabel>
 			<p:outputLabel value="PC">
         		<br/>
 	        	<p:inputText value="#{maquinaSessaoController.coreVirtualMachine.centralProcessingUnit.registers.programCounter.realValue()}" disabled="true" styleClass="tam_p"/>
-       		</p:outputLabel> -->
-        		
-			<p:outputLabel value="PID - Processo Atual">
+       		</p:outputLabel>
+			<!-- <p:outputLabel value="PID - Processo Atual">
         		<br/>
 	        	<p:inputText value="1 - Firefox" disabled="true" styleClass="tam_g"/>
-        	</p:outputLabel>
+        	</p:outputLabel> -->
        	</p:panelGrid>
 	</p:fieldset>
 	

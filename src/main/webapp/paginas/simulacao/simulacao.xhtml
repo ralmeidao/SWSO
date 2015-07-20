@@ -20,7 +20,7 @@
 			<p:focus for="formSimulacao"/>
         		
 			 <h:panelGroup id="groupAuto" rendered="true">
-				<p:commandButton icon="ui-icon-play" value="Executar" actionListener="#{maquinaSessaoController.executarCiclo()}" styleClass="btn"/>
+				<p:commandButton icon="ui-icon-play" value="Executar" actionListener="#{maquinaSessaoController.executarCiclo()}" update="@form" styleClass="btn"/>
 			</h:panelGroup>
 	        
 			<p:tabView activeIndex="#{maquinaSessaoController.activeAba}">

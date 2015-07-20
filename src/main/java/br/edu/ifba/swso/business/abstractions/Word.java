@@ -24,15 +24,6 @@ public class Word {
 	    }
 	}
 
-	@Override
-	public String toString() {
-		String temp = "";
-		for (int i = 0; i < Constantes.WORD_SIZE; i++) {
-			temp += ioWord[i].toString();
-		}
-		return temp;
-	}
-
 	public String toHexa() {
 		String temp = "";
 		for (int i = 0; i < Constantes.WORD_SIZE; i++) {
@@ -43,6 +34,15 @@ public class Word {
 
 	public ByteSWSO[] getIoWord() {
 		return ioWord;
+	}
+	
+	@Override
+	public String toString() {
+		String temp = "";
+		for (int i = 0; i < Constantes.WORD_SIZE; i++) {
+			temp += ioWord[i].toString();
+		}
+		return temp;
 	}
 	
 }
