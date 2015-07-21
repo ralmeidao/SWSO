@@ -20,7 +20,7 @@ public class CentralProcessingUnit {
     private long cpuTime;
     
 	public CentralProcessingUnit(RandomAccessMemory ram) {
-		this.memoryManagementUnit = new MemoryManagementUnit(ram);
+		this.memoryManagementUnit = new MemoryManagementUnit(ram, this);
 		this.registers = new Registers();
 		this.arithmeticLogicUnit = new ArithmeticLogicUnit();
 		this.controlUnit = new ControlUnit();
@@ -71,5 +71,4 @@ public class CentralProcessingUnit {
 	public long getCpuTime() {
 		return cpuTime;
 	}
-    
 }

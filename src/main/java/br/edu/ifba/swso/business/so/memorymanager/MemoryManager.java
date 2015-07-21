@@ -3,10 +3,10 @@ package br.edu.ifba.swso.business.so.memorymanager;
 import java.util.HashMap;
 import java.util.Map;
 
-import br.edu.ifba.swso.business.simulacao.Processo;
 import br.edu.ifba.swso.business.so.memorymanager.exception.InvalidPositionException;
 import br.edu.ifba.swso.business.so.memorymanager.exception.PageNotFoundException;
 import br.edu.ifba.swso.business.so.memorymanager.exception.VirtualMemoryFullException;
+import br.edu.ifba.swso.business.so.processmanager.Process;
 import br.edu.ifba.swso.business.virtualmachine.cpu.RandomAccessMemory;
 import br.edu.ifba.swso.util.Constantes;
 
@@ -32,23 +32,20 @@ public class MemoryManager {
 		return virtualMemory;
 	}
 
-
-	public void alocaProcesso(Processo processo) throws PageNotFoundException, InvalidPositionException, VirtualMemoryFullException {
-		PageTable pagetable = new PageTable(processo.getId());
+	public void alocaProcesso(Process process) throws PageNotFoundException, InvalidPositionException, VirtualMemoryFullException {
+		PageTable pagetable = new PageTable(process.getPid());
 		
-		int nPaginas = (processo.getnInstrucoes()*2)/Constantes.BYTE_PER_PAGE;
+		int nPaginas = (process.getQuantidadeInstrucoes()*2)/Constantes.BYTE_PER_PAGE;
 		
-		if ((processo.getnInstrucoes()*2) % Constantes.BYTE_PER_PAGE != 0) {
+		if ((process.getQuantidadeInstrucoes()*2) % Constantes.BYTE_PER_PAGE != 0) {
 			nPaginas++;
 		}
 		
 		for (int i = 0; i < nPaginas; i++) {
 			pagetable.getListaEtp().add(new ETP(i, virtualMemory.foundFreePosition()));
-			if (ram.taxaOcupacao() < 80) {
-			}
 		}
 		
-		pageList.put(processo.getId(), pagetable);
+		pageList.put(process.getPid(), pagetable);
 
 	}    
 }

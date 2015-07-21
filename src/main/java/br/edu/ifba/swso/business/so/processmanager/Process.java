@@ -1,15 +1,16 @@
 package br.edu.ifba.swso.business.so.processmanager;
 
 import br.edu.ifba.swso.business.abstractions.Word;
+import br.edu.ifba.swso.enumerator.ProcessStateEnum;
 import br.edu.ifba.swso.util.Constantes;
 
-public class Processo {
+public class Process {
 	private int pid;
 	private String nome;
 
-	private int prioridade;
-	private int estado; // TODO CRIAR ENUM
-	private int tempoCpu;
+	private int priority;
+	private ProcessStateEnum state; // TODO CRIAR ENUM
+	private long timeInitCpu;
 
 	private int timeSlice;
 	private int timeRunning;
@@ -21,26 +22,18 @@ public class Processo {
 	private int tamanhoProcessoBit;
 	private int quantidadeInstrucoes;
 
-	public Processo() {
-		this.prioridade = Constantes.PRIORITY_INITIAL;
-		this.estado = 0;
-		this.tempoCpu = 0;
-		this.timeSlice = 5;
+	public Process() {
+		this.priority = Constantes.PRIORITY_INITIAL;
+		this.timeSlice = Constantes.TIME_SLICE;
+		this.state = ProcessStateEnum.PRONTO;
+		this.timeInitCpu = 0;
 		this.timeRunning = 0;
 		this.pc = 0;
 		this.ri = null;
 	}
 
-	public void incrementTimeCPU() {
-		tempoCpu++;
-	}
-
 	public void incrementTimeRunning() {
 		this.timeRunning++;
-	}
-
-	public void clearTimeRunning() {
-		this.timeRunning = 0;
 	}
 
 	// METHODS OF ACCESS
@@ -60,28 +53,32 @@ public class Processo {
 		this.nome = nome;
 	}
 
-	public int getPrioridade() {
-		return prioridade;
+	public int getPriority() {
+		return priority;
 	}
 
-	public void setPrioridade(int prioridade) {
-		this.prioridade = prioridade;
+	public void setPriority(int priority) {
+		this.priority = priority;
 	}
 
-	public int getEstado() {
-		return estado;
+	public ProcessStateEnum getState() {
+		return state;
 	}
 
-	public void setEstado(int estado) {
-		this.estado = estado;
+	public void setState(ProcessStateEnum state) {
+		this.state = state;
 	}
 
-	public int getTempoCpu() {
-		return tempoCpu;
+	public long getTimeInitCpu() {
+		return timeInitCpu;
 	}
 
-	public void setTempoCpu(int tempoCpu) {
-		this.tempoCpu = tempoCpu;
+	public void setTimeInitCpu(long timeInitCpu) {
+		this.timeInitCpu = timeInitCpu;
+	}
+
+	public void setTimeRunning(int timeRunning) {
+		this.timeRunning = timeRunning;
 	}
 
 	public int getTimeSlice() {

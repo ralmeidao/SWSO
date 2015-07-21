@@ -277,6 +277,4 @@ public class MaquinaSessaoController extends BaseController implements Serializa
 		this.file = file;
 	}
 	
-	
-	
 }

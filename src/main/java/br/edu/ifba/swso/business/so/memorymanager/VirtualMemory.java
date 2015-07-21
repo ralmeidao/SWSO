@@ -8,7 +8,7 @@ public class VirtualMemory {
 	private char[] virtualMemory;
 	
 	public VirtualMemory() {
-		virtualMemory = new char[Constantes.MEMORY_SIZE*2];
+		virtualMemory = new char[Constantes.VIRTUAL_MEMORY_SIZE];
 		for (int i = 0; i < virtualMemory.length; i++) {
 			virtualMemory[i] = '0';
 		}

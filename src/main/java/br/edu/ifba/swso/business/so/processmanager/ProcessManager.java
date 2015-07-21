@@ -6,40 +6,43 @@ import java.util.List;
 
 import br.edu.ifba.swso.business.abstractions.File;
 import br.edu.ifba.swso.business.virtualmachine.CoreVirtualMachine;
+import br.edu.ifba.swso.enumerator.ProcessStateEnum;
 
 public class ProcessManager {
     private int ultimoId = 0;
     
-    private List<Processo> tabelaProcesso = new ArrayList<Processo>();
-    private LinkedList<Processo> listaPronto = new LinkedList<Processo>();
-    private LinkedList<Processo> listaBloqueado = new LinkedList<Processo>();
+    private List<Process> tabelaProcesso = new ArrayList<Process>();
+    private LinkedList<Process> listaPronto = new LinkedList<Process>();
+    private LinkedList<Process> listaBloqueado = new LinkedList<Process>();
     
-    private Processo emExecucao;
-	private Processo tempoOcisoso;
+    private Process emExecucao;
+	private Process tempoOcisoso;
 	private CoreVirtualMachine coreVirtualMachine;
 	
 	public ProcessManager(CoreVirtualMachine coreVirtualMachine) {
 		this.coreVirtualMachine = coreVirtualMachine;
-		tempoOcisoso = new Processo();
+		tempoOcisoso = new Process();
 		tempoOcisoso.setPid(-1);
 		tempoOcisoso.setPc(-1);
 		emExecucao = tempoOcisoso;
 	}
     
-    public Processo criarProcesso(File arquivo) {
-        Processo processo = new Processo();
-        processo.setPid(getNewIdProcess());
-        processo.setTamanhoProcessoByte(arquivo.getFileSize());; 
-        processo.setTamanhoProcessoBit(arquivo.getFileSize() * 8);  
-        processo.setQuantidadeInstrucoes(arquivo.getFileSize()/2);
-        listaPronto.add(processo);
-        tabelaProcesso.add(processo);
+    public Process criarProcesso(File arquivo) {
+        Process process = new Process();
+        process.setPid(getNewIdProcess());
+        process.setTamanhoProcessoByte(arquivo.getFileSize());; 
+        process.setTamanhoProcessoBit(arquivo.getFileSize() * 8);  
+        process.setQuantidadeInstrucoes(arquivo.getFileSize()/2);
+        process.setNome(arquivo.getFileName());
+        process.setTimeInitCpu(coreVirtualMachine.getCentralProcessingUnit().getCpuTime());
+        listaPronto.add(process);
+        tabelaProcesso.add(process);
         
-        return processo;
+        return process;
     }
     
-    public Processo escalonamento() {
-    	Processo proximo = escolherProximo(listaPronto);
+    public Process escalonamento() {
+    	Process proximo = escolherProximo(listaPronto);
 
     	if(emExecucao.getPid() != proximo.getPid()) {
     		//EXECUTA TROCA DE CONTEXTO
@@ -48,6 +51,7 @@ public class ProcessManager {
     		
     		if(emExecucao.getPid() != -1) {
     			listaPronto.add(emExecucao);
+    			emExecucao.setState(ProcessStateEnum.PRONTO);
     		}
     		
     		listaPronto.remove(proximo);
@@ -56,6 +60,9 @@ public class ProcessManager {
     		coreVirtualMachine.getCentralProcessingUnit().getRegisters().getProgramCounter().modifyRealValue(proximo.getPc());
     		
     		emExecucao = proximo;
+    		emExecucao.setState(ProcessStateEnum.EXECUTANDO);
+    		
+    		coreVirtualMachine.getCentralProcessingUnit().getRegisters().setProcess(emExecucao);
     	}
     	
     	return emExecucao;
@@ -65,7 +72,7 @@ public class ProcessManager {
     	return ultimoId++;
     }
 
-    public Processo escolherProximo(LinkedList<Processo> listaPronto) {
+    public Process escolherProximo(LinkedList<Process> listaPronto) {
     	if (listaPronto.size() > 0) {
     		return listaPronto.getFirst();
 		} else {
@@ -74,19 +81,19 @@ public class ProcessManager {
     }
     
     //MÉT0D0S DE ACESSO
-	public List<Processo> getTabelaProcesso() {
+	public List<Process> getTabelaProcesso() {
 		return tabelaProcesso;
 	}
 
-	public LinkedList<Processo> getListaPronto() {
+	public LinkedList<Process> getListaPronto() {
 		return listaPronto;
 	}
 
-	public LinkedList<Processo> getListaBloqueado() {
+	public LinkedList<Process> getListaBloqueado() {
 		return listaBloqueado;
 	}
 
-	public Processo getEmExecucao() {
+	public Process getEmExecucao() {
 		return emExecucao;
 	}
 	
