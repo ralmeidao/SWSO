@@ -6,7 +6,6 @@ import java.util.List;
 
 public class File {
     private String fileName;
-    private int iniSector;
     private int fileSize;
     private int fileID;
     private List<Integer> allocatedSectors;
@@ -27,11 +26,7 @@ public class File {
     }
 
     public int getIniSector() {
-        return iniSector;
-    }
-
-    public void setIniSector(int iniSector) {
-        this.iniSector = iniSector;
+        return allocatedSectors.get(0);
     }
 
     public int getFileSize() {

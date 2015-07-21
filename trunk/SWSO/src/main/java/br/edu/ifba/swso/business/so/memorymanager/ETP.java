@@ -1,14 +1,16 @@
 package br.edu.ifba.swso.business.so.memorymanager;
 
 public class ETP {
-	private int ppr;
 	private int ppv;
+	private int ppr;
 	private char bitV;
 	private char bitM;
 	
-	public ETP(int ppr, int ppv) {
-		this.ppr = ppr;
+	public ETP(int ppv, int ppr) {
 		this.ppv = ppv;
+		this.ppr = ppr;
+		bitV = '0';
+		bitM = '0';
 	}
 	public int getPpr() {
 		return ppr;

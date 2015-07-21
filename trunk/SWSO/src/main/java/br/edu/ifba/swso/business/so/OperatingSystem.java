@@ -5,8 +5,8 @@ import br.edu.ifba.swso.business.abstractions.File;
 import br.edu.ifba.swso.business.so.filemanager.IFileSystem;
 import br.edu.ifba.swso.business.so.filemanager.XIndexedAllocation;
 import br.edu.ifba.swso.business.so.memorymanager.MemoryManager;
+import br.edu.ifba.swso.business.so.processmanager.Process;
 import br.edu.ifba.swso.business.so.processmanager.ProcessManager;
-import br.edu.ifba.swso.business.so.processmanager.Processo;
 import br.edu.ifba.swso.business.virtualmachine.CoreVirtualMachine;
 
 public class OperatingSystem {
@@ -27,8 +27,13 @@ public class OperatingSystem {
 	
 	//CHAMADAS AO SISTEMA
 	public void criarProcesso(File file) {
-		Processo process = processManager.criarProcesso(file);
-		System.out.println("Processo criado - PID:" + process.getPid());
+		try {
+			Process process = processManager.criarProcesso(file);
+			memoryManager.alocaProcesso(process);
+			System.out.println("Processo criado - PID:" + process.getPid());
+		} catch (Exception e) {
+
+		}
 	}
 	
 	//METHODS OF ACCESS
@@ -54,14 +59,13 @@ public class OperatingSystem {
 	}
 
 	public void execute() {
-		Processo running = processManager.getEmExecucao();
+		Process running = processManager.getEmExecucao();
 		
-		if (running.getTimeRunning() == running.getTimeSlice() || running.getPid() == -1) {
+		if (running.getPid() == -1 || (running.getTimeRunning() != 0 && running.getTimeRunning() % running.getTimeSlice() == 0)) {
 			//TROCA DE CONTEXTO
 			running = processManager.escalonamento();
 		}
 		
-		running.incrementTimeCPU();
 		running.incrementTimeRunning();
 		
 	}

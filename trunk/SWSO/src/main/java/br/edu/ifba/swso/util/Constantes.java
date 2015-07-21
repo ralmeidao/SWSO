@@ -31,12 +31,16 @@ public class Constantes {
 	public static int TRACK_SIZE = 8;// tamanho da trilha. (8 setores)
 	public static int SECTOR_SIZE = 256; // tamanho do setor.(256 bytes)
 	
-	public static int MEMORY_SIZE = 32; // quantidade total da memória.
 	
 	public static int NUM_QUATUM = 64; // quatum é medido por palavras (neste caso).
 	
-	
+	//GERENCIA DE PROCESSOS
 	public static int PRIORITY_INITIAL = 5;
+	public static int TIME_SLICE = 5;
 	
+	//GERENCIA DE MEMORIA
+	public static int MEMORY_SIZE = 32; // quantidade total da memória.
+	public static int VIRTUAL_MEMORY_SIZE = MEMORY_SIZE*2; // quantidade total da memória virtual.
+	public static int RAM_TAXA_DE_OCUPACAO_MAX = 80; //De 0 à 100%
 	
 }

@@ -62,6 +62,7 @@ public class XIndexedAllocation implements IFileSystem {
 		File newFile = new File(fileinput.getFileName());
 		newFile.setColor(fileinput.getColor());
 		newFile.setFileID(getNewIdFile());
+		newFile.setFileSize(fileinput.getListaInstrucoes().size());
 		
 		int[] freeSectorsList = freeSectorsList(fileinput.getListaInstrucoes().size());
 		
