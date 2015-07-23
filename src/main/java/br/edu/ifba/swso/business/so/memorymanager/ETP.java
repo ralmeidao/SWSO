@@ -6,6 +6,8 @@ public class ETP {
 	private char bitV;
 	private char bitM;
 	
+	//GUARDAR LISTA DE SETORES ONDE ENCOTRAM-SE A PÁGINA
+	
 	public ETP(int ppv, int ppr) {
 		this.ppv = ppv;
 		this.ppr = ppr;

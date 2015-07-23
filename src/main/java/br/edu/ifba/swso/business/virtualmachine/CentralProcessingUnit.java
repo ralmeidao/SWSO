@@ -2,6 +2,7 @@ package br.edu.ifba.swso.business.virtualmachine;
 
 
 import br.edu.ifba.swso.business.abstractions.Word;
+import br.edu.ifba.swso.business.so.memorymanager.PageTable;
 import br.edu.ifba.swso.business.virtualmachine.cpu.ArithmeticLogicUnit;
 import br.edu.ifba.swso.business.virtualmachine.cpu.ControlUnit;
 import br.edu.ifba.swso.business.virtualmachine.cpu.InstructionDecoder;
@@ -16,6 +17,9 @@ public class CentralProcessingUnit {
     private ArithmeticLogicUnit arithmeticLogicUnit;
     private ControlUnit controlUnit;
     private InstructionDecoder instructionDecoder;
+    
+    //CACHE
+    private PageTable pageTable;
     
     private long cpuTime;
     
@@ -71,4 +75,13 @@ public class CentralProcessingUnit {
 	public long getCpuTime() {
 		return cpuTime;
 	}
+
+	public PageTable getPageTable() {
+		return pageTable;
+	}
+
+	public void setPageTable(PageTable pageTable) {
+		this.pageTable = pageTable;
+	}
+	
 }

@@ -22,7 +22,7 @@ public class OperatingSystem {
 	public OperatingSystem(CoreVirtualMachine coreVirtualMachine){
 		fileSystem = new XIndexedAllocation(coreVirtualMachine.getHardDisk());
 		processManager = new ProcessManager(coreVirtualMachine);
-		memoryManager = new MemoryManager(coreVirtualMachine.getRandomAccessMemory());
+		memoryManager = new MemoryManager(coreVirtualMachine);
 	}
 	
 	//CHAMADAS AO SISTEMA
@@ -64,6 +64,7 @@ public class OperatingSystem {
 		if (running.getPid() == -1 || (running.getTimeRunning() != 0 && running.getTimeRunning() % running.getTimeSlice() == 0)) {
 			//TROCA DE CONTEXTO
 			running = processManager.escalonamento();
+			memoryManager.updatePageTable();
 		}
 		
 		running.incrementTimeRunning();

@@ -6,7 +6,7 @@ public class Registers {
 
 	private InstructionRegister registerInstruction;
 	private ProgramCounter programCounter;
-	private Process process;
+	private int pid;
 
 	public Registers() {
 		registerInstruction = new InstructionRegister();
@@ -21,12 +21,12 @@ public class Registers {
 		return programCounter;
 	}
 
-	public Process getProcess() {
-		return process;
+	public int getPid() {
+		return pid;
 	}
 
-	public void setProcess(Process process) {
-		this.process = process;
+	public void setPid(int pid) {
+		this.pid = pid;
 	}
 
 }
