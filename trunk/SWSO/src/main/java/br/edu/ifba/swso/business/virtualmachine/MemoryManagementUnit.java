@@ -1,6 +1,7 @@
 package br.edu.ifba.swso.business.virtualmachine;
 
 import br.edu.ifba.swso.business.abstractions.Word;
+import br.edu.ifba.swso.business.so.memorymanager.ETP;
 import br.edu.ifba.swso.business.so.processmanager.Process;
 import br.edu.ifba.swso.business.virtualmachine.cpu.RandomAccessMemory;
 import br.edu.ifba.swso.util.Constantes;
@@ -17,7 +18,15 @@ public class MemoryManagementUnit {
 
 	public Word getWord(int index) {
 		int paginaLogica = index/Constantes.BYTE_PER_PAGE;
-		Process process = cpu.getRegisters().getProcess();
+		int deslocamento = index % Constantes.BYTE_PER_PAGE;
+		
+		ETP etp = cpu.getPageTable().getEtp(paginaLogica);
+		
+		if (etp.getBitV() == '0') {
+			//PAGE FAULT
+		} else {
+			randomAccessMemory.getMemory((etp.getPpr() * Constantes.BYTE_PER_PAGE) + deslocamento);
+		}
 		
 		
 		return null;

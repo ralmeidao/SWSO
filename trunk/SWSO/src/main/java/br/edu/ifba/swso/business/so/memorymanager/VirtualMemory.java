@@ -27,6 +27,10 @@ public class VirtualMemory {
 		virtualMemory[pos] = '0';
 	}
 
+	public void blockPosition(int pos) {
+		virtualMemory[pos] = '1';
+	}
+
 	//MÉTHODS OF ACCESS
 	public char[] getVirtualMemory() {
 		return virtualMemory;

@@ -62,7 +62,7 @@ public class ProcessManager {
     		emExecucao = proximo;
     		emExecucao.setState(ProcessStateEnum.EXECUTANDO);
     		
-    		coreVirtualMachine.getCentralProcessingUnit().getRegisters().setProcess(emExecucao);
+    		coreVirtualMachine.getCentralProcessingUnit().getRegisters().setPid(emExecucao.getPid());
     	}
     	
     	return emExecucao;

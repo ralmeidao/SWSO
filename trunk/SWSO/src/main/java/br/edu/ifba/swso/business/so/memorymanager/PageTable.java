@@ -12,6 +12,10 @@ public class PageTable {
 		listaEtp = new ArrayList<ETP>(); 
 	}
 	
+	public ETP getEtp(int pageNumber) {
+		return listaEtp.get(pageNumber);
+	}
+	
 	public int getPid() {
 		return pid;
 	}
@@ -19,6 +23,7 @@ public class PageTable {
 	public void setPid(int pid) {
 		this.pid = pid;
 	}
+	
 	public List<ETP> getListaEtp() {
 		return listaEtp;
 	}
@@ -26,4 +31,6 @@ public class PageTable {
 	public void setListaEtp(List<ETP> listaEtp) {
 		this.listaEtp = listaEtp;
 	}
+	
+	
 }
