@@ -1,18 +1,22 @@
 package br.edu.ifba.swso.business.so.memorymanager;
 
+import java.util.List;
+
 public class ETP {
 	private int ppv;
 	private int ppr;
 	private char bitV;
 	private char bitM;
+	private List<Integer> allocatedSectors;
 	
 	//GUARDAR LISTA DE SETORES ONDE ENCOTRAM-SE A PÁGINA
 	
-	public ETP(int ppv, int ppr) {
+	public ETP(int ppv, List<Integer> allocatedSectors) {
 		this.ppv = ppv;
-		this.ppr = ppr;
+		this.ppr = -1;
 		bitV = '0';
 		bitM = '0';
+		this.allocatedSectors = allocatedSectors;
 	}
 	public int getPpr() {
 		return ppr;
@@ -37,5 +41,8 @@ public class ETP {
 	}
 	public void setBitM(char bitM) {
 		this.bitM = bitM;
+	}
+	public List<Integer> getAllocatedSectors() {
+		return allocatedSectors;
 	}
 }

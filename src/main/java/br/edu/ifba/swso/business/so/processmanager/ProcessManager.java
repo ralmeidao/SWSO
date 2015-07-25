@@ -35,6 +35,7 @@ public class ProcessManager {
         process.setQuantidadeInstrucoes(arquivo.getFileSize()/2);
         process.setNome(arquivo.getFileName());
         process.setTimeInitCpu(coreVirtualMachine.getCentralProcessingUnit().getCpuTime());
+        process.setFile(arquivo);
         listaPronto.add(process);
         tabelaProcesso.add(process);
         

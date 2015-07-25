@@ -1,5 +1,6 @@
 package br.edu.ifba.swso.business.so.processmanager;
 
+import br.edu.ifba.swso.business.abstractions.File;
 import br.edu.ifba.swso.business.abstractions.Word;
 import br.edu.ifba.swso.enumerator.ProcessStateEnum;
 import br.edu.ifba.swso.util.Constantes;
@@ -21,7 +22,9 @@ public class Process {
 	private int tamanhoProcessoByte;
 	private int tamanhoProcessoBit;
 	private int quantidadeInstrucoes;
-
+	
+	private File File;
+	
 	public Process() {
 		this.priority = Constantes.PRIORITY_INITIAL;
 		this.timeSlice = Constantes.TIME_SLICE;
@@ -131,5 +134,13 @@ public class Process {
 
 	public void setQuantidadeInstrucoes(int quantidadeInstrucoes) {
 		this.quantidadeInstrucoes = quantidadeInstrucoes;
+	}
+
+	public File getFile() {
+		return File;
+	}
+
+	public void setFile(File file) {
+		File = file;
 	}
 }
