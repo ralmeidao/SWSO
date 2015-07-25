@@ -8,7 +8,7 @@ public class RealMemory {
 	private char[] realMemory;
 	
 	public RealMemory() {
-		realMemory = new char[Constantes.MEMORY_SIZE/Constantes.BYTE_PER_PAGE];
+		realMemory = new char[Constantes.MEMORY_SIZE*Constantes.BYTE_PER_PAGE];
 		for (int i = 0; i < realMemory.length; i++) {
 			realMemory[i] = '0';
 		}
