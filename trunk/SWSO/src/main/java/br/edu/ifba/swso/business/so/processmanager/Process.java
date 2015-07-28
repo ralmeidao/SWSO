@@ -48,6 +48,13 @@ public class Process {
 		this.pid = pid;
 	}
 
+	public String getPidConcatNome() {
+		if (pid == -1) {
+			return "Processador Ocioso";
+		}
+		return pid + " - " +nome;
+	}
+	
 	public String getNome() {
 		return nome;
 	}

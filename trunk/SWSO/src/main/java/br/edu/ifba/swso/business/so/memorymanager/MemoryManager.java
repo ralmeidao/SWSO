@@ -77,6 +77,7 @@ public class MemoryManager {
 			realMemory.blockPosition(realPosition);
 			etp.setPpr(realPosition);
 			copiarDoDiscoParaRAM(etp.getAllocatedSectors(), realPosition);
+			etp.setBitV('1');
 		}
 	}
 	

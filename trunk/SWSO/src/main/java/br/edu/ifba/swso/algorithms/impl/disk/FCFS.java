@@ -7,7 +7,7 @@ public class FCFS implements IDiskScheduler {
 	private final String nome = "FCFS";
 	
 	@Override
-	public int[] reordenaLista(int[] freeSectorsList, int setorAtual) {
+	public int[] escalonar(int[] freeSectorsList, int setorAtual) {
 		return freeSectorsList;
 	}
 

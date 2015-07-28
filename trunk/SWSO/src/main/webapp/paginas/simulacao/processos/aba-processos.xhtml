@@ -10,7 +10,7 @@
 		<label><h:outputText value="Tempo: #{maquinaSessaoController.coreVirtualMachine.centralProcessingUnit.cpuTime}"/></label>
 	</div>
 		
-    <p:fieldset legend="CPU" rendered="#{maquinaSessaoController.coreVirtualMachine.centralProcessingUnit.registers.programCounter.realValue() != -1}">
+    <p:fieldset legend="CPU">
     	<p:panelGrid columns="4" styleClass="panelgrid" id="simulaProcessosPanel">
         	<p:outputLabel value="IR">
         		<br/>
@@ -20,12 +20,38 @@
         		<br/>
 	        	<p:inputText value="#{maquinaSessaoController.coreVirtualMachine.centralProcessingUnit.registers.programCounter.realValue()}" disabled="true" styleClass="tam_p"/>
        		</p:outputLabel>
-			<!-- <p:outputLabel value="PID - Processo Atual">
+			<p:outputLabel value="PID - Processo Atual">
         		<br/>
-	        	<p:inputText value="1 - Firefox" disabled="true" styleClass="tam_g"/>
-        	</p:outputLabel> -->
+	        	<p:inputText value="#{maquinaSessaoController.operatingSystem.processManager.emExecucao.pidConcatNome}" disabled="true" styleClass="tam_g"/>
+        	</p:outputLabel>
        	</p:panelGrid>
 	</p:fieldset>
+	<p:commandButton value="Criar Processo" icon="ui-icon-plus" styleClass="btn" onclick="modalNovoProcesso.show()" rendered="#{!viewOnly}"/>
 	
-	<p:commandButton value="Criar Processo" styleClass="btn" onclick="modalNovoProcesso.show()" rendered="#{!viewOnly}"/>
+	<p:dataTable var="processo" value="#{maquinaSessaoController.operatingSystem.processManager.tabelaProcesso}" id="processTable" emptyMessage="Nenhum item encontrado.">
+		<f:facet name="header">
+	        Tabela de Processo
+	    </f:facet>
+        <p:column headerText="PID" width="05%">
+        	<h:outputText value="#{processo.pid}" />
+        </p:column>
+        <p:column headerText="Nome" width="30%">
+        	<h:outputText value="#{processo.nome}"/>
+        </p:column>
+        <p:column headerText="Prioridade" width="10%">
+        	<h:outputText value="#{processo.priority}"/>
+        </p:column>
+        <p:column headerText="PC" width="10%">
+        	<h:outputText value="#{processo.pc}"/>
+        </p:column>
+        <p:column headerText="RI" width="10%">
+        	<h:outputText value="#{processo.ri}"/>
+        </p:column>
+        <p:column headerText="Estado" width="10%">
+        	<h:outputText value="#{processo.state}"/>
+        </p:column>
+        <p:column headerText="" width="10%">
+        	<p:commandButton value="" icon="ui-icon-clipboard" styleClass="btn" action="#{maquinaSessaoController.abrirModalPbc(processo.pid)}" style=""/>
+        </p:column>
+    </p:dataTable>
 </html>

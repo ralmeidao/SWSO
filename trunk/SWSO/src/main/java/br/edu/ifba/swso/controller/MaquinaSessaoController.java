@@ -17,6 +17,7 @@ import br.edu.ifba.swso.business.abstractions.FileInput;
 import br.edu.ifba.swso.business.abstractions.Word;
 import br.edu.ifba.swso.business.so.OperatingSystem;
 import br.edu.ifba.swso.business.so.filemanager.IFileSystem;
+import br.edu.ifba.swso.business.so.memorymanager.PageTable;
 import br.edu.ifba.swso.business.virtualmachine.CoreVirtualMachine;
 import br.edu.ifba.swso.util.Constantes;
 import br.edu.ifba.swso.util.Util;
@@ -56,6 +57,8 @@ public class MaquinaSessaoController extends BaseController implements Serializa
 	private IDiskScheduler diskSchedule;
 	
 	private File file;
+	
+	private PageTable pageTable;
 	
 	private IDiskScheduler[] arrayDiskSchedule = {new SSTF(), new FCFS()};
 	// DATE OF VIEW - END
@@ -191,6 +194,14 @@ public class MaquinaSessaoController extends BaseController implements Serializa
 	public void updateComboColor() {
 		updateComponentes(":uploadForm:selectColors");
 	}
+	
+	public void abrirModalPbc(int pid) {
+		  this.pageTable = operatingSystem.getMemoryManager().getPageList().get(pid);
+		  updateComponentes("modalPbcForm");
+		  showDialog("modalPbc");
+		  
+	}
+	
 
 	//MÉT0D0S DE ACESSO
 	public CoreVirtualMachine getCoreVirtualMachine() {
@@ -275,6 +286,14 @@ public class MaquinaSessaoController extends BaseController implements Serializa
 
 	public void setFile(File file) {
 		this.file = file;
+	}
+
+	public PageTable getPageTable() {
+		return pageTable;
+	}
+
+	public void setPageTable(PageTable pageTable) {
+		this.pageTable = pageTable;
 	}
 	
 }

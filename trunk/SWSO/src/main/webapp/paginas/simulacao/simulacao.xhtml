@@ -40,25 +40,29 @@
 		        </p:tab>
 		    </p:tabView>
 		    <br/>
-		    <p:outputLabel>Terminal</p:outputLabel>
+		    <p:outputLabel>log</p:outputLabel>
 		    <p:terminal id="terminal" widgetVar="term"  prompt="swso $ " />
 		    
 		    <p:commandButton type="button" value="Limpar" icon="ui-icon-trash" onclick="PF('term').clear()" style="margin-top:10px"/>
 		</h:form>
 		
 		<!-- MODAL UPLOAD -->
-		<p:dialog id="novo-arquivo" widgetVar="modalNovoArquivo" header="Upload de Arquivo" width="600px" height="auto" resizable="false" modal="true">
+		<p:dialog id="novo-arquivo" widgetVar="modalNovoArquivo" header="Adicionar arquivo ao Disco" width="600px" height="auto" resizable="false" modal="true">
 			<ui:include src="/paginas/simulacao/disco/dialog-upload.xhtml" />
 		</p:dialog>
 		
 		<!-- MODAL CRIAR PROCESSO -->
-		<p:dialog id="novo-processo" widgetVar="modalNovoProcesso" header="Criar Processo" width="auto" height="auto" resizable="false" modal="true">
+		<p:dialog id="novo-processo" widgetVar="modalNovoProcesso" header="Criar Processo" width="600px" height="auto" resizable="false" modal="true">
 			<ui:include src="/paginas/simulacao/processos/dialog-processo.xhtml" />
 		</p:dialog>
-		
+
+		<!-- MODAL PBC -->
+		<p:dialog id="modal-pbc" widgetVar="modalPbc" header="Tabela de Páginas" width="600px" height="auto" resizable="false" modal="true">
+			<ui:include src="/paginas/simulacao/processos/dialog-pbc.xhtml" />
+		</p:dialog>
 		
 		<!-- CONFIGURAÇÕES DE DISCO -->
-		<p:dialog id="configuracoes-disco" widgetVar="modalConfigDisk" header="Configurações de Disco" width="250px" height="auto" resizable="false" modal="true">
+		<p:dialog id="configuracoes-disco" widgetVar="modalConfigDisk" header="Configurações de Disco" width="600px" height="auto" resizable="false" modal="true">
 			<h:form id="configDiskForm">
 				<p:panelGrid columns="1" styleClass="panelgrid" id="panelConfigDisk">
 					<p:outputLabel value="Algoritmo">
@@ -67,13 +71,13 @@
 							<f:selectItems value="#{maquinaSessaoController.arrayDiskSchedule}" var="algorithm" itemLabel="#{algorithm}" itemValue="#{algorithm}"/>
 						</p:selectOneMenu>			
 					</p:outputLabel>
-					<p:commandButton value="Ok" ajax="false" id="btnOk" actionListener="#{maquinaSessaoController.salvarConfiguracoes}" />
+					<p:commandButton value="Confirmar" ajax="false" id="btnOk" actionListener="#{maquinaSessaoController.salvarConfiguracoes}" />
 				</p:panelGrid>
 			</h:form>
 		</p:dialog>
 		
 		<!-- SIMULAÇÃO DE DISCO -->
-		<p:dialog id="simulacao-disco" widgetVar="modalSimulationDisk" header="Simulação de Disco" width="300px" height="auto" resizable="false" modal="true">
+		<p:dialog id="simulacao-disco" widgetVar="modalSimulationDisk" header="Simulação de Disco" width="600px" height="auto" resizable="false" modal="true">
 			<h:form id="simulDiskForm">
 				<p:panelGrid columns="1" styleClass="panelgrid" id="panelSimulDisk">
 					<p:outputLabel value="Simulação">

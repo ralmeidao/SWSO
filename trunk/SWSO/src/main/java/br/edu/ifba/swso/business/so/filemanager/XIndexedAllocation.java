@@ -50,7 +50,7 @@ public class XIndexedAllocation implements IFileSystem {
 				simulatorSectorsList[i] = Integer.parseInt(array[i]) * Constantes.TRACK_SIZE;
 			}
 			
-			int[] sectorsReordered = diskScheduler.reordenaLista(simulatorSectorsList, hardDisk.getPositionReaderHead());
+			int[] sectorsReordered = diskScheduler.escalonar(simulatorSectorsList, hardDisk.getPositionReaderHead());
 			
 			for (int sector : sectorsReordered) {
 				hardDisk.moveReaderHead(sector/8);
@@ -66,7 +66,7 @@ public class XIndexedAllocation implements IFileSystem {
 		
 		int[] freeSectorsList = freeSectorsList(fileinput.getListaInstrucoes().size());
 		
-		int[] freeSectorsReordered = diskScheduler.reordenaLista(freeSectorsList, hardDisk.getPositionReaderHead());
+		int[] freeSectorsReordered = diskScheduler.escalonar(freeSectorsList, hardDisk.getPositionReaderHead());
 		
 		ByteSWSO[] newSector = null;
 

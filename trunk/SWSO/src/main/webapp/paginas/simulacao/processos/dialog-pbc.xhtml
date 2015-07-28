@@ -1,0 +1,30 @@
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+	
+	<h:form id="modalPbcForm">
+		<p:messages id="dialogMessages" autoUpdate="false" escape="false"/>
+		
+		<p:dataTable var="etp" value="#{maquinaSessaoController.pageTable.listaEtp}" id="etp" emptyMessage="Nenhum item encontrado.">
+			<f:facet name="header">
+		        Tabela de Paginas do Processo
+		    </f:facet>
+	        <p:column headerText="PPV" width="05%">
+	        	<h:outputText value="#{etp.ppv}" />
+	        </p:column>
+	        <p:column headerText="PPR" width="05%">
+	        	<h:outputText value="#{etp.ppr}" />
+	        </p:column>
+	        <p:column headerText="Bit V" width="05%">
+	        	<h:outputText value="#{etp.bitV}" />
+	        </p:column>
+	        <p:column headerText="Bit M" width="05%">
+	        	<h:outputText value="#{etp.bitM}" />
+	        </p:column>
+	    </p:dataTable>
+	</h:form>
+</html>
