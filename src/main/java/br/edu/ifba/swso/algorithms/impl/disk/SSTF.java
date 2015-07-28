@@ -12,25 +12,25 @@ public class SSTF implements IDiskScheduler {
 	private final String nome = "SSTF";
 	
 	@Override
-	public int[] reordenaLista(int[] queue, int initialCylinder) {
+	public int[] escalonar(int[] queue, int initialCylinder) {
 		int[] resultPath = new int[queue.length];
 		int now = initialCylinder;
 		int[] requests = new int[queue.length];
-		int[] queueAux = new int[queue.length];//new
+		int[] queueAux = new int[queue.length];
 		
 		for (int i = 0; i < queue.length; i++) {
-			requests[i] = getCylinder(queue[i]); //requests[i] = queue[i];
-			queueAux[i] = getCylinder(queue[i]); //new
+			requests[i] = getCylinder(queue[i]);
+			queueAux[i] = getCylinder(queue[i]);
 		}
 		for (int i = 0; i < resultPath.length; i++) {
-			int closest = closest(now, requests, queue, queueAux);//int closest = closest(now, requests, queue);
+			int closest = closest(now, requests, queue, queueAux);
 			resultPath[i] = closest;
 			now = getCylinder(closest);
 		}
 		return resultPath;
 	}
 	
-	private int closest(int now, int[] requests, int[] queue, int[] queueAux) {//private int closest(int k, int[] requests, int[] queue) {
+	private int closest(int now, int[] requests, int[] queue, int[] queueAux) {
 		int min = 5000000;
 		int minPos = -1;
 		

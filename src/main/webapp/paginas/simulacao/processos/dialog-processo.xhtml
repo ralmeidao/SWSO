@@ -10,9 +10,9 @@
 		<p:messages id="dialogMessages" autoUpdate="false" escape="false"/>
 		
 		<p:panelGrid columns="1" styleClass="panelgrid" id="criarProcesso">	    	
-	    	<p:outputLabel value="Cor de exibição">
+	    	<p:outputLabel value="Arquivos">
 	    		<br/>
-	    		<p:selectOneMenu id="selectArquivos" value="#{maquinaSessaoController.file}" panelStyleClass="listArquivos" converter="omnifaces.SelectItemsConverter" >
+	    		<p:selectOneMenu id="selectArquivos" value="#{maquinaSessaoController.file}" panelStyleClass="listArquivos" converter="omnifaces.SelectItemsConverter">
 	    			<f:selectItem itemLabel="Selecione" 	noSelectionOption="true" />
 	    			<f:selectItems  value="#{maquinaSessaoController.sistemaArquivo.allFiles}" var="arquivo" itemLabel="#{arquivo.fileName}" itemValue="#{arquivo}" />
 				</p:selectOneMenu>

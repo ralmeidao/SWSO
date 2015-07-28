@@ -2,7 +2,6 @@ package br.edu.ifba.swso.business.virtualmachine;
 
 import br.edu.ifba.swso.business.abstractions.Word;
 import br.edu.ifba.swso.business.so.memorymanager.ETP;
-import br.edu.ifba.swso.business.so.processmanager.Process;
 import br.edu.ifba.swso.business.virtualmachine.cpu.RandomAccessMemory;
 import br.edu.ifba.swso.util.Constantes;
 
@@ -25,7 +24,7 @@ public class MemoryManagementUnit {
 		if (etp.getBitV() == '0') {
 			//PAGE FAULT
 		} else {
-			randomAccessMemory.getMemory((etp.getPpr() * Constantes.BYTE_PER_PAGE) + deslocamento);
+			return randomAccessMemory.getWord((etp.getPpr() * Constantes.BYTE_PER_PAGE) + deslocamento);
 		}
 		
 		

@@ -6,11 +6,21 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:c="http://java.sun.com/jsp/jstl/core">
 	
-	<div align="right" class="tempo-simulacao" >
-		<p:commandButton value="Configurações" styleClass="btn" onclick="modalConfigDisk.show()" rendered="#{!viewOnly}"/>
-	</div>
+	<p:fieldset legend="Escalonamento de disco">
+		<!-- <div align="right" class="tempo-simulacao" >
+			
+		</div> -->
+		<p:panelGrid columns="1" styleClass="panelgrid" id="panelConfigDisk">
+			<b>Algoritmo:</b> #{maquinaSessaoController.diskSchedule} |	
+			<b>Tamanho do disco:</b> #{discoController.diskSize/1024} KB. | 
+			<b>Tamanho do setor:</b> #{discoController.sectorSize} bytes | 
+			<b>Quantidade de setores:</b> #{discoController.qtdSectors} |
+		</p:panelGrid>
+	</p:fieldset> 
 	
-	<p:commandButton value="Adicionar Arquivo" styleClass="btn" onclick="modalNovoArquivo.show()" rendered="#{!viewOnly}"/>
+	
+	<p:commandButton value="Criar Arquivo" icon="ui-icon-plus" styleClass="btn" onclick="modalNovoArquivo.show()" rendered="#{!viewOnly}"/>
+	<p:commandButton value="Configurações" icon="ui-icon-gear" styleClass="btn" onclick="modalConfigDisk.show()" rendered="#{!viewOnly}"/>		
 		
 	<p:dataTable var="arquivo" value="#{maquinaSessaoController.sistemaArquivo.allFiles}" id="dataFat" emptyMessage="Nenhum item encontrado.">
 		<f:facet name="header">
@@ -22,7 +32,7 @@
         <p:column headerText="Nome" width="65%">
         	<b><h:outputText value="#{arquivo.fileName}" style="color: ##{arquivo.color}"/></b>
         </p:column>
-        <p:column headerText="Iniciar" width="15%" rendered="#{!viewOnly}">
+        <p:column headerText="Ações" width="15%" rendered="#{!viewOnly}">
         	<p:commandButton icon="ui-icon-trash" title="Excluir" actionListener="#{maquinaSessaoController.deleteFile(arquivo.fileID)}" update=":formSimulacao :formSimulacaoMessage" />
         </p:column>
     </p:dataTable>
