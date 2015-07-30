@@ -6,7 +6,6 @@
 
 package br.edu.ifba.swso.business.virtualmachine.cpu;
 
-import br.edu.ifba.swso.business.abstractions.ByteSWSO;
 import br.edu.ifba.swso.business.abstractions.Word;
 /**
  * 
@@ -20,10 +19,6 @@ public class InstructionRegister {
 		instruction = argNewWord;
 	}
 
-	protected void modifyValue(Object newValue) {
-		instruction = new Word((ByteSWSO[]) newValue);
-	}
-	
 	public Word realValue() {
 		return instruction;
 	}

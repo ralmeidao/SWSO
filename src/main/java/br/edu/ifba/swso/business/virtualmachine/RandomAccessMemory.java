@@ -1,4 +1,4 @@
-package br.edu.ifba.swso.business.virtualmachine.cpu;
+package br.edu.ifba.swso.business.virtualmachine;
 
 import java.math.BigDecimal;
 

@@ -10,8 +10,8 @@ public class ProgramCounter {
 	private int currentValue = -1;
 
 
-	public void modifyRealValue(Object argiNewValue) {
-		currentValue = (Integer) argiNewValue;
+	public void modifyRealValue(Integer argiNewValue) {
+		currentValue =  argiNewValue;
 	}
 	
 	public int realValue() {

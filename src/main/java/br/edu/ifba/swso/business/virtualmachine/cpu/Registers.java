@@ -1,6 +1,5 @@
 package br.edu.ifba.swso.business.virtualmachine.cpu;
 
-import br.edu.ifba.swso.business.so.processmanager.Process;
 
 public class Registers {
 
