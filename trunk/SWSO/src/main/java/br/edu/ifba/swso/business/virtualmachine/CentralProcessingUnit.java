@@ -6,7 +6,6 @@ import br.edu.ifba.swso.business.so.memorymanager.PageTable;
 import br.edu.ifba.swso.business.virtualmachine.cpu.ArithmeticLogicUnit;
 import br.edu.ifba.swso.business.virtualmachine.cpu.ControlUnit;
 import br.edu.ifba.swso.business.virtualmachine.cpu.InstructionDecoder;
-import br.edu.ifba.swso.business.virtualmachine.cpu.RandomAccessMemory;
 import br.edu.ifba.swso.business.virtualmachine.cpu.Registers;
 
 
