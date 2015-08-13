@@ -2,6 +2,7 @@ package br.edu.ifba.swso.controller;
 
 import java.io.Serializable;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
@@ -12,6 +13,7 @@ import org.primefaces.model.UploadedFile;
 import br.edu.ifba.swso.algorithms.impl.disk.FCFS;
 import br.edu.ifba.swso.algorithms.impl.disk.SSTF;
 import br.edu.ifba.swso.algorithms.interfaces.IDiskScheduler;
+import br.edu.ifba.swso.business.VirtualMachineParameters;
 import br.edu.ifba.swso.business.abstractions.File;
 import br.edu.ifba.swso.business.abstractions.FileInput;
 import br.edu.ifba.swso.business.abstractions.Word;
@@ -31,19 +33,18 @@ public class MaquinaSessaoController extends BaseController implements Serializa
 
 	private static final long serialVersionUID = 1L;
 	
+	@Inject
+	private ApplicationController applicationController;
 	
 	//BUSSINESS - START
 	private CoreVirtualMachine coreVirtualMachine;
 	
 	private OperatingSystem operatingSystem;
+	
+	private VirtualMachineParameters virtualMachineParameters;
 	//BUSSINESS - END
 	
 	//DATE OF VIEW - START
-	@Inject
-	private ApplicationController applicationController;
-	
-	private String name;
-	
 	private UploadedFile uploadFile;
 	
 	private String color;
@@ -60,22 +61,27 @@ public class MaquinaSessaoController extends BaseController implements Serializa
 	
 	private PageTable pageTable;
 	
-	private IDiskScheduler[] arrayDiskSchedule = {new SSTF(), new FCFS()};
+	private IDiskScheduler[] arrayDiskSchedule;
 	// DATE OF VIEW - END
 
+	@PostConstruct
+	public void init() {
+		virtualMachineParameters = new VirtualMachineParameters();
+		arrayDiskSchedule = new IDiskScheduler[]{new SSTF(virtualMachineParameters), new FCFS(virtualMachineParameters)};
+	}
+	
 	@PreDestroy
 	public void destroy() {
-		applicationController.getMaquinasAtivas().remove(name);
+		applicationController.getMaquinasAtivas().remove(virtualMachineParameters.getName());
 	}
 	
 	public String initSimulation() {
 		if(validarName()) {
-			diskSchedule = new SSTF();
-			coreVirtualMachine = new CoreVirtualMachine();
+			diskSchedule = arrayDiskSchedule[0];
+			coreVirtualMachine = new CoreVirtualMachine(virtualMachineParameters);
 			operatingSystem = new OperatingSystem(coreVirtualMachine);
 			operatingSystem.setDiskSchedule(diskSchedule);
-
-			applicationController.getMaquinasAtivas().put(name, this);
+			applicationController.getMaquinasAtivas().put(virtualMachineParameters.getName(), this);
 			
 			return includeRedirect("/paginas/simulacao/simulacao");
 		}
@@ -85,7 +91,7 @@ public class MaquinaSessaoController extends BaseController implements Serializa
 	
 	public String searchSimulation() {
 		if(searchMachine()) {
-			MaquinaSessaoController maquina = applicationController.getMaquinasAtivas().get(name);
+			MaquinaSessaoController maquina = applicationController.getMaquinasAtivas().get(virtualMachineParameters.getName());
 			diskSchedule = maquina.getDiskSchedule();
 			coreVirtualMachine = maquina.getCoreVirtualMachine();
 			operatingSystem = maquina.getOperatingSystem();
@@ -169,11 +175,11 @@ public class MaquinaSessaoController extends BaseController implements Serializa
 	
 	private boolean validarName() {
 		String message = "";
-		if(Util.isNullOuVazio(name)) {
+		if(Util.isNullOuVazio(virtualMachineParameters.getName())) {
 			message += "É necessário informar o nome da máquina!";
 			facesMessager.addMessageError(message);
 			return false;
-		} else if (applicationController.getMaquinasAtivas().containsKey(name)) {
+		} else if (applicationController.getMaquinasAtivas().containsKey(virtualMachineParameters.getName())) {
 			message += "Já existe uma máquina executando com o nome informado.";
 			facesMessager.addMessageError(message);
 			return false;
@@ -183,7 +189,7 @@ public class MaquinaSessaoController extends BaseController implements Serializa
 	
 	private boolean searchMachine() {
 		String message = "";
-		if(!applicationController.getMaquinasAtivas().containsKey(name)) {
+		if(!applicationController.getMaquinasAtivas().containsKey(virtualMachineParameters.getName())) {
 			message += "A máquina informada não existe!";
 			facesMessager.addMessageError(message);
 			return false;
@@ -212,12 +218,20 @@ public class MaquinaSessaoController extends BaseController implements Serializa
 		return operatingSystem.getFileSystem();
 	}
 	
+	public VirtualMachineParameters getVirtualMachineParameters() {
+		return virtualMachineParameters;
+	}
+
+	public void setVirtualMachineParameters(VirtualMachineParameters virtualMachineParameters) {
+		this.virtualMachineParameters = virtualMachineParameters;
+	}
+
 	public String getName() {
-		return name;
+		return virtualMachineParameters.getName();
 	}
 
 	public void setName(String name) {
-		this.name = name;
+		this.virtualMachineParameters.setName(name);
 	}
 
 	public UploadedFile getUploadFile() {

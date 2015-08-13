@@ -24,6 +24,11 @@
 			</h:panelGroup>
 	        
 			<p:tabView activeIndex="#{maquinaSessaoController.activeAba}">
+				<!-- DASHBOARD -->
+		        <p:tab title="Dashboard">
+				    
+		        </p:tab>
+			
 		        <!-- DISCO -->
 		        <p:tab title="Disco">
 				    <ui:include src="/paginas/simulacao/disco/aba-disco.xhtml" />
@@ -77,15 +82,13 @@
 		</p:dialog>
 		
 		<!-- SIMULAÇÃO DE DISCO -->
-		<p:dialog id="simulacao-disco" widgetVar="modalSimulationDisk" header="Simulação de Disco" width="600px" height="auto" resizable="false" modal="true">
+		<p:dialog id="simulacao-disco" widgetVar="modalSimulationDisk" header="Cilindros requisitados" width="415px" height="auto" resizable="false" modal="true">
 			<h:form id="simulDiskForm">
 				<p:panelGrid columns="1" styleClass="panelgrid" id="panelSimulDisk">
-					<p:outputLabel value="Simulação">
-						<br/>
-						<p:inputText value="#{maquinaSessaoController.movimentacaoSimulada}" styleClass="tam_g" />
-					</p:outputLabel>
+					<p:inputText value="#{maquinaSessaoController.movimentacaoSimulada}" style="width: 360px;"/>
 					<p:commandButton value="Simular" ajax="false" id="btnSimular" actionListener="#{maquinaSessaoController.simularMovimentacao}" />
 				</p:panelGrid>
+				<p style="color: red;"><b>*</b> Devem ser informados números de 1 à 9 separados por virgulas.</p>
 			</h:form>
 		</p:dialog>
 		

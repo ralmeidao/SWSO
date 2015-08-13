@@ -16,16 +16,15 @@ public class MemoryManagementUnit {
 
 	public Word getWord(int index) {
 		int paginaLogica = index/Constantes.BYTE_PER_PAGE;
-		int deslocamento = index % Constantes.BYTE_PER_PAGE;
 		
 		ETP etp = cpu.getPageTable().getEtp(paginaLogica);
 		
 		if (etp.getBitV() == '0') {
 			//PAGE FAULT
 		} else {
+			int deslocamento = index % Constantes.BYTE_PER_PAGE;
 			return randomAccessMemory.getWord((etp.getPpr() * Constantes.BYTE_PER_PAGE) + deslocamento);
 		}
-		
 		
 		return null;
 	}

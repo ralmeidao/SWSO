@@ -1,14 +1,14 @@
 package br.edu.ifba.swso.business.virtualmachine.harddisk;
 
-import br.edu.ifba.swso.util.Constantes;
+import br.edu.ifba.swso.business.VirtualMachineParameters;
 
 public class Plate {
 	private final Track[] tracks;
 	
-	public Plate() {
-		tracks = new Track[Constantes.PLATE_SIZE];
+	public Plate(VirtualMachineParameters virtualMachineParameters) {
+		tracks = new Track[virtualMachineParameters.getPlateSize()];
 		for (int i = 0; i < tracks.length; i++) {
-			tracks[i] = new Track();
+			tracks[i] = new Track(virtualMachineParameters);
 		}
 	}
 

@@ -1,15 +1,15 @@
 package br.edu.ifba.swso.business.virtualmachine.harddisk;
 
+import br.edu.ifba.swso.business.VirtualMachineParameters;
 import br.edu.ifba.swso.business.abstractions.ByteSWSO;
-import br.edu.ifba.swso.util.Constantes;
 
 public class Sector {
 	private final ByteSWSO[] sector;
 	
 	private boolean empty;
 
-	public Sector() {
-		sector = new ByteSWSO[Constantes.SECTOR_SIZE];
+	public Sector(VirtualMachineParameters virtualMachineParameters) {
+		sector = new ByteSWSO[virtualMachineParameters.getSectorSize()];
 		empty = true;
 	}
 

@@ -3,21 +3,23 @@ package br.edu.ifba.swso.business.virtualmachine.harddisk;
 import java.util.LinkedList;
 import java.util.List;
 
+import br.edu.ifba.swso.business.VirtualMachineParameters;
 import br.edu.ifba.swso.business.abstractions.ByteSWSO;
 import br.edu.ifba.swso.display.MovimentoCabecoteHD;
-import br.edu.ifba.swso.util.Constantes;
 
 public class HardDisk {
 
 	private final Plate[] hd;
 	private final List<MovimentoCabecoteHD> listMoveReaderHead;
 	private int positionReaderHead = 0;
+	private VirtualMachineParameters virtualMachineParameters; 
 	
-	public HardDisk() {
+	public HardDisk(VirtualMachineParameters virtualMachineParameters) {
+		this.virtualMachineParameters = virtualMachineParameters;
 		listMoveReaderHead = new LinkedList<MovimentoCabecoteHD>();
-		hd = new Plate[Constantes.DISK_SIZE];
+		hd = new Plate[virtualMachineParameters.getDiskSize()];
 		for (int i = 0; i < hd.length; i++) {
-			hd[i] = new Plate();
+			hd[i] = new Plate(virtualMachineParameters);
 		}
 	}
 
@@ -34,15 +36,15 @@ public class HardDisk {
 	}
 
 	private int getPlate(int nSector) {
-		return  nSector / (Constantes.TRACK_SIZE * Constantes.PLATE_SIZE);
+		return  nSector / (getTrackSize() * virtualMachineParameters.getPlateSize());
 	}
 	
 	private int getTrack(int sector) {
-		return (sector % (Constantes.TRACK_SIZE * Constantes.PLATE_SIZE))/Constantes.TRACK_SIZE;
+		return (sector % (getTrackSize()* virtualMachineParameters.getPlateSize()))/getTrackSize();
 	}
 
 	private int getPosition(int sector) {
-		return (sector % (Constantes.TRACK_SIZE * Constantes.PLATE_SIZE))%Constantes.TRACK_SIZE;
+		return (sector % (getTrackSize() * virtualMachineParameters.getPlateSize()))%getTrackSize();
 	}
 	
 	private Sector getSector(int nSector) {
@@ -68,6 +70,18 @@ public class HardDisk {
 
 	public int getPositionReaderHead() {
 		return positionReaderHead;
+	}
+
+	public int getNSetores() {
+		return virtualMachineParameters.getDiskSize() * virtualMachineParameters.getPlateSize() * getTrackSize();
+	}
+
+	public int getTrackSize() {
+		return virtualMachineParameters.getTrackSize();
+	}
+
+	public int getSectorSize() {
+		return virtualMachineParameters.getSectorSize();
 	}
 	
 }

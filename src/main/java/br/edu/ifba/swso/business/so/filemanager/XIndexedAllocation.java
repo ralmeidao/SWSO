@@ -12,7 +12,6 @@ import br.edu.ifba.swso.business.abstractions.ByteSWSO;
 import br.edu.ifba.swso.business.abstractions.File;
 import br.edu.ifba.swso.business.abstractions.FileInput;
 import br.edu.ifba.swso.business.virtualmachine.harddisk.HardDisk;
-import br.edu.ifba.swso.util.Constantes;
 
 /**
  * @author Ramon
@@ -25,12 +24,14 @@ public class XIndexedAllocation implements IFileSystem {
 	private final HardDisk hardDisk;
 	private final List<Integer> listaSetoresLivres;
 	private int ultimoId = 0;
-	private final int nSetores = Constantes.DISK_SIZE * Constantes.PLATE_SIZE * Constantes.TRACK_SIZE;
+	private int nSetores;
 	
 	public XIndexedAllocation(HardDisk hardDisk) {
-		this.listaFile = new HashMap<Integer, File>();
 		this.hardDisk = hardDisk;
+		this.nSetores = this.hardDisk.getNSetores();
+		this.listaFile = new HashMap<Integer, File>();
 		this.listaSetoresLivres = createListOfBlankSpaces();
+		
 	}
 	
 	private List<Integer> createListOfBlankSpaces() {
@@ -47,7 +48,7 @@ public class XIndexedAllocation implements IFileSystem {
 			int[] simulatorSectorsList = new int[array.length]; 
 
 			for (int i = 0; i < array.length; i++) {
-				simulatorSectorsList[i] = Integer.parseInt(array[i]) * Constantes.TRACK_SIZE;
+				simulatorSectorsList[i] = Integer.parseInt(array[i]) * hardDisk.getTrackSize();
 			}
 			
 			int[] sectorsReordered = diskScheduler.escalonar(simulatorSectorsList, hardDisk.getPositionReaderHead());
@@ -75,7 +76,7 @@ public class XIndexedAllocation implements IFileSystem {
 		
 		for (ByteSWSO byTe : fileinput.getListaInstrucoes()) {
 			if (newSector == null) {
-				newSector = new ByteSWSO[Constantes.SECTOR_SIZE];
+				newSector = new ByteSWSO[hardDisk.getSectorSize()];
 			}
 			newSector[i] = byTe;
 
@@ -101,8 +102,8 @@ public class XIndexedAllocation implements IFileSystem {
 	
 	public int[] freeSectorsList(int qtdInstrucoes) {
 		
-		int qtdSetores = qtdInstrucoes/Constantes.SECTOR_SIZE;
-		qtdSetores = (qtdInstrucoes % Constantes.SECTOR_SIZE) == 0 ? qtdSetores : qtdSetores+1;
+		int qtdSetores = qtdInstrucoes/hardDisk.getSectorSize();
+		qtdSetores = (qtdInstrucoes % hardDisk.getSectorSize()) == 0 ? qtdSetores : qtdSetores+1;
 		
 		int[] freeSectorsList = new int[qtdSetores];
 		

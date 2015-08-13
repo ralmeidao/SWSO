@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import br.edu.ifba.swso.business.VirtualMachineParameters;
 import br.edu.ifba.swso.business.so.memorymanager.exception.InvalidPositionException;
 import br.edu.ifba.swso.business.so.memorymanager.exception.MemoryFullException;
 import br.edu.ifba.swso.business.so.memorymanager.exception.PageNotFoundException;
@@ -43,7 +44,7 @@ public class MemoryManager {
 		
 		int nPaginas = (process.getQuantidadeInstrucoes()*2)/Constantes.BYTE_PER_PAGE;
 		
-		int setoresPorPaginas = Constantes.BYTE_PER_PAGE/Constantes.SECTOR_SIZE;
+		int setoresPorPaginas = getVirtualMachineParameters().getBytePerPage()/getVirtualMachineParameters().getSectorSize();
 		
 		if ((process.getQuantidadeInstrucoes()*2) % Constantes.BYTE_PER_PAGE != 0) {
 			nPaginas++;
@@ -93,4 +94,7 @@ public class MemoryManager {
 		}
 	}
 	
+	public VirtualMachineParameters getVirtualMachineParameters() {
+		return coreVirtualMachine.getVirtualMachineParameters();
+	}
 }
