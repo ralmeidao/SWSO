@@ -6,13 +6,13 @@ import javax.faces.bean.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import br.edu.ifba.swso.business.VirtualMachineParameters;
 import br.edu.ifba.swso.business.abstractions.File;
 import br.edu.ifba.swso.business.so.filemanager.IFileSystem;
 import br.edu.ifba.swso.business.virtualmachine.harddisk.HardDisk;
 import br.edu.ifba.swso.business.virtualmachine.harddisk.Plate;
 import br.edu.ifba.swso.business.virtualmachine.harddisk.Track;
 import br.edu.ifba.swso.display.MovimentoCabecoteHD;
-import br.edu.ifba.swso.util.Constantes;
 
 /**
  * @author Ramon
@@ -62,7 +62,7 @@ public class DiscoController implements Serializable {
 		for (Track track : plate.getTracks()) {
 			String color = "new Array(";
 			for (int k = 0; k < track.getSectors().length; k++) {
-				color += "\"#"+obterArquivo((i * Constantes.PLATE_SIZE * Constantes.TRACK_SIZE ) + (j*Constantes.TRACK_SIZE) + k).getColor()+"\"";
+				color += "\"#"+obterArquivo((i * getVirtualMachineParameters().getPlateSize() * getVirtualMachineParameters().getTrackSize()) + (j*getVirtualMachineParameters().getTrackSize()) + k).getColor()+"\"";
 				color+= (track.getSectors().length == k+1) ? ")" : ",";
 			}
 			script+= color + ", ";
@@ -134,7 +134,7 @@ public class DiscoController implements Serializable {
 	 * @return
 	 */
 	public int getDiskSize(){
-		return Constantes.DISK_SIZE * Constantes.PLATE_SIZE * Constantes.TRACK_SIZE * Constantes.SECTOR_SIZE;
+		return getVirtualMachineParameters().getDiskSize() * getVirtualMachineParameters().getPlateSize()* getVirtualMachineParameters().getTrackSize() * getSectorSize();
 	}
 	
 	
@@ -144,7 +144,7 @@ public class DiscoController implements Serializable {
 	 * @return
 	 */
 	public int getSectorSize(){
-		return Constantes.SECTOR_SIZE;
+		return getVirtualMachineParameters().getSectorSize();
 	}
 	
 	/**
@@ -163,6 +163,10 @@ public class DiscoController implements Serializable {
 	 */
 	public int getCanvasHeight(){
 		return 50 + getHardDisk().getListMoveReaderHead().size() * 20;
+	}
+	
+	private VirtualMachineParameters getVirtualMachineParameters() {
+		return maquinaSessaoController.getVirtualMachineParameters();
 	}
 	
 }

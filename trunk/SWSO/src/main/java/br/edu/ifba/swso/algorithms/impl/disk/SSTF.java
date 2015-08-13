@@ -1,15 +1,19 @@
 package br.edu.ifba.swso.algorithms.impl.disk;
 
 import br.edu.ifba.swso.algorithms.interfaces.IDiskScheduler;
-import br.edu.ifba.swso.util.Constantes;
+import br.edu.ifba.swso.business.VirtualMachineParameters;
 
 /**
  * @author Ramon
  *
  */
-public class SSTF implements IDiskScheduler {
+public class SSTF extends DiskScheduler implements IDiskScheduler {
 
 	private final String nome = "SSTF";
+	
+	public SSTF(VirtualMachineParameters virtualMachineParameters) {
+		super(virtualMachineParameters);
+	}
 	
 	@Override
 	public int[] escalonar(int[] queue, int initialCylinder) {
@@ -48,10 +52,17 @@ public class SSTF implements IDiskScheduler {
 	}
 	
 	private int getCylinder(int sector) {
-		return (sector % (Constantes.TRACK_SIZE * Constantes.PLATE_SIZE))/Constantes.TRACK_SIZE;
+		return (sector % (getTrackSize() * getPlateSize()))/getTrackSize();
 	}
 
-	
+	public VirtualMachineParameters getVirtualMachineParameters() {
+		return virtualMachineParameters;
+	}
+
+	public void setVirtualMachineParameters(VirtualMachineParameters virtualMachineParameters) {
+		this.virtualMachineParameters = virtualMachineParameters;
+	}
+
 	@Override
 	public String toString() {
 		return nome;

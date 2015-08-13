@@ -1,10 +1,16 @@
 package br.edu.ifba.swso.algorithms.impl.disk;
 
 import br.edu.ifba.swso.algorithms.interfaces.IDiskScheduler;
+import br.edu.ifba.swso.business.VirtualMachineParameters;
 
-public class FCFS implements IDiskScheduler {
+public class FCFS extends DiskScheduler implements IDiskScheduler {
+
+	public FCFS(VirtualMachineParameters virtualMachineParameters) {
+		super(virtualMachineParameters);
+	}
 
 	private final String nome = "FCFS";
+	
 	
 	@Override
 	public int[] escalonar(int[] freeSectorsList, int setorAtual) {

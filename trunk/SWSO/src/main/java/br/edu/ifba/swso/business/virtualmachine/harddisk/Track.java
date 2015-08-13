@@ -1,14 +1,14 @@
 package br.edu.ifba.swso.business.virtualmachine.harddisk;
 
-import br.edu.ifba.swso.util.Constantes;
+import br.edu.ifba.swso.business.VirtualMachineParameters;
 
 public class Track {
 	private final Sector[] sectors;
 
-	public Track() {
-		sectors = new Sector[Constantes.TRACK_SIZE];
+	public Track(VirtualMachineParameters virtualMachineParameters) {
+		sectors = new Sector[virtualMachineParameters.getTrackSize()];
 		for (int i = 0; i < sectors.length; i++) {
-			sectors[i] = new Sector();
+			sectors[i] = new Sector(virtualMachineParameters);
 		}
 	}
 	
