@@ -1,6 +1,7 @@
 package br.edu.ifba.swso.business.so;
 
 import br.edu.ifba.swso.algorithms.interfaces.IDiskScheduler;
+import br.edu.ifba.swso.algorithms.interfaces.IProcessesScheduler;
 import br.edu.ifba.swso.business.abstractions.File;
 import br.edu.ifba.swso.business.so.filemanager.IFileSystem;
 import br.edu.ifba.swso.business.so.filemanager.XIndexedAllocation;
@@ -14,6 +15,10 @@ public class OperatingSystem {
 	private IFileSystem fileSystem;
 	
 	private IDiskScheduler diskSchedule;
+	
+	private int timeslice;
+
+	private IProcessesScheduler processesScheduler;
 	
 	private MemoryManager memoryManager;
 	
@@ -57,11 +62,27 @@ public class OperatingSystem {
 	public void setDiskSchedule(IDiskScheduler diskSchedule) {
 		this.diskSchedule = diskSchedule;
 	}
+	
+	public IProcessesScheduler getProcessesScheduler() {
+		return processesScheduler;
+	}
+
+	public void setProcessesScheduler(IProcessesScheduler processesScheduler) {
+		this.processesScheduler = processesScheduler;
+	}
+	
+	public int getTimeslice() {
+		return timeslice;
+	}
+
+	public void setTimeslice(int timeslice) {
+		this.timeslice = timeslice;
+	}
 
 	public void execute() {
 		Process running = processManager.getEmExecucao();
 		
-		if (running.getPid() == -1 || (running.getTimeRunning() != 0 && running.getTimeRunning() % running.getTimeSlice() == 0)) {
+		if (running.getPid() == -1 || (running.getTimeRunning() != 0 && running.getTimeRunning() % timeslice == 0)) {
 			//TROCA DE CONTEXTO
 			running = processManager.escalonamento();
 			memoryManager.updatePageTable();

@@ -12,7 +12,9 @@ import org.primefaces.model.UploadedFile;
 
 import br.edu.ifba.swso.algorithms.impl.disk.FCFS;
 import br.edu.ifba.swso.algorithms.impl.disk.SSTF;
+import br.edu.ifba.swso.algorithms.impl.process.FIFO;
 import br.edu.ifba.swso.algorithms.interfaces.IDiskScheduler;
+import br.edu.ifba.swso.algorithms.interfaces.IProcessesScheduler;
 import br.edu.ifba.swso.business.VirtualMachineParameters;
 import br.edu.ifba.swso.business.abstractions.File;
 import br.edu.ifba.swso.business.abstractions.FileInput;
@@ -57,17 +59,25 @@ public class MaquinaSessaoController extends BaseController implements Serializa
 	
 	private IDiskScheduler diskSchedule;
 	
+	private IProcessesScheduler processesScheduler;
+	
 	private File file;
 	
 	private PageTable pageTable;
 	
 	private IDiskScheduler[] arrayDiskSchedule;
+	
+	private IProcessesScheduler[] arrayProcessesScheduler;
+	
+	private int timeslice = 5;
 	// DATE OF VIEW - END
 
 	@PostConstruct
 	public void init() {
 		virtualMachineParameters = new VirtualMachineParameters();
 		arrayDiskSchedule = new IDiskScheduler[]{new SSTF(virtualMachineParameters), new FCFS(virtualMachineParameters)};
+		arrayProcessesScheduler = new IProcessesScheduler[]{new FIFO()};
+		
 	}
 	
 	@PreDestroy
@@ -78,9 +88,14 @@ public class MaquinaSessaoController extends BaseController implements Serializa
 	public String initSimulation() {
 		if(validarName()) {
 			diskSchedule = arrayDiskSchedule[0];
+			processesScheduler = arrayProcessesScheduler[0];
 			coreVirtualMachine = new CoreVirtualMachine(virtualMachineParameters);
+			
 			operatingSystem = new OperatingSystem(coreVirtualMachine);
 			operatingSystem.setDiskSchedule(diskSchedule);
+			operatingSystem.setProcessesScheduler(processesScheduler);
+			operatingSystem.setTimeslice(timeslice);
+			
 			applicationController.getMaquinasAtivas().put(virtualMachineParameters.getName(), this);
 			
 			return includeRedirect("/paginas/simulacao/simulacao");
@@ -93,6 +108,7 @@ public class MaquinaSessaoController extends BaseController implements Serializa
 		if(searchMachine()) {
 			MaquinaSessaoController maquina = applicationController.getMaquinasAtivas().get(virtualMachineParameters.getName());
 			diskSchedule = maquina.getDiskSchedule();
+			processesScheduler = maquina.getProcessesScheduler();
 			coreVirtualMachine = maquina.getCoreVirtualMachine();
 			operatingSystem = maquina.getOperatingSystem();
 			return includeRedirect("/paginas/simulacao/simulacao-view-aluno");
@@ -122,7 +138,12 @@ public class MaquinaSessaoController extends BaseController implements Serializa
     }
     
     public void salvarConfiguracoes() {
-    	getOperatingSystem().setDiskSchedule(diskSchedule);
+    	operatingSystem.setDiskSchedule(diskSchedule);
+    }
+    
+    public void salvarConfiguracoesProcesso() {
+    	operatingSystem.setProcessesScheduler(processesScheduler);
+    	operatingSystem.setTimeslice(timeslice);
     }
     
     public void deleteFile(Integer id) {
@@ -266,6 +287,30 @@ public class MaquinaSessaoController extends BaseController implements Serializa
 		this.arrayDiskSchedule = arrayDiskSchedule;
 	}
 
+	public IProcessesScheduler getProcessesScheduler() {
+		return processesScheduler;
+	}
+
+	public void setProcessesScheduler(IProcessesScheduler processesScheduler) {
+		this.processesScheduler = processesScheduler;
+	}
+	
+	public IProcessesScheduler[] getArrayProcessesScheduler() {
+		return arrayProcessesScheduler;
+	}
+
+	public void setArrayProcessesScheduler(IProcessesScheduler[] arrayProcessesScheduler) {
+		this.arrayProcessesScheduler = arrayProcessesScheduler;
+	}
+
+	public int getTimeslice() {
+		return timeslice;
+	}
+
+	public void setTimeslice(int timeslice) {
+		this.timeslice = timeslice;
+	}
+
 	public String getColor() {
 		return color;
 	}
@@ -309,5 +354,5 @@ public class MaquinaSessaoController extends BaseController implements Serializa
 	public void setPageTable(PageTable pageTable) {
 		this.pageTable = pageTable;
 	}
-	
+
 }

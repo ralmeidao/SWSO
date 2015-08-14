@@ -26,7 +26,9 @@
         	</p:outputLabel>
        	</p:panelGrid>
 	</p:fieldset>
+	
 	<p:commandButton value="Criar Processo" icon="ui-icon-plus" styleClass="btn" onclick="modalNovoProcesso.show()" rendered="#{!viewOnly}"/>
+	<p:commandButton value="Configurações" icon="ui-icon-gear" styleClass="btn" onclick="modalConfigProcess.show()" rendered="#{!viewOnly}"/>
 	
 	<p:dataTable var="processo" value="#{maquinaSessaoController.operatingSystem.processManager.tabelaProcesso}" id="processTable" emptyMessage="Nenhum item encontrado.">
 		<f:facet name="header">
@@ -50,8 +52,26 @@
         <p:column headerText="Estado" width="10%">
         	<h:outputText value="#{processo.state}"/>
         </p:column>
-        <p:column headerText="" width="10%">
-        	<p:commandButton value="" icon="ui-icon-clipboard" styleClass="btn" action="#{maquinaSessaoController.abrirModalPbc(processo.pid)}" style=""/>
+        <p:column headerText="Ações" width="10%">
+        	<p:commandButton title="Tabela de Páginas" 
+        		icon="ui-icon-clipboard" 
+        		styleClass="btn" 
+        		action="#{maquinaSessaoController.abrirModalPbc(processo.pid)}" 
+        		style="width: 30px; height: 30px;"/>
+			
+			<p:commandButton title="Bloquear Processo" 
+        		icon="ui-icon-cancel"
+        		styleClass="btn" 
+        		rendered="#{processo.running}" 
+        		action="#{maquinaSessaoController.abrirModalPbc(processo.pid)}"
+        		style="width: 30px; height: 30px;"/>
+        	
+        	<p:commandButton title="Liberar Processo"
+        		icon="ui-icon-play"
+        		styleClass="btn" 
+        		action="#{maquinaSessaoController.abrirModalPbc(processo.pid)}"
+        		rendered="#{processo.blocked}"
+        		style="width: 30px; height: 30px;"/>
         </p:column>
     </p:dataTable>
 </html>

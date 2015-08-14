@@ -13,7 +13,6 @@ public class Process {
 	private ProcessStateEnum state; // TODO CRIAR ENUM
 	private long timeInitCpu;
 
-	private int timeSlice;
 	private int timeRunning;
 
 	private int pc;
@@ -27,7 +26,6 @@ public class Process {
 	
 	public Process() {
 		this.priority = Constantes.PRIORITY_INITIAL;
-		this.timeSlice = Constantes.TIME_SLICE;
 		this.state = ProcessStateEnum.PRONTO;
 		this.timeInitCpu = 0;
 		this.timeRunning = 0;
@@ -91,14 +89,6 @@ public class Process {
 		this.timeRunning = timeRunning;
 	}
 
-	public int getTimeSlice() {
-		return timeSlice;
-	}
-
-	public void setTimeSlice(int timeSlice) {
-		this.timeSlice = timeSlice;
-	}
-
 	public int getTimeRunning() {
 		return timeRunning;
 	}
@@ -149,5 +139,13 @@ public class Process {
 
 	public void setFile(File file) {
 		File = file;
+	}
+	
+	public boolean isBlocked() {
+		return ProcessStateEnum.BLOQUEADO.equals(state);
+	}
+	
+	public boolean isRunning() {
+		return ProcessStateEnum.EXECUTANDO.equals(state);
 	}
 }
