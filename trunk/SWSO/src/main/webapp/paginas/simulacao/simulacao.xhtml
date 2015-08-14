@@ -26,7 +26,7 @@
 			<p:tabView activeIndex="#{maquinaSessaoController.activeAba}">
 				<!-- DASHBOARD -->
 		        <p:tab title="Dashboard">
-				    
+
 		        </p:tab>
 			
 		        <!-- DISCO -->
@@ -67,7 +67,7 @@
 		</p:dialog>
 		
 		<!-- CONFIGURAÇÕES DE DISCO -->
-		<p:dialog id="configuracoes-disco" widgetVar="modalConfigDisk" header="Configurações de Disco" width="600px" height="auto" resizable="false" modal="true">
+		<p:dialog id="configuracoes-disco" widgetVar="modalConfigDisk" header="Configurações de Disco" width="300px" height="auto" resizable="false" modal="true">
 			<h:form id="configDiskForm">
 				<p:panelGrid columns="1" styleClass="panelgrid" id="panelConfigDisk">
 					<p:outputLabel value="Algoritmo">
@@ -77,6 +77,26 @@
 						</p:selectOneMenu>			
 					</p:outputLabel>
 					<p:commandButton value="Confirmar" ajax="false" id="btnOk" actionListener="#{maquinaSessaoController.salvarConfiguracoes}" />
+				</p:panelGrid>
+			</h:form>
+		</p:dialog>
+
+		<!-- CONFIGURAÇÕES DE PROCESSO -->
+		<p:dialog id="configuracoes-processo" widgetVar="modalConfigProcess" header="Configurações do Gerenciador de Processo" width="450px" height="auto" resizable="false" modal="true">
+			<h:form id="configProcessManagerForm">
+				<p:panelGrid columns="1" styleClass="panelgrid" id="panelConfigDisk">
+					<p:outputLabel value="Algoritmo">
+						<br/>
+						<p:selectOneMenu id="selectProcessesSchedule" value="#{maquinaSessaoController.processesScheduler}" styleClass="tam_m" converter="omnifaces.SelectItemsConverter">
+							<f:selectItems value="#{maquinaSessaoController.arrayProcessesScheduler}" var="algorithm" itemLabel="#{algorithm}" itemValue="#{algorithm}"/>
+						</p:selectOneMenu>			
+					</p:outputLabel>
+					<p:outputLabel>
+				        <h:outputText id="output" value="Timeslice: #{maquinaSessaoController.timeslice}" />
+				        <h:inputHidden id="timeslice" value="#{maquinaSessaoController.timeslice}" />
+				        <p:slider minValue="1" maxValue="10" for="timeslice" display="output" style="width: 200px" displayTemplate="Timeslice: {value}" />
+					</p:outputLabel>
+					<p:commandButton value="Confirmar" ajax="false" id="btnOk" actionListener="#{maquinaSessaoController.salvarConfiguracoesProcesso}" />
 				</p:panelGrid>
 			</h:form>
 		</p:dialog>
