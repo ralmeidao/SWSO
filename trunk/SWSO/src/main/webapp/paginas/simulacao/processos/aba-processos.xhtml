@@ -55,23 +55,43 @@
         <p:column headerText="Ações" width="10%">
         	<p:commandButton title="Tabela de Páginas" 
         		icon="ui-icon-clipboard" 
-        		styleClass="btn" 
-        		action="#{maquinaSessaoController.abrirModalPbc(processo.pid)}" 
+        		action="#{processoController.abrirModalPbc(processo.pid)}" 
         		style="width: 30px; height: 30px;"/>
-			
+        		
 			<p:commandButton title="Bloquear Processo" 
         		icon="ui-icon-cancel"
-        		styleClass="btn" 
         		rendered="#{processo.running}" 
-        		action="#{maquinaSessaoController.abrirModalPbc(processo.pid)}"
+        		action="#{processoController.abrirModalPbc(processo.pid)}"
         		style="width: 30px; height: 30px;"/>
         	
         	<p:commandButton title="Liberar Processo"
         		icon="ui-icon-play"
-        		styleClass="btn" 
-        		action="#{maquinaSessaoController.abrirModalPbc(processo.pid)}"
+        		action="#{processoController.abrirModalPbc(processo.pid)}"
         		rendered="#{processo.blocked}"
         		style="width: 30px; height: 30px;"/>
         </p:column>
     </p:dataTable>
+    
+	<div class="ui-datatable-tablewrapper processos-table-outter wrapper">
+		<table class="processos-table inner">
+			<thead>
+			<tr>
+				<th class="ui-state-default processos-table-th-processo">Processos\Tempo</th>
+				<ui:repeat varStatus="count" value="#{maquinaSessaoController.timelineDisplay.listaIds}">
+					<th class="ui-state-default processos-table-th-time">#{count.index + 1}</th>
+				</ui:repeat>
+			</tr>
+			</thead>
+			<tbody class="ui-datatable-data ui-widget-content">
+				<ui:repeat varStatus="count" var="processo" value="#{maquinaSessaoController.timelineDisplay.listaProcesso}">
+					<tr class="ui-widget-content">
+						<td>#{processo.nome}</td>
+						<ui:repeat varStatus="count" var="pid" value="#{maquinaSessaoController.timelineDisplay.listaIds}">
+							<td style="background: ##{processo.pid == pid ? processo.file.color : 'FFFFFF'}" />
+						</ui:repeat>
+					</tr>
+				</ui:repeat>
+			</tbody>
+		</table>
+	</div>
 </html>

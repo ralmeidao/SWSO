@@ -224,3 +224,28 @@ legend {
 .min-width750px{
 	min-width: 750px;
 }
+
+
+.processos-table-outter {
+	overflow-x: scroll;
+}
+
+.processos-table {
+	table-layout: fixed;
+	margin: 40px auto 0px auto;
+	min-width: 100%;
+}
+
+.processos-table,td,th {
+	border-collapse: collapse;
+	border: 1px solid;
+	border-color: inherit;
+}
+
+.processos-table-th-processo {
+	min-width: 100px;
+}
+
+.processos-table-th-time {
+	min-width: 25px;
+}

@@ -11,7 +11,7 @@
 			
 		</div> -->
 		<p:panelGrid columns="1" styleClass="panelgrid" id="panelConfigDisk">
-			<b>Algoritmo:</b> #{maquinaSessaoController.diskSchedule} |	
+			<b>Algoritmo:</b> #{discoController.diskSchedule} |	
 			<b>Tamanho do disco:</b> #{discoController.diskSize/1024} KB. | 
 			<b>Tamanho do setor:</b> #{discoController.sectorSize} bytes | 
 			<b>Quantidade de setores:</b> #{discoController.qtdSectors} |
@@ -22,7 +22,7 @@
 	<p:commandButton value="Criar Arquivo" icon="ui-icon-plus" styleClass="btn" onclick="modalNovoArquivo.show()" rendered="#{!viewOnly}"/>
 	<p:commandButton value="Configurações" icon="ui-icon-gear" styleClass="btn" onclick="modalConfigDisk.show()" rendered="#{!viewOnly}"/>		
 		
-	<p:dataTable var="arquivo" value="#{maquinaSessaoController.sistemaArquivo.allFiles}" id="dataFat" emptyMessage="Nenhum item encontrado.">
+	<p:dataTable var="arquivo" value="#{discoController.sistemaArquivo.allFiles}" id="dataFat" emptyMessage="Nenhum item encontrado.">
 		<f:facet name="header">
 	        #{bundle['simulacao.title.tabela.arquivo']}
 	    </f:facet>
@@ -33,7 +33,7 @@
         	<b><h:outputText value="#{arquivo.fileName}" style="color: ##{arquivo.color}"/></b>
         </p:column>
         <p:column headerText="Ações" width="15%" rendered="#{!viewOnly}">
-        	<p:commandButton icon="ui-icon-trash" title="Excluir" actionListener="#{maquinaSessaoController.deleteFile(arquivo.fileID)}" update=":formSimulacao :formSimulacaoMessage" />
+        	<p:commandButton icon="ui-icon-trash" title="Excluir" actionListener="#{discoController.deleteFile(arquivo.fileID)}" update=":formSimulacao :formSimulacaoMessage" />
         </p:column>
     </p:dataTable>
 
