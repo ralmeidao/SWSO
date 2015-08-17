@@ -9,10 +9,7 @@
 	<h:form id="modalPbcForm">
 		<p:messages id="dialogMessages" autoUpdate="false" escape="false"/>
 		
-		<p:dataTable var="etp" value="#{maquinaSessaoController.pageTable.listaEtp}" id="etp" emptyMessage="Nenhum item encontrado.">
-			<f:facet name="header">
-		        Tabela de Paginas do Processo
-		    </f:facet>
+		<p:dataTable var="etp" value="#{processoController.pageTable.listaEtp}" id="etp" emptyMessage="Nenhum item encontrado." scrollable="true" scrollHeight="350">
 	        <p:column headerText="PPV" width="05%">
 	        	<h:outputText value="#{etp.ppv}" />
 	        </p:column>

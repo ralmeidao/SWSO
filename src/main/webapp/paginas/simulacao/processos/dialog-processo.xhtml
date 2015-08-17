@@ -12,13 +12,13 @@
 		<p:panelGrid columns="1" styleClass="panelgrid" id="criarProcesso">	    	
 	    	<p:outputLabel value="Arquivos">
 	    		<br/>
-	    		<p:selectOneMenu id="selectArquivos" value="#{maquinaSessaoController.file}" panelStyleClass="listArquivos" converter="omnifaces.SelectItemsConverter">
+	    		<p:selectOneMenu id="selectArquivos" value="#{processoController.file}" panelStyleClass="listArquivos" converter="omnifaces.SelectItemsConverter">
 	    			<f:selectItem itemLabel="Selecione" 	noSelectionOption="true" />
-	    			<f:selectItems  value="#{maquinaSessaoController.sistemaArquivo.allFiles}" var="arquivo" itemLabel="#{arquivo.fileName}" itemValue="#{arquivo}" />
+	    			<f:selectItems  value="#{discoController.sistemaArquivo.allFiles}" var="arquivo" itemLabel="#{arquivo.fileName}" itemValue="#{arquivo}" />
 				</p:selectOneMenu>
 	    	</p:outputLabel>
     	
-			<p:commandButton value="Criar" ajax="false" id="btnCriar" actionListener="#{maquinaSessaoController.newProcess}" />
+			<p:commandButton value="Criar" ajax="false" id="btnCriar" actionListener="#{processoController.newProcess}" />
  		</p:panelGrid>
 	</h:form>
 </html>

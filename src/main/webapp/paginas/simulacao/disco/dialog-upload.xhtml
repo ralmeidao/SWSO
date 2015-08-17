@@ -13,12 +13,12 @@
 		<p:panelGrid columns="1" styleClass="panelgrid" id="criarProcesso">
 	    	<p:outputLabel value="Arquivo">
 	    		<br/>
-	    		<p:fileUpload value="#{maquinaSessaoController.uploadFile}" mode="simple" />
+	    		<p:fileUpload value="#{discoController.uploadFile}" mode="simple" />
 	    	</p:outputLabel>
 	    	
 	    	<p:outputLabel value="Cor de exibição">
 	    		<br/>
-	    		<p:selectOneMenu id="selectColors" styleClass="tam_m S#{maquinaSessaoController.color}" value="#{maquinaSessaoController.color}" panelStyleClass="listColor" >
+	    		<p:selectOneMenu id="selectColors" styleClass="tam_m S#{discoController.color}" value="#{discoController.color}" panelStyleClass="listColor" >
 	    			<p:ajax event="change" update=":#{p:component('colorPickerId')} @this" />
 					<f:selectItem itemLabel="Selecione" 	noSelectionOption="true" />
 		            <f:selectItem itemLabel="Azul" 			itemValue="0000FF" />
@@ -30,11 +30,11 @@
 				</p:selectOneMenu>
 				<h:panelGroup id="colorPickerId" style="vertical-align: top;" >
 					<p:spacer width="10" />
-	      			<p:colorPicker value="#{maquinaSessaoController.colorPersonalizar}"  immediate="true" rendered="#{maquinaSessaoController.color.equals('XXXXXX')}" />
+	      			<p:colorPicker value="#{discoController.colorPersonalizar}"  immediate="true" rendered="#{discoController.color.equals('XXXXXX')}" />
 	      		</h:panelGroup> 
 	    	</p:outputLabel>
     	
-			<p:commandButton value="Criar" ajax="false" id="btnCriar" actionListener="#{maquinaSessaoController.doUploadFile}" />
+			<p:commandButton value="Criar" ajax="false" id="btnCriar" actionListener="#{discoController.doUploadFile}" />
  		</p:panelGrid>
 	</h:form>
 </html>
