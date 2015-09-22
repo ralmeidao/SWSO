@@ -9,7 +9,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import br.edu.ifba.swso.business.VirtualMachineParameters;
-import br.edu.ifba.swso.business.so.OperatingSystem;
+import br.edu.ifba.swso.business.so.KernelOperatingSystem;
 import br.edu.ifba.swso.business.virtualmachine.CoreVirtualMachine;
 import br.edu.ifba.swso.display.TimelineDisplay;
 import br.edu.ifba.swso.util.Util;
@@ -29,7 +29,7 @@ public class MaquinaSessaoController extends BaseController implements Serializa
 	//BUSINESS - START
 	private CoreVirtualMachine coreVirtualMachine;
 	
-	private OperatingSystem operatingSystem;
+	private KernelOperatingSystem kernelOperatingSystem;
 	
 	private VirtualMachineParameters virtualMachineParameters;
 	
@@ -53,7 +53,7 @@ public class MaquinaSessaoController extends BaseController implements Serializa
 	public String initSimulation() {
 		if(validarName()) {
 			coreVirtualMachine = new CoreVirtualMachine(virtualMachineParameters);
-			operatingSystem = new OperatingSystem(coreVirtualMachine);
+			kernelOperatingSystem = new KernelOperatingSystem(coreVirtualMachine);
 			applicationController.getMaquinasAtivas().put(virtualMachineParameters.getName(), this);
 			return includeRedirect("/paginas/simulacao/simulacao");
 		}
@@ -65,7 +65,7 @@ public class MaquinaSessaoController extends BaseController implements Serializa
 		if(searchMachine()) {
 			MaquinaSessaoController maquina = applicationController.getMaquinasAtivas().get(virtualMachineParameters.getName());
 			coreVirtualMachine = maquina.getCoreVirtualMachine();
-			operatingSystem = maquina.getOperatingSystem();
+			kernelOperatingSystem = maquina.getOperatingSystem();
 			return includeRedirect("/paginas/simulacao/simulacao-view-aluno");
 		}
 		
@@ -73,9 +73,13 @@ public class MaquinaSessaoController extends BaseController implements Serializa
 	}
 	
 	public void executarCiclo() {
-		operatingSystem.execute();
+		kernelOperatingSystem.execute();
 		coreVirtualMachine.getCentralProcessingUnit().execute();
-		timelineDisplay.incrementList(operatingSystem.getProcessManager().getEmExecucao());
+		timelineDisplay.incrementList(kernelOperatingSystem.getProcessManager().getEmExecucao());
+		
+		if (coreVirtualMachine.getCentralProcessingUnit().getRegisters().getProgramCounter().realValue() == (kernelOperatingSystem.getProcessManager().getEmExecucao().getQuantidadeInstrucoes()*2)) {
+			kernelOperatingSystem.finalizarProcesso(kernelOperatingSystem.getProcessManager().getEmExecucao());	
+		}
 	}
 	
 	
@@ -132,8 +136,8 @@ public class MaquinaSessaoController extends BaseController implements Serializa
 		this.activeAba = activeAba;
 	}
 
-	public OperatingSystem getOperatingSystem() {
-		return operatingSystem;
+	public KernelOperatingSystem getOperatingSystem() {
+		return kernelOperatingSystem;
 	}
 
 	public TimelineDisplay getTimelineDisplay() {

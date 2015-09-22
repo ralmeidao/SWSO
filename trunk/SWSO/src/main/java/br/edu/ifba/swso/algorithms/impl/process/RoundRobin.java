@@ -5,11 +5,11 @@ import java.util.LinkedList;
 import br.edu.ifba.swso.algorithms.IProcessesScheduler;
 import br.edu.ifba.swso.business.so.processmanager.Process;
 
-public class FIFO implements IProcessesScheduler {
+public class RoundRobin implements IProcessesScheduler {
 	
-	private final String nome = "FIFO (Não Preemptivo)";
+	private final String nome = "Round Robin (Preemptivo)";
 
-	public FIFO() {
+	public RoundRobin() {
 	}
 	
 	@Override
@@ -19,12 +19,11 @@ public class FIFO implements IProcessesScheduler {
 
 	@Override
 	public boolean isPreemptivo() {
-		return false;
+		return true;
 	}
 	
 	@Override
 	public boolean isPrioridade() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 	
@@ -49,7 +48,7 @@ public class FIFO implements IProcessesScheduler {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		FIFO other = (FIFO) obj;
+		RoundRobin other = (RoundRobin) obj;
 		if (nome == null) {
 			if (other.nome != null)
 				return false;
@@ -57,5 +56,4 @@ public class FIFO implements IProcessesScheduler {
 			return false;
 		return true;
 	}
-
 }

@@ -1,6 +1,8 @@
 package br.edu.ifba.swso.display;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,7 +25,15 @@ public class TimelineDisplay {
 	}
 	
 	public List<Process> getListaProcesso() {
-		return new ArrayList<Process>(listaProcesso.values());
+		List<Process> lista = new ArrayList<Process>(listaProcesso.values());
+		Collections.sort(lista, new Comparator<Process>() {
+			@Override
+			public int compare(Process a, Process b) {
+				return a.getNome().compareTo(b.getNome());
+			}
+		});
+		lista.remove(new Process(-1));
+		return lista;
 	}
 
 	public void incrementList(Process processo) {

@@ -42,11 +42,11 @@ public class MemoryManager {
 	public void alocaProcesso(Process process) throws PageNotFoundException, InvalidPositionException, VirtualMemoryFullException, MemoryFullException {
 		PageTable pagetable = new PageTable(process.getPid());
 		
-		int nPaginas = (process.getQuantidadeInstrucoes()*2)/Constantes.BYTE_PER_PAGE;
+		int nPaginas = (process.getQuantidadeInstrucoes()*2)/getVirtualMachineParameters().getBytePerPage();
 		
 		int setoresPorPaginas = getVirtualMachineParameters().getBytePerPage()/getVirtualMachineParameters().getSectorSize();
 		
-		if ((process.getQuantidadeInstrucoes()*2) % Constantes.BYTE_PER_PAGE != 0) {
+		if ((process.getQuantidadeInstrucoes()*2) % getVirtualMachineParameters().getBytePerPage() != 0) {
 			nPaginas++;
 		}
 		
@@ -54,7 +54,9 @@ public class MemoryManager {
 			List<Integer> allocatedSectorsPerPage = new ArrayList<Integer>(setoresPorPaginas);
 			
 			for (int nSetor = 0; nSetor < setoresPorPaginas; nSetor++) {
-				allocatedSectorsPerPage.add(process.getFile().getAllocatedSectors().get((nPagina*setoresPorPaginas)+nSetor));
+				if (process.getFile().getAllocatedSectors().size() > ((nPagina*setoresPorPaginas)+nSetor)) {
+					allocatedSectorsPerPage.add(process.getFile().getAllocatedSectors().get((nPagina*setoresPorPaginas)+nSetor));
+				}
 			}
 			
 			int virtualPosition = virtualMemory.foundFreePosition();

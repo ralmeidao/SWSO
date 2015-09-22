@@ -9,8 +9,16 @@ body {
 
 label {
 	font-weight: bold;
+	color: #2779AA;
 }
 
+h3 {
+	color: #2779AA;
+}
+
+h2 {
+	color: #2779AA;
+}
 
 .header {
     height: 85px;
