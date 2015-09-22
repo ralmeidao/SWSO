@@ -1,6 +1,6 @@
 package br.edu.ifba.swso.algorithms.impl.disk;
 
-import br.edu.ifba.swso.algorithms.interfaces.IDiskScheduler;
+import br.edu.ifba.swso.algorithms.IDiskScheduler;
 import br.edu.ifba.swso.business.VirtualMachineParameters;
 
 public class FCFS extends DiskScheduler implements IDiskScheduler {
@@ -13,8 +13,8 @@ public class FCFS extends DiskScheduler implements IDiskScheduler {
 	
 	
 	@Override
-	public int[] escalonar(int[] freeSectorsList, int setorAtual) {
-		return freeSectorsList;
+	public int[] escalonar(int[] queue, int initialCylinder) {
+		return queue;
 	}
 
 	@Override
