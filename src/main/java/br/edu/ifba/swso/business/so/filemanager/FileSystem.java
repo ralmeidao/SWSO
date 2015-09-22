@@ -7,16 +7,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import br.edu.ifba.swso.algorithms.interfaces.IDiskScheduler;
+import br.edu.ifba.swso.algorithms.IDiskScheduler;
 import br.edu.ifba.swso.business.abstractions.ByteSWSO;
 import br.edu.ifba.swso.business.abstractions.File;
 import br.edu.ifba.swso.business.abstractions.FileInput;
+import br.edu.ifba.swso.business.virtualmachine.CoreVirtualMachine;
 import br.edu.ifba.swso.business.virtualmachine.harddisk.HardDisk;
 
 /**
  * @author Ramon
  */
-public class XIndexedAllocation implements IFileSystem {
+public class FileSystem implements IFileSystem {
 
 	private static final long serialVersionUID = 1L;
 
@@ -26,37 +27,12 @@ public class XIndexedAllocation implements IFileSystem {
 	private int ultimoId = 0;
 	private int nSetores;
 	
-	public XIndexedAllocation(HardDisk hardDisk) {
-		this.hardDisk = hardDisk;
+	public FileSystem(CoreVirtualMachine coreVirtualMachine) {
+		this.hardDisk = coreVirtualMachine.getHardDisk();
 		this.nSetores = this.hardDisk.getNSetores();
 		this.listaFile = new HashMap<Integer, File>();
 		this.listaSetoresLivres = createListOfBlankSpaces();
 		
-	}
-	
-	private List<Integer> createListOfBlankSpaces() {
-		List<Integer> listaSetoresLivres = new ArrayList<Integer>(nSetores);
-		for (int i = 0; i < nSetores; i++) {
-			listaSetoresLivres.add(i);
-		}
-		return listaSetoresLivres;
-	}
-
-	public void simularMovimentacao(String movimento, IDiskScheduler diskScheduler) {
-		if (movimento != null) {
-			String[] array = movimento.split(",");
-			int[] simulatorSectorsList = new int[array.length]; 
-
-			for (int i = 0; i < array.length; i++) {
-				simulatorSectorsList[i] = Integer.parseInt(array[i]) * hardDisk.getTrackSize();
-			}
-			
-			int[] sectorsReordered = diskScheduler.escalonar(simulatorSectorsList, hardDisk.getPositionReaderHead());
-			
-			for (int sector : sectorsReordered) {
-				hardDisk.moveReaderHead(sector/8);
-			}
-		}
 	}
 	
 	public void allocateFile(FileInput fileinput, IDiskScheduler diskScheduler) {
@@ -99,26 +75,6 @@ public class XIndexedAllocation implements IFileSystem {
 		this.listaFile.put(newFile.getFileID(), newFile);
 	}
 	
-	
-	public int[] freeSectorsList(int qtdInstrucoes) {
-		
-		int qtdSetores = qtdInstrucoes/hardDisk.getSectorSize();
-		qtdSetores = (qtdInstrucoes % hardDisk.getSectorSize()) == 0 ? qtdSetores : qtdSetores+1;
-		
-		int[] freeSectorsList = new int[qtdSetores];
-		
-		for (int i = 0; i < qtdSetores; i++) {
-			int sectorVazio = buscarSetorLivreDisco();
-			if (sectorVazio == -1) {
-				return null;
-			} else {
-				freeSectorsList[i] = sectorVazio;
-			}
-		}
-		
-		return freeSectorsList;
-	}
-
 	public void deallocateFile(int index) {
 		File file = this.listaFile.get(index);
 		for (Integer setor : file.getAllocatedSectors()) {
@@ -126,22 +82,6 @@ public class XIndexedAllocation implements IFileSystem {
 		}
 		Collections.sort(listaSetoresLivres);
 		this.listaFile.remove(index);
-	}
-
-	private int getNewIdFile() {
-		return ultimoId++;
-	}
-
-	private int buscarSetorLivreDisco() {
-		int nSector;
-		
-		if (listaSetoresLivres.size() > 0){
-			nSector = listaSetoresLivres.get(0);
-			listaSetoresLivres.remove(0);
-			return nSector;
-		} else {
-			return -1;
-		}
 	}
 	
 	public int seekIdFilePerSector(int nSector) {
@@ -162,9 +102,70 @@ public class XIndexedAllocation implements IFileSystem {
 		return null;
 	}
 
-	@Override
 	public  Collection<File> getAllFiles() {
 		return new ArrayList<File>(listaFile.values());
+	}	
+	
+	public void simularMovimentacao(String movimento, IDiskScheduler diskScheduler) {
+		if (movimento != null) {
+			String[] array = movimento.split(",");
+			int[] simulatorSectorsList = new int[array.length]; 
+
+			for (int i = 0; i < array.length; i++) {
+				simulatorSectorsList[i] = Integer.parseInt(array[i]) * hardDisk.getTrackSize();
+			}
+			
+			int[] sectorsReordered = diskScheduler.escalonar(simulatorSectorsList, hardDisk.getPositionReaderHead());
+			
+			for (int sector : sectorsReordered) {
+				hardDisk.moveReaderHead(sector/8);
+			}
+		}
 	}
+	
+	//MAPA DE BITS
+	public int[] freeSectorsList(int qtdInstrucoes) {
+		
+		int qtdSetores = qtdInstrucoes/hardDisk.getSectorSize();
+		qtdSetores = (qtdInstrucoes % hardDisk.getSectorSize()) == 0 ? qtdSetores : qtdSetores+1;
+		
+		int[] freeSectorsList = new int[qtdSetores];
+		
+		for (int i = 0; i < qtdSetores; i++) {
+			int sectorVazio = buscarSetorLivreDisco();
+			if (sectorVazio == -1) {
+				return null;
+			} else {
+				freeSectorsList[i] = sectorVazio;
+			}
+		}
+		
+		return freeSectorsList;
+	}
+
+	private int buscarSetorLivreDisco() {
+		int nSector;
+		
+		if (listaSetoresLivres.size() > 0){
+			nSector = listaSetoresLivres.get(0);
+			listaSetoresLivres.remove(0);
+			return nSector;
+		} else {
+			return -1;
+		}
+	}
+	
+	private int getNewIdFile() {
+		return ultimoId++;
+	}
+	
+	private List<Integer> createListOfBlankSpaces() {
+		List<Integer> listaSetoresLivres = new ArrayList<Integer>(nSetores);
+		for (int i = 0; i < nSetores; i++) {
+			listaSetoresLivres.add(i);
+		}
+		return listaSetoresLivres;
+	}
+
 	
 }
