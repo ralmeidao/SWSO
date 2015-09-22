@@ -1,6 +1,6 @@
 package br.edu.ifba.swso.algorithms.impl.disk;
 
-import br.edu.ifba.swso.algorithms.interfaces.IDiskScheduler;
+import br.edu.ifba.swso.algorithms.IDiskScheduler;
 import br.edu.ifba.swso.business.VirtualMachineParameters;
 
 /**
