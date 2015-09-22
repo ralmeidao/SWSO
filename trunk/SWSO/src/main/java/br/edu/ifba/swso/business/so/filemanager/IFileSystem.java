@@ -3,7 +3,7 @@ package br.edu.ifba.swso.business.so.filemanager;
 import java.io.Serializable;
 import java.util.Collection;
 
-import br.edu.ifba.swso.algorithms.interfaces.IDiskScheduler;
+import br.edu.ifba.swso.algorithms.IDiskScheduler;
 import br.edu.ifba.swso.business.abstractions.File;
 import br.edu.ifba.swso.business.abstractions.FileInput;
 
@@ -12,6 +12,8 @@ public interface IFileSystem extends Serializable {
 	public void deallocateFile(int index);
 	public int seekIdFilePerSector(int nSector);
 	public File seekFilePerId(int id);
+	
+	//Método utilizado para a exibição
 	public Collection<File> getAllFiles();
 	public void simularMovimentacao(String movimento, IDiskScheduler diskScheduler);
 }
