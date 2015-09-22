@@ -7,10 +7,11 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import br.edu.ifba.swso.algorithms.IProcessesScheduler;
 import br.edu.ifba.swso.algorithms.impl.process.FIFO;
-import br.edu.ifba.swso.algorithms.interfaces.IProcessesScheduler;
+import br.edu.ifba.swso.algorithms.impl.process.RoundRobin;
 import br.edu.ifba.swso.business.abstractions.File;
-import br.edu.ifba.swso.business.so.OperatingSystem;
+import br.edu.ifba.swso.business.so.KernelOperatingSystem;
 import br.edu.ifba.swso.business.so.memorymanager.PageTable;
 
 /**
@@ -28,7 +29,7 @@ public class ProcessoController extends BaseController implements Serializable {
 	@Inject
 	private MaquinaSessaoController maquinaSessaoController;
 	
-	private OperatingSystem operatingSystem;
+	private KernelOperatingSystem kernelOperatingSystem;
 	
 	private IProcessesScheduler processesScheduler;
 
@@ -40,30 +41,42 @@ public class ProcessoController extends BaseController implements Serializable {
 	
 	private PageTable pageTable;
 	
+	private int priority;
+	
 	@PostConstruct
 	public void init() {
 		this.timeslice = 5;
-		this.operatingSystem = maquinaSessaoController.getOperatingSystem();
-		this.arrayProcessesScheduler = new IProcessesScheduler[]{new FIFO()};
-		this.operatingSystem.setTimeslice(timeslice);
+		this.priority = 5;
+		this.kernelOperatingSystem = maquinaSessaoController.getOperatingSystem();
+		this.arrayProcessesScheduler = new IProcessesScheduler[]{new FIFO(), new RoundRobin()};
+		this.kernelOperatingSystem.setTimeslice(timeslice);
 		this.processesScheduler = arrayProcessesScheduler[0];
+		this.kernelOperatingSystem.setProcessesScheduler(processesScheduler);
 	}
 
 	public void salvarConfiguracoesProcesso() {
-    	operatingSystem.setProcessesScheduler(processesScheduler);
-    	operatingSystem.setTimeslice(timeslice);
+    	kernelOperatingSystem.setProcessesScheduler(processesScheduler);
+    	kernelOperatingSystem.setTimeslice(timeslice);
     }
 	
     public void newProcess() {
-    	operatingSystem.criarProcesso(file);
+    	kernelOperatingSystem.criarProcesso(file, priority);
     	file = null;
     	updateComponentes(":formSimulacao");
     }
     
 	public void abrirModalPbc(int pid) {
-		  this.pageTable = operatingSystem.getMemoryManager().getPageList().get(pid);
+		  this.pageTable = kernelOperatingSystem.getMemoryManager().getPageList().get(pid);
 		  updateComponentes("modalPbcForm");
 		  showDialog("modalPbc");
+	}
+	
+	public void bloquearProcesso() {
+		kernelOperatingSystem.getProcessManager().bloquearProcesso();
+	}
+	
+	public void desbloquearProcesso(int pid) {
+		kernelOperatingSystem.getProcessManager().desbloquearProcesso(pid);
 	}
 
 	//ACCESS METHODS
@@ -99,6 +112,14 @@ public class ProcessoController extends BaseController implements Serializable {
 		this.file = file;
 	}
 	
+	public int getPriority() {
+		return priority;
+	}
+
+	public void setPriority(int priority) {
+		this.priority = priority;
+	}
+
 	public PageTable getPageTable() {
 		return pageTable;
 	}

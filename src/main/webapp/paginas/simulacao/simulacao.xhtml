@@ -18,20 +18,24 @@
 			
 		<h:form id="formSimulacao">
 			<p:focus for="formSimulacao"/>
-        		
-			 <h:panelGroup id="groupAuto" rendered="true">
+			<h:panelGroup id="groupAuto" rendered="true">
 				<p:commandButton icon="ui-icon-play" value="Executar" actionListener="#{maquinaSessaoController.executarCiclo()}" update="@form" styleClass="btn"/>
 			</h:panelGroup>
 	        
 			<p:tabView activeIndex="#{maquinaSessaoController.activeAba}">
 				<!-- DASHBOARD -->
 		        <p:tab title="Dashboard">
-					
+					<ui:include src="/paginas/simulacao/dashboard/aba-dashboard.xhtml" />
 		        </p:tab>
 			
 		        <!-- DISCO -->
 		        <p:tab title="Disco">
 				    <ui:include src="/paginas/simulacao/disco/aba-disco.xhtml" />
+		        </p:tab>
+		        
+		        <!-- PROCESSOS -->
+		        <p:tab title="Processador">
+					<ui:include src="/paginas/simulacao/processos/aba-processador.xhtml" />
 		        </p:tab>
 		        
 		        <!-- PROCESSOS -->
@@ -44,10 +48,6 @@
 		        	<ui:include src="/paginas/simulacao/memoria/aba-memoria.xhtml" />
 		        </p:tab>
 		    </p:tabView>
-			<!--<br/>
-		    <p:outputLabel>log</p:outputLabel>
-		    <p:terminal id="terminal" widgetVar="term"  prompt="" />
-		    <p:commandButton type="button" value="Limpar" icon="ui-icon-trash" onclick="PF('term').clear()" style="margin-top:10px"/> -->
 		</h:form>
 		
 		<!-- MODAL UPLOAD -->
@@ -67,50 +67,17 @@
 		
 		<!-- CONFIGURAÇÕES DE DISCO -->
 		<p:dialog id="configuracoes-disco" widgetVar="modalConfigDisk" header="Configurações de Disco" width="300px" height="auto" resizable="false" modal="true" showEffect="explode" hideEffect="explode" >
-			<h:form id="configDiskForm">
-				<p:panelGrid columns="1" styleClass="panelgrid" id="panelConfigDisk">
-					<p:outputLabel value="Algoritmo">
-						<br/>
-						<p:selectOneMenu id="selectDiskSchedule" value="#{discoController.diskSchedule}" styleClass="tam_m" converter="omnifaces.SelectItemsConverter">
-							<f:selectItems value="#{discoController.arrayDiskSchedule}" var="algorithm" itemLabel="#{algorithm}" itemValue="#{algorithm}"/>
-						</p:selectOneMenu>			
-					</p:outputLabel>
-					<p:commandButton value="Confirmar" ajax="false" id="btnOk" actionListener="#{discoController.salvarConfiguracoesDisco}" />
-				</p:panelGrid>
-			</h:form>
+			<ui:include src="/paginas/simulacao/disco/config-disk.xhtml" />
 		</p:dialog>
 
 		<!-- CONFIGURAÇÕES DE PROCESSO -->
 		<p:dialog id="configuracoes-processo" widgetVar="modalConfigProcess" header="Configurações do Gerenciador de Processo" width="450px" height="auto" resizable="false" modal="true" showEffect="explode" hideEffect="explode" >
-			<h:form id="configProcessManagerForm">
-				<p:panelGrid columns="1" styleClass="panelgrid" id="panelConfigDisk">
-					<p:outputLabel value="Algoritmo">
-						<br/>
-						<p:selectOneMenu id="selectProcessesSchedule" value="#{processoController.processesScheduler}" styleClass="tam_m" converter="omnifaces.SelectItemsConverter">
-							<f:selectItems value="#{processoController.arrayProcessesScheduler}" var="algorithm" itemLabel="#{algorithm}" itemValue="#{algorithm}"/>
-						</p:selectOneMenu>			
-					</p:outputLabel>
-					<p:outputLabel>
-				        <h:outputText id="output" value="Timeslice: #{processoController.timeslice}" />
-				        <h:inputHidden id="timeslice" value="#{processoController.timeslice}" />
-				        <p:slider minValue="1" maxValue="10" for="timeslice" display="output" style="width: 200px" displayTemplate="Timeslice: {value}" />
-					</p:outputLabel>
-					<p:commandButton value="Confirmar" ajax="false" id="btnOk" actionListener="#{processoController.salvarConfiguracoesProcesso}" />
-				</p:panelGrid>
-			</h:form>
+			<ui:include src="/paginas/simulacao/processos/config-process.xhtml" />
 		</p:dialog>
 		
 		<!-- SIMULAÇÃO DE DISCO -->
 		<p:dialog id="simulacao-disco" widgetVar="modalSimulationDisk" header="Cilindros requisitados" width="415px" height="auto" resizable="false" modal="true" showEffect="explode" hideEffect="explode" >
-			<h:form id="simulDiskForm">
-				<p:panelGrid columns="1" styleClass="panelgrid" id="panelSimulDisk">
-					<p:inputText value="#{discoController.movimentacaoSimulada}" style="width: 360px;"/>
-					<p:commandButton value="Simular" ajax="false" id="btnSimular" actionListener="#{discoController.simularMovimentacao}" />
-				</p:panelGrid>
-				<p style="color: red;"><b>*</b> Devem ser informados números de 1 à 9 separados por virgulas.</p>
-			</h:form>
+			<ui:include src="/paginas/simulacao/disco/disk-simulation.xhtml" />
 		</p:dialog>
-		
-		
 	</ui:define>
 </ui:composition>

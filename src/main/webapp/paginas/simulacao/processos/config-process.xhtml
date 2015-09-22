@@ -1,0 +1,25 @@
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+	<h:form id="configProcessManagerForm">
+		<p:panelGrid columns="1" styleClass="panelgrid" id="panelConfigDisk">
+			<p:outputLabel value="Algoritmo">
+				<br/>
+				<p:selectOneMenu id="selectProcessesSchedule" value="#{processoController.processesScheduler}" styleClass="tam_gg" converter="omnifaces.SelectItemsConverter">
+					<f:selectItems value="#{processoController.arrayProcessesScheduler}" var="algorithm" itemLabel="#{algorithm}" itemValue="#{algorithm}"/>
+					<p:ajax event="change" update="@form"/>
+				</p:selectOneMenu>			
+			</p:outputLabel>
+			<p:outputLabel id="labelTimeslice" rendered="#{processoController.processesScheduler.preemptivo}">
+		        <h:outputText id="output" value="Timeslice: #{processoController.timeslice}" />
+		        <h:inputHidden id="timeslice" value="#{processoController.timeslice}" />
+		        <p:slider minValue="1" maxValue="10" for="timeslice" display="output" style="width: 200px" displayTemplate="Timeslice: {value}" />
+			</p:outputLabel>
+			<p:commandButton value="Confirmar" ajax="false" id="btnOk" actionListener="#{processoController.salvarConfiguracoesProcesso}" />
+		</p:panelGrid>
+	</h:form>
+</html>

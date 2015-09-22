@@ -9,7 +9,8 @@ public enum ProcessStateEnum {
 	
 	PRONTO("Pronto",1L),
 	EXECUTANDO("Executando",2L),
-	BLOQUEADO("Bloqueado", 3L);
+	BLOQUEADO("Bloqueado", 3L),
+	FINALIZADO("Finalizado", 3L);
 	
 	private String descricao;
 	private Long valor;

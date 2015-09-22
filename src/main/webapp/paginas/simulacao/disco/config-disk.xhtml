@@ -1,0 +1,19 @@
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+	<h:form id="configDiskForm">
+		<p:panelGrid columns="1" styleClass="panelgrid" id="panelConfigDisk">
+			<p:outputLabel value="Algoritmo">
+				<br/>
+				<p:selectOneMenu id="selectDiskSchedule" value="#{discoController.diskSchedule}" styleClass="tam_m" converter="omnifaces.SelectItemsConverter">
+					<f:selectItems value="#{discoController.arrayDiskSchedule}" var="algorithm" itemLabel="#{algorithm}" itemValue="#{algorithm}"/>
+				</p:selectOneMenu>			
+			</p:outputLabel>
+			<p:commandButton value="Confirmar" ajax="false" id="btnOk" actionListener="#{discoController.salvarConfiguracoesDisco}" />
+		</p:panelGrid>
+	</h:form>
+</html>

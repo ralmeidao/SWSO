@@ -20,7 +20,7 @@ public class CentralProcessingUnit {
     //CACHE
     private PageTable pageTable;
     
-    private long cpuTime;
+    private int cpuTime;
     
 	public CentralProcessingUnit(RandomAccessMemory ram) {
 		this.memoryManagementUnit = new MemoryManagementUnit(ram, this);
@@ -71,7 +71,7 @@ public class CentralProcessingUnit {
 		return instructionDecoder;
 	}
 
-	public long getCpuTime() {
+	public int getCpuTime() {
 		return cpuTime;
 	}
 

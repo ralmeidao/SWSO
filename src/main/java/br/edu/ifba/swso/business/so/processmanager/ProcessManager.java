@@ -24,6 +24,7 @@ public class ProcessManager {
 		tempoOcisoso = new Process();
 		tempoOcisoso.setPid(-1);
 		tempoOcisoso.setPc(-1);
+		tempoOcisoso.setNome("Tempo Ocioso");;
 		emExecucao = tempoOcisoso;
 	}
     
@@ -43,37 +44,55 @@ public class ProcessManager {
     }
     
     public Process escalonamento() {
+    	if(emExecucao.getPid() != -1 && !emExecucao.isBlocked() && !emExecucao.isEnding()) {
+			emExecucao.setState(ProcessStateEnum.PRONTO);
+			listaPronto.add(emExecucao);
+		}
+    	
     	Process proximo = escolherProximo(listaPronto);
 
     	if(emExecucao.getPid() != proximo.getPid()) {
-    		//EXECUTA TROCA DE CONTEXTO
-    		emExecucao.setRi(coreVirtualMachine.getCentralProcessingUnit().getRegisters().getInstructionRegister().realValue());
-    		emExecucao.setPc(coreVirtualMachine.getCentralProcessingUnit().getRegisters().getProgramCounter().realValue());
-    		
-    		if(emExecucao.getPid() != -1) {
-    			listaPronto.add(emExecucao);
-    			emExecucao.setState(ProcessStateEnum.PRONTO);
-    		}
-    		
-    		listaPronto.remove(proximo);
-    		
-    		coreVirtualMachine.getCentralProcessingUnit().getRegisters().getInstructionRegister().refreshInstruction(proximo.getRi());
-    		coreVirtualMachine.getCentralProcessingUnit().getRegisters().getProgramCounter().modifyRealValue(proximo.getPc());
-    		
-    		emExecucao = proximo;
-    		emExecucao.setState(ProcessStateEnum.EXECUTANDO);
-    		
-    		coreVirtualMachine.getCentralProcessingUnit().getRegisters().setPid(emExecucao.getPid());
+    		executaTrocaDeContexto(proximo);
     	}
+    	listaPronto.remove(proximo);
+    	proximo.setState(ProcessStateEnum.EXECUTANDO);
     	
     	return emExecucao;
     }
 
+    public void bloquearProcesso() {
+    	emExecucao.setState(ProcessStateEnum.BLOQUEADO);
+		listaBloqueado.add(emExecucao);
+    }
+    
+    public void desbloquearProcesso(int pid) {
+    	Process desbloqueado = null;
+    	for (Process process : listaBloqueado) {
+			if (process.getPid() == pid) {
+				desbloqueado = process;
+				break;
+			}
+		}
+    	desbloqueado.setState(ProcessStateEnum.PRONTO);
+		listaBloqueado.remove(desbloqueado);
+		listaPronto.add(desbloqueado);
+    }
+    
+    
     private int getNewIdProcess() {
     	return ultimoId++;
     }
 
-    public Process escolherProximo(LinkedList<Process> listaPronto) {
+	private void executaTrocaDeContexto(Process proximo) {
+		emExecucao.setRi(coreVirtualMachine.getCentralProcessingUnit().getRegisters().getInstructionRegister().realValue());
+		emExecucao.setPc(coreVirtualMachine.getCentralProcessingUnit().getRegisters().getProgramCounter().realValue());
+		coreVirtualMachine.getCentralProcessingUnit().getRegisters().getInstructionRegister().refreshInstruction(proximo.getRi());
+		coreVirtualMachine.getCentralProcessingUnit().getRegisters().getProgramCounter().modifyRealValue(proximo.getPc());
+		emExecucao = proximo;
+		coreVirtualMachine.getCentralProcessingUnit().getRegisters().setPid(emExecucao.getPid());
+	}
+	
+    private Process escolherProximo(LinkedList<Process> listaPronto) {
     	if (listaPronto.size() > 0) {
     		return listaPronto.getFirst();
 		} else {
@@ -81,6 +100,17 @@ public class ProcessManager {
 		}
     }
     
+	public void incrementarTimeWaitingPronto() {
+		for (Process processo : listaPronto) {
+			processo.incrementTimeWaiting();
+		}
+	}
+    
+	public void finalizarProcesso(Process process) {
+		process.setState(ProcessStateEnum.FINALIZADO);
+		process.setTimeFinishCpu(coreVirtualMachine.getCentralProcessingUnit().getCpuTime());
+	}
+	
     //MÉT0D0S DE ACESSO
 	public List<Process> getTabelaProcesso() {
 		return tabelaProcesso;

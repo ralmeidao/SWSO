@@ -10,10 +10,12 @@ public class Process {
 	private String nome;
 
 	private int priority;
-	private ProcessStateEnum state; // TODO CRIAR ENUM
-	private long timeInitCpu;
+	private ProcessStateEnum state;
+	private int timeInitCpu;
 
 	private int timeRunning;
+	private int timeWaiting;
+	private int timeFinishCpu;
 
 	private int pc;
 	private Word ri;
@@ -23,6 +25,11 @@ public class Process {
 	private int quantidadeInstrucoes;
 	
 	private File File;
+	
+	public Process(int pid) {
+		this();
+		this.pid = pid;
+	}
 	
 	public Process() {
 		this.priority = Constantes.PRIORITY_INITIAL;
@@ -35,6 +42,14 @@ public class Process {
 
 	public void incrementTimeRunning() {
 		this.timeRunning++;
+	}
+
+	public void incrementTimeWaiting() {
+		this.timeWaiting++;
+	}
+	
+	public int getTimeTurnaround() {
+		return timeFinishCpu - timeInitCpu;
 	}
 
 	// METHODS OF ACCESS
@@ -77,20 +92,28 @@ public class Process {
 		this.state = state;
 	}
 
-	public long getTimeInitCpu() {
+	public int getTimeInitCpu() {
 		return timeInitCpu;
 	}
 
-	public void setTimeInitCpu(long timeInitCpu) {
+	public void setTimeInitCpu(int timeInitCpu) {
 		this.timeInitCpu = timeInitCpu;
-	}
-
-	public void setTimeRunning(int timeRunning) {
-		this.timeRunning = timeRunning;
 	}
 
 	public int getTimeRunning() {
 		return timeRunning;
+	}
+
+	public int getTimeWaiting() {
+		return timeWaiting;
+	}
+
+	public int getTimeFinishCpu() {
+		return timeFinishCpu;
+	}
+
+	public void setTimeFinishCpu(int timeFinishCpu) {
+		this.timeFinishCpu = timeFinishCpu;
 	}
 
 	public int getPc() {
@@ -148,4 +171,19 @@ public class Process {
 	public boolean isRunning() {
 		return ProcessStateEnum.EXECUTANDO.equals(state);
 	}
+	
+	public boolean isEnding() {
+		return ProcessStateEnum.FINALIZADO.equals(state);
+	}
+	
+	@Override
+	public boolean equals(final Object other) {
+	    if (this == other)
+	        return true;
+	    if (!(other instanceof Process))
+	        return false;
+	    Process castOther = (Process) other;
+	    return castOther.pid == this.pid;
+	}
+	
 }

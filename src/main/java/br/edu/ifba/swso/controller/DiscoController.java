@@ -9,14 +9,14 @@ import javax.inject.Named;
 
 import org.primefaces.model.UploadedFile;
 
+import br.edu.ifba.swso.algorithms.IDiskScheduler;
 import br.edu.ifba.swso.algorithms.impl.disk.FCFS;
 import br.edu.ifba.swso.algorithms.impl.disk.SSTF;
-import br.edu.ifba.swso.algorithms.interfaces.IDiskScheduler;
 import br.edu.ifba.swso.business.VirtualMachineParameters;
 import br.edu.ifba.swso.business.abstractions.File;
 import br.edu.ifba.swso.business.abstractions.FileInput;
 import br.edu.ifba.swso.business.abstractions.Word;
-import br.edu.ifba.swso.business.so.OperatingSystem;
+import br.edu.ifba.swso.business.so.KernelOperatingSystem;
 import br.edu.ifba.swso.business.so.filemanager.IFileSystem;
 import br.edu.ifba.swso.business.virtualmachine.harddisk.HardDisk;
 import br.edu.ifba.swso.business.virtualmachine.harddisk.Plate;
@@ -45,7 +45,7 @@ public class DiscoController extends BaseController implements Serializable {
 	
 	private IDiskScheduler diskSchedule;
 	
-	private OperatingSystem operatingSystem;
+	private KernelOperatingSystem kernelOperatingSystem;
 	
 	//VIEW DATA - START
 	private UploadedFile uploadFile;
@@ -60,21 +60,21 @@ public class DiscoController extends BaseController implements Serializable {
 	@PostConstruct
 	public void init() {
 		VirtualMachineParameters virtualMachineParameters = maquinaSessaoController.getVirtualMachineParameters();
-		operatingSystem = maquinaSessaoController.getOperatingSystem();
+		kernelOperatingSystem = maquinaSessaoController.getOperatingSystem();
 		arrayDiskSchedule = new IDiskScheduler[]{new SSTF(virtualMachineParameters), new FCFS(virtualMachineParameters)};
 		diskSchedule = arrayDiskSchedule[0];
-		operatingSystem.setDiskSchedule(diskSchedule);
+		kernelOperatingSystem.setDiskSchedule(diskSchedule);
 		arrayDiskSchedule = new IDiskScheduler[]{new SSTF(virtualMachineParameters), new FCFS(virtualMachineParameters)};
 	}
 	
     public void salvarConfiguracoesDisco() {
-    	operatingSystem.setDiskSchedule(diskSchedule);
+    	kernelOperatingSystem.setDiskSchedule(diskSchedule);
     }
     
     public void doUploadFile() {
     	if (validarUploadArquivo()) {
     		FileInput fileInput = criarInputFile();
-    		operatingSystem.getFileSystem().allocateFile(fileInput, operatingSystem.getDiskSchedule());
+    		kernelOperatingSystem.getFileSystem().allocateFile(fileInput, kernelOperatingSystem.getDiskSchedule());
     		clearUpload();
     		updateComponentes(":formSimulacao");
     	}
@@ -85,11 +85,11 @@ public class DiscoController extends BaseController implements Serializable {
 	}
     
     public void simularMovimentacao() {
-    	operatingSystem.getFileSystem().simularMovimentacao(movimentacaoSimulada, operatingSystem.getDiskSchedule());
+    	kernelOperatingSystem.getFileSystem().simularMovimentacao(movimentacaoSimulada, kernelOperatingSystem.getDiskSchedule());
     }
     
     public void deleteFile(Integer id) {
-    	operatingSystem.getFileSystem().deallocateFile(id);
+    	kernelOperatingSystem.getFileSystem().deallocateFile(id);
     }
     
 	private FileInput criarInputFile() {
@@ -269,7 +269,7 @@ public class DiscoController extends BaseController implements Serializable {
 	 * @return ISistemaArquivo
 	 */
 	public IFileSystem getSistemaArquivo() {
-		return operatingSystem.getFileSystem();
+		return kernelOperatingSystem.getFileSystem();
 	}
 		
 	/**

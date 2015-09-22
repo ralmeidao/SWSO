@@ -10,16 +10,16 @@
 		<p:messages id="dialogMessages" autoUpdate="false" escape="false"/>
 		
 		<p:dataTable var="etp" value="#{processoController.pageTable.listaEtp}" id="etp" emptyMessage="Nenhum item encontrado." scrollable="true" scrollHeight="350">
-	        <p:column headerText="PPV" width="05%">
+	        <p:column headerText="PPV" width="25%">
 	        	<h:outputText value="#{etp.ppv}" />
 	        </p:column>
-	        <p:column headerText="PPR" width="05%">
+	        <p:column headerText="PPR" width="25%">
 	        	<h:outputText value="#{etp.ppr}" />
 	        </p:column>
-	        <p:column headerText="Bit V" width="05%">
+	        <p:column headerText="Bit V" width="25%">
 	        	<h:outputText value="#{etp.bitV}" />
 	        </p:column>
-	        <p:column headerText="Bit M" width="05%">
+	        <p:column headerText="Bit M" width="25%">
 	        	<h:outputText value="#{etp.bitM}" />
 	        </p:column>
 	    </p:dataTable>

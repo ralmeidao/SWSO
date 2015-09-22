@@ -10,13 +10,18 @@
 		<p:messages id="dialogMessages" autoUpdate="false" escape="false"/>
 		
 		<p:panelGrid columns="1" styleClass="panelgrid" id="criarProcesso">	    	
-	    	<p:outputLabel value="Arquivos">
+	    	<p:outputLabel value="Programa">
 	    		<br/>
 	    		<p:selectOneMenu id="selectArquivos" value="#{processoController.file}" panelStyleClass="listArquivos" converter="omnifaces.SelectItemsConverter">
 	    			<f:selectItem itemLabel="Selecione" 	noSelectionOption="true" />
 	    			<f:selectItems  value="#{discoController.sistemaArquivo.allFiles}" var="arquivo" itemLabel="#{arquivo.fileName}" itemValue="#{arquivo}" />
 				</p:selectOneMenu>
 	    	</p:outputLabel>
+    		<p:outputLabel id="labelTimeslice" rendered="#{processoController.processesScheduler.preemptivo}">
+		        <h:outputText id="output" value="Prioridade: #{processoController.priority}" />
+		        <h:inputHidden id="timeslice" value="#{processoController.priority}" />
+		        <p:slider minValue="1" maxValue="10" for="timeslice" display="output" style="width: 200px" displayTemplate="Prioridade: {value}" />
+			</p:outputLabel>
     	
 			<p:commandButton value="Criar" ajax="false" id="btnCriar" actionListener="#{processoController.newProcess}" />
  		</p:panelGrid>
