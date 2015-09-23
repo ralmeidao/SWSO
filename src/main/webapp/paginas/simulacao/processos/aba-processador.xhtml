@@ -14,7 +14,7 @@
     	<p:panelGrid columns="4" styleClass="panelgrid" id="simulaProcessosPanel">
 			<p:outputLabel value="Executando">
         		<br/>
-	        	<p:inputText value="#{maquinaSessaoController.operatingSystem.processManager.emExecucao.nome}" readonly="true" 
+	        	<p:inputText value="#{maquinaSessaoController.operatingSystem.processManager.emExecucao.nome}" readonly="true" disabled="true"
 	        		styleClass="tam_g" style="font-weight: bold; color: ##{maquinaSessaoController.operatingSystem.processManager.emExecucao.file.color};" />
         	</p:outputLabel>
         	<p:outputLabel value="IR">
@@ -27,7 +27,7 @@
        		</p:outputLabel>
        	</p:panelGrid>
 	</p:fieldset>
-	
+	<p:spacer height="10"/>
 	<p:dataTable var="processo" value="#{maquinaSessaoController.operatingSystem.processManager.tabelaProcesso}" 
 				 id="processTable" emptyMessage="Nenhum item encontrado." 
 				 rendered="#{maquinaSessaoController.operatingSystem.processManager.tabelaProcesso.size() != 0}">
@@ -54,4 +54,69 @@
         		style="width: 30px; height: 30px;"/>
         </p:column>
     </p:dataTable>
+	<p:spacer height="10"/>
+	<p:dataTable var="word" value="#{maquinaSessaoController.coreVirtualMachine.randomAccessMemory.wordList}" id="memoryRam" emptyMessage="Nenhum item encontrado."
+    	paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+        paginatorPosition="bottom" rowIndexVar="index"
+    	rows="64">
+    	
+    	<f:facet name="header">
+	        Memória Ram
+	    </f:facet>
+        <p:column width="7,5%" headerText="Posição" style="background-color: #EEEEEE;">
+        	<h:outputText value="#{word.positionColumn01}" style="font-weight: bold;"/>
+        </p:column>
+        <p:column width="5%" headerText="Valor">
+        	<h:outputText value="#{word.valorColumn01}"/>
+        </p:column>
+        
+        <p:column width="7,5%" headerText="Posição" style="background-color: #EEEEEE;">
+        	<h:outputText value="#{word.positionColumn02}" style="font-weight: bold;"/>
+        </p:column>
+        <p:column width="5%" headerText="Valor">
+        	<h:outputText value="#{word.valorColumn02}"/>
+        </p:column>
+        
+        <p:column width="7,5%" headerText="Posição" style="background-color: #EEEEEE;">
+        	<h:outputText value="#{word.positionColumn03}" style="font-weight: bold;"/>
+        </p:column>
+        <p:column width="5%" headerText="Valor">
+        	<h:outputText value="#{word.valorColumn03}"/>
+        </p:column>
+        
+        <p:column width="7,5%" headerText="Posição" style="background-color: #EEEEEE;">
+        	<h:outputText value="#{word.positionColumn04}" style="font-weight: bold;"/>
+        </p:column>
+        <p:column width="5%" headerText="Valor">
+        	<h:outputText value="#{word.valorColumn04}"/>
+        </p:column>
+        
+        <p:column width="7,5%" headerText="Posição" style="background-color: #EEEEEE;">
+			<h:outputText value="#{word.positionColumn05}" style="font-weight: bold;"/>
+        </p:column>
+        <p:column width="5%" headerText="Valor">
+        	<h:outputText value="#{word.valorColumn05}"/>
+        </p:column>
+        
+        <p:column width="7,5%" headerText="Posição" style="background-color: #EEEEEE;">
+        	<h:outputText value="#{word.positionColumn06}" style="font-weight: bold;"/>
+        </p:column>
+        <p:column width="5%" headerText="Valor">
+        	<h:outputText value="#{word.valorColumn06}"/>
+        </p:column>
+        
+        <p:column width="7,5%" headerText="Posição" style="background-color: #EEEEEE;">
+        	<h:outputText value="#{word.positionColumn07}" style="font-weight: bold;"/>
+        </p:column>
+        <p:column width="5%" headerText="Valor">
+        	<h:outputText value="#{word.valorColumn07}"/>
+        </p:column>
+        
+        <p:column width="7,5%" headerText="Posição" style="background-color: #EEEEEE;">
+        	<h:outputText value="#{word.positionColumn08}" style="font-weight: bold;"/>
+        </p:column>
+        <p:column width="5%" headerText="Valor">
+        	<h:outputText value="#{word.valorColumn08}"/>
+        </p:column>
+    </p:dataTable>	
 </html>
