@@ -6,5 +6,11 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:c="http://java.sun.com/jsp/jstl/core">
 
+	<p:dataTable var="position" value="#{maquinaSessaoController.operatingSystem.memoryManager.realMemory.realMemory}" 
+				 id="memoryReal" emptyMessage="Nenhum item encontrado.">
+        <p:column headerText="Posição" width="100%">
+        	<h:outputText value="#{position}" />
+        </p:column>
+    </p:dataTable>
 
 </html>
