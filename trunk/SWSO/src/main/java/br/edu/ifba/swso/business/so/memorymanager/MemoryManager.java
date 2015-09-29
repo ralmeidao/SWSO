@@ -38,6 +38,10 @@ public class MemoryManager {
 	public VirtualMemory getVirtualMemory() {
 		return virtualMemory;
 	}
+	
+	public RealMemory getRealMemory() {
+		return realMemory;
+	}
 
 	public void alocaProcesso(Process process) throws PageNotFoundException, InvalidPositionException, VirtualMemoryFullException, MemoryFullException {
 		PageTable pagetable = new PageTable(process.getPid());
@@ -77,7 +81,7 @@ public class MemoryManager {
 		if (etp.getBitV() == '0') {
 			int realPosition = realMemory.foundFreePosition();
 			//virtualToReal.put(etp.getPpv(), realPosition);
-			realMemory.blockPosition(realPosition);
+			realMemory.blockPosition(realPosition, pid);
 			etp.setPpr(realPosition);
 			copiarDoDiscoParaRAM(etp.getAllocatedSectors(), realPosition);
 			etp.setBitV('1');
@@ -93,6 +97,7 @@ public class MemoryManager {
 		int ini = realPosition*Constantes.BYTE_PER_PAGE;
 		for (Integer nSector : setores) {
 			this.coreVirtualMachine.getRandomAccessMemory().alloc(ini, coreVirtualMachine.getHardDisk().getData(nSector));
+			ini+=Constantes.SECTOR_SIZE;
 		}
 	}
 	
