@@ -11,26 +11,26 @@ import br.edu.ifba.swso.business.so.processmanager.ProcessManager;
 import br.edu.ifba.swso.business.virtualmachine.CoreVirtualMachine;
 
 public class KernelOperatingSystem {
-	
+
 	private IFileSystem fileSystem;
-	
+
 	private IDiskScheduler diskSchedule;
-	
+
 	private int timeslice;
 
 	private IProcessesScheduler processesScheduler;
-	
+
 	private MemoryManager memoryManager;
-	
+
 	private ProcessManager processManager;
-	
-	public KernelOperatingSystem(CoreVirtualMachine coreVirtualMachine){
+
+	public KernelOperatingSystem(CoreVirtualMachine coreVirtualMachine) {
 		fileSystem = new FileSystem(coreVirtualMachine);
 		processManager = new ProcessManager(coreVirtualMachine);
 		memoryManager = new MemoryManager(coreVirtualMachine);
 	}
-	
-	//CHAMADAS AO SISTEMA
+
+	// CHAMADAS AO SISTEMA
 	public void criarProcesso(File file, int prioridade) {
 		try {
 			Process process = processManager.criarProcesso(file);
@@ -40,8 +40,8 @@ public class KernelOperatingSystem {
 
 		}
 	}
-	
-	//METHODS OF ACCESS
+
+	// METHODS OF ACCESS
 	public IFileSystem getFileSystem() {
 		return fileSystem;
 	}
@@ -54,7 +54,7 @@ public class KernelOperatingSystem {
 		return processManager;
 	}
 
-	//ALGORITHMS
+	// ALGORITHMS
 	public IDiskScheduler getDiskSchedule() {
 		return diskSchedule;
 	}
@@ -62,7 +62,7 @@ public class KernelOperatingSystem {
 	public void setDiskSchedule(IDiskScheduler diskSchedule) {
 		this.diskSchedule = diskSchedule;
 	}
-	
+
 	public IProcessesScheduler getProcessesScheduler() {
 		return processesScheduler;
 	}
@@ -70,7 +70,7 @@ public class KernelOperatingSystem {
 	public void setProcessesScheduler(IProcessesScheduler processesScheduler) {
 		this.processesScheduler = processesScheduler;
 	}
-	
+
 	public int getTimeslice() {
 		return timeslice;
 	}
@@ -81,14 +81,14 @@ public class KernelOperatingSystem {
 
 	public void execute() {
 		Process running = processManager.getEmExecucao();
-		
-		if (running.getPid() == -1 || running.isBlocked()  || running.isEnding()
+
+		if (running.getPid() == -1 || running.isBlocked() || running.isEnding()
 				|| (processesScheduler.isPreemptivo() && running.getTimeRunning() != 0 && running.getTimeRunning() % timeslice == 0)) {
-			//TROCA DE CONTEXTO
+			// TROCA DE CONTEXTO
 			running = processManager.escalonamento();
 			memoryManager.updatePageTable();
 		}
-		
+
 		running.incrementTimeRunning();
 		processManager.incrementarTimeWaitingPronto();
 	}
@@ -96,5 +96,5 @@ public class KernelOperatingSystem {
 	public void finalizarProcesso(Process process) {
 		processManager.finalizarProcesso(process);
 	}
-	
+
 }

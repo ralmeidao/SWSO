@@ -64,8 +64,8 @@ public class RandomAccessMemory {
 			wd.setPositionColumn07(i+(6*64));
 			wd.setValorColumn07(memory[i+(6*64)]);
 			
-			wd.setPositionColumn08(i+(6*64));
-			wd.setValorColumn08(memory[i+(6*64)]);
+			wd.setPositionColumn08(i+(7*64));
+			wd.setValorColumn08(memory[i+(7*64)]);
 			
 			lista.add(wd);
 			
