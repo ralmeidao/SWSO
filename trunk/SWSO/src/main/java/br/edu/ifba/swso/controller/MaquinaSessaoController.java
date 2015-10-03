@@ -26,6 +26,8 @@ public class MaquinaSessaoController extends BaseController implements Serializa
 	@Inject
 	private ApplicationController applicationController;
 	
+	private Integer qtdCiclos;
+	
 	//BUSINESS - START
 	private CoreVirtualMachine coreVirtualMachine;
 	
@@ -41,6 +43,7 @@ public class MaquinaSessaoController extends BaseController implements Serializa
 	//BUSINESS METHODS
 	@PostConstruct
 	public void init() {
+		qtdCiclos = 1;
 		virtualMachineParameters = new VirtualMachineParameters();
 		timelineDisplay = new TimelineDisplay();
 	}
@@ -73,12 +76,15 @@ public class MaquinaSessaoController extends BaseController implements Serializa
 	}
 	
 	public void executarCiclo() {
-		kernelOperatingSystem.execute();
-		coreVirtualMachine.getCentralProcessingUnit().execute();
-		timelineDisplay.incrementList(kernelOperatingSystem.getProcessManager().getEmExecucao());
-		
-		if (coreVirtualMachine.getCentralProcessingUnit().getRegisters().getProgramCounter().realValue() == (kernelOperatingSystem.getProcessManager().getEmExecucao().getQuantidadeInstrucoes()*2)) {
-			kernelOperatingSystem.finalizarProcesso(kernelOperatingSystem.getProcessManager().getEmExecucao());	
+		int loop = qtdCiclos != null ? qtdCiclos : 1;
+		for (int i = 0; i < loop; i++) {
+			kernelOperatingSystem.execute();
+			coreVirtualMachine.getCentralProcessingUnit().execute();
+			timelineDisplay.incrementList(kernelOperatingSystem.getProcessManager().getEmExecucao());
+			
+			if (coreVirtualMachine.getCentralProcessingUnit().getRegisters().getProgramCounter().realValue() == (kernelOperatingSystem.getProcessManager().getEmExecucao().getQuantidadeInstrucoes()*2)) {
+				kernelOperatingSystem.finalizarProcesso(kernelOperatingSystem.getProcessManager().getEmExecucao());	
+			}
 		}
 	}
 	
@@ -144,4 +150,12 @@ public class MaquinaSessaoController extends BaseController implements Serializa
 		return timelineDisplay;
 	}
 
+	public Integer getQtdCiclos() {
+		return qtdCiclos;
+	}
+
+	public void setQtdCiclos(Integer qtdCiclos) {
+		this.qtdCiclos = qtdCiclos;
+	}
+	
 }
