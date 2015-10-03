@@ -1,5 +1,6 @@
 package br.edu.ifba.swso.controller;
 
+import java.io.IOException;
 import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
@@ -10,7 +11,9 @@ import javax.inject.Named;
 import org.primefaces.model.UploadedFile;
 
 import br.edu.ifba.swso.algorithms.IDiskScheduler;
+import br.edu.ifba.swso.algorithms.impl.disk.CSCAN;
 import br.edu.ifba.swso.algorithms.impl.disk.FCFS;
+import br.edu.ifba.swso.algorithms.impl.disk.SCAN;
 import br.edu.ifba.swso.algorithms.impl.disk.SSTF;
 import br.edu.ifba.swso.business.VirtualMachineParameters;
 import br.edu.ifba.swso.business.abstractions.File;
@@ -58,13 +61,17 @@ public class DiscoController extends BaseController implements Serializable {
 	
 	
 	@PostConstruct
-	public void init() {
-		VirtualMachineParameters virtualMachineParameters = maquinaSessaoController.getVirtualMachineParameters();
-		kernelOperatingSystem = maquinaSessaoController.getOperatingSystem();
-		arrayDiskSchedule = new IDiskScheduler[]{new SSTF(virtualMachineParameters), new FCFS(virtualMachineParameters)};
-		diskSchedule = arrayDiskSchedule[0];
-		kernelOperatingSystem.setDiskSchedule(diskSchedule);
-		arrayDiskSchedule = new IDiskScheduler[]{new SSTF(virtualMachineParameters), new FCFS(virtualMachineParameters)};
+	public void init() throws IOException {
+		if (maquinaSessaoController.getOperatingSystem() != null) {
+			VirtualMachineParameters virtualMachineParameters = maquinaSessaoController.getVirtualMachineParameters();
+			kernelOperatingSystem = maquinaSessaoController.getOperatingSystem();
+			arrayDiskSchedule = new IDiskScheduler[]{new SSTF(virtualMachineParameters), 
+													 new FCFS(virtualMachineParameters), 
+													 new SCAN(virtualMachineParameters),
+													 new CSCAN(virtualMachineParameters)};
+			diskSchedule = arrayDiskSchedule[0];
+			kernelOperatingSystem.setDiskSchedule(diskSchedule);
+		}
 	}
 	
     public void salvarConfiguracoesDisco() {
@@ -77,7 +84,7 @@ public class DiscoController extends BaseController implements Serializable {
     		kernelOperatingSystem.getFileSystem().allocateFile(fileInput, kernelOperatingSystem.getDiskSchedule());
     		clearUpload();
     		updateComponentes(":formSimulacao");
-    	}
+    	}		
     }
     
     public void updateComboColor() {

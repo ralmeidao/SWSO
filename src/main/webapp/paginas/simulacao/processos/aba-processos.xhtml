@@ -6,10 +6,6 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:c="http://java.sun.com/jsp/jstl/core">
 	
-	<div align="right" class="tempo-simulacao" >
-		<label><h:outputText value="Tempo: #{maquinaSessaoController.coreVirtualMachine.centralProcessingUnit.cpuTime} u.t."/></label>
-	</div>
-		
 	<p:fieldset legend="Escalonamento de Processo">
 		<p:panelGrid columns="1" styleClass="panelgrid" id="panelConfigProcess">
 			<b>Algoritmo:</b> #{processoController.processesScheduler} | 
@@ -30,7 +26,7 @@
         <p:column headerText="Nome" width="30%">
         	<h:outputText value="#{processo.nome}"/>
         </p:column>
-        <p:column headerText="Prioridade" width="20%">
+        <p:column headerText="Prioridade" width="20%" rendered="#{processoController.processesScheduler.prioridade}">
         	<h:outputText value="#{processo.priority}"/>
         </p:column>
         <p:column headerText="Estado" width="30%">
@@ -77,6 +73,8 @@
 			</table>
 		</div>
 	</c:if>
+	
+	<p:spacer height="10"/>
 	
 	<p:dataTable var="processo" value="#{maquinaSessaoController.operatingSystem.processManager.tabelaProcesso}" 
 				 id="processTableStatistcs" emptyMessage="Nenhum item encontrado."

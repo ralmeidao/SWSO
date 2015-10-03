@@ -12,30 +12,71 @@
 	</ui:define>
 	
 	<ui:define name="content-main-page">
-		<h3 style="margin-bottom: 5px;">Simulação - #{maquinaSessaoController.name}</h3>
+	
+	
+		<p:messages id="formConfigurarMessage" autoUpdate="false"/>
+		<h:form id="formConfiguraSimulacao" rendered="#{maquinaSessaoController.operatingSystem == null}">
+			<h3>Criar Simulação</h3>
+		
+			<p:focus for="formConfiguraSimulacao"/>
+			
+	 		<p:fieldset legend="Parâmetros da Máquina Virtual">
+				<p:panelGrid columns="1" styleClass="panelgrid">
+					<p:outputLabel value="Nome">
+						<br/>
+						<p:inputText style="width: 250px" maxlength="25" value="#{maquinaSessaoController.virtualMachineParameters.name}"/>
+					</p:outputLabel>
+					
+					<p:outputLabel value="Tamanho da Memória">
+						<br/>
+						<p:selectOneMenu style="width: 250px" id="selectMemorySize" value="#{maquinaSessaoController.virtualMachineParameters.memorySize}">
+		    				<f:selectItem itemLabel="64 KB" itemValue="64" />
+		    				<f:selectItem itemLabel="32 KB" itemValue="32" />
+		    				<f:selectItem itemLabel="16 KB" itemValue="16" />
+		    				<f:selectItem itemLabel="8 KB" itemValue="8" />
+						</p:selectOneMenu>
+					</p:outputLabel>
+					
+					<p:outputLabel value="Tamanho das páginas">
+						<br/>
+						<p:selectOneMenu style="width: 250px" id="selectPageSize" value="#{maquinaSessaoController.virtualMachineParameters.bytePerPage}">
+			   				<f:selectItem itemLabel="1024 Bytes" itemValue="1024" />
+			   				<f:selectItem itemLabel="512 Bytes"	 itemValue="512" />
+					        <f:selectItem itemLabel="256 Bytes"  itemValue="256" />
+						</p:selectOneMenu>
+					</p:outputLabel>
+					
+					<p:outputLabel value="Tamanho dos setores">
+						<br/>
+						<p:selectOneMenu style="width: 250px" id="selectSectorSize" value="#{maquinaSessaoController.virtualMachineParameters.sectorSize}">
+					        <f:selectItem itemLabel="256 Bytes"  itemValue="256" />
+					        <f:selectItem itemLabel="128 Bytes"  itemValue="128" />
+					        <f:selectItem itemLabel="64 Bytes" itemValue="64" />
+						</p:selectOneMenu>
+					</p:outputLabel>
+				</p:panelGrid>
+			</p:fieldset>
+				
+			<p:commandButton id="startSimulacao" value="Iniciar Simulação" styleClass="btn" update=":#{p:component('formConfigurarMessage')}" action="#{maquinaSessaoController.initSimulation}"/>
+		</h:form>		
 		
 		<p:messages id="formSimulacaoMessage" autoUpdate="false"/>
-			
-		<h:form id="formSimulacao">
+		<h:form id="formSimulacao" rendered="#{maquinaSessaoController.operatingSystem != null}">
+			<h3 style="margin-bottom: 5px;">Simulação - #{maquinaSessaoController.name}</h3>
+			<div align="right" class="tempo-simulacao" >
+				<label><h:outputText value="Tempo: #{maquinaSessaoController.coreVirtualMachine.centralProcessingUnit.cpuTime} u.t."/></label>
+			</div>
+		
 			<p:focus for="formSimulacao"/>
 			<h:panelGroup id="groupAuto" rendered="true">
+				<p:inputText value="#{maquinaSessaoController.qtdCiclos}" styleClass="tam_p" />
 				<p:commandButton icon="ui-icon-play" value="Executar" actionListener="#{maquinaSessaoController.executarCiclo()}" update="@form" styleClass="btn"/>
 			</h:panelGroup>
 	        
-			<p:tabView activeIndex="#{maquinaSessaoController.activeAba}">
-				<!-- DASHBOARD -->
-		        <p:tab title="Dashboard">
-					<ui:include src="/paginas/simulacao/dashboard/aba-dashboard.xhtml" />
-		        </p:tab>
-			
+			<p:tabView activeIndex="#{maquinaSessaoController.activeAba}" styleClass="min-width1280px">
 		        <!-- DISCO -->
 		        <p:tab title="Disco">
 				    <ui:include src="/paginas/simulacao/disco/aba-disco.xhtml" />
-		        </p:tab>
-		        
-		        <!-- MÁQUINA VIRTUAL -->
-		        <p:tab title="Máquina Virtual">
-					<ui:include src="/paginas/simulacao/processos/aba-processador.xhtml" />
 		        </p:tab>
 		        
 		        <!-- PROCESSOS -->
@@ -47,36 +88,53 @@
 		        <p:tab title="Memória">
 		        	<ui:include src="/paginas/simulacao/memoria/aba-memoria.xhtml" />
 		        </p:tab>
+		        
+				<!-- DASHBOARD -->
+		        <!-- <p:tab title="Dashboard">
+					<ui:include src="/paginas/simulacao/dashboard/aba-dashboard.xhtml" />
+		        </p:tab> -->
+			
+		        <!-- MÁQUINA VIRTUAL -->
+		        <!-- <p:tab title="Máquina Virtual">
+					<ui:include src="/paginas/simulacao/processos/aba-processador.xhtml" />
+		        </p:tab> -->
 		    </p:tabView>
 		</h:form>
+
 		
 		<!-- MODAL UPLOAD -->
-		<p:dialog id="novo-arquivo" widgetVar="modalNovoArquivo" header="Adicionar arquivo ao Disco" width="600px" height="auto" resizable="false" modal="true" showEffect="explode" hideEffect="explode" >
+		<p:dialog id="novo-arquivo" widgetVar="modalNovoArquivo" header="Adicionar arquivo ao Disco" width="600px" height="auto" resizable="false" modal="true" showEffect="explode" hideEffect="explode" 
+			rendered="#{maquinaSessaoController.operatingSystem != null}">
 			<ui:include src="/paginas/simulacao/disco/dialog-upload.xhtml" />
 		</p:dialog>
 		
 		<!-- MODAL CRIAR PROCESSO -->
-		<p:dialog id="novo-processo" widgetVar="modalNovoProcesso" header="Criar Processo" width="600px" height="auto" resizable="false" modal="true" showEffect="explode" hideEffect="explode" >
+		<p:dialog id="novo-processo" widgetVar="modalNovoProcesso" header="Criar Processo" width="600px" height="auto" resizable="false" modal="true" showEffect="explode" hideEffect="explode" 
+			rendered="#{maquinaSessaoController.operatingSystem != null}">
 			<ui:include src="/paginas/simulacao/processos/dialog-processo.xhtml" />
 		</p:dialog>
 
 		<!-- MODAL PBC -->
-		<p:dialog id="modal-pbc" widgetVar="modalPbc" header="Tabela de Páginas" width="600px" height="auto" resizable="false" modal="true" showEffect="explode" hideEffect="explode">
+		<p:dialog id="modal-pbc" widgetVar="modalPbc" header="Tabela de Páginas" width="600px" height="auto" resizable="false" modal="true" showEffect="explode" hideEffect="explode"
+			rendered="#{maquinaSessaoController.operatingSystem != null}">
 			<ui:include src="/paginas/simulacao/processos/dialog-pbc.xhtml" />
 		</p:dialog>
 		
 		<!-- CONFIGURAÇÕES DE DISCO -->
-		<p:dialog id="configuracoes-disco" widgetVar="modalConfigDisk" header="Configurações de Disco" width="300px" height="auto" resizable="false" modal="true" showEffect="explode" hideEffect="explode" >
+		<p:dialog id="configuracoes-disco" widgetVar="modalConfigDisk" header="Configurações de Disco" width="300px" height="auto" resizable="false" modal="true" showEffect="explode" hideEffect="explode" 
+			rendered="#{maquinaSessaoController.operatingSystem != null}">
 			<ui:include src="/paginas/simulacao/disco/config-disk.xhtml" />
 		</p:dialog>
 
 		<!-- CONFIGURAÇÕES DE PROCESSO -->
-		<p:dialog id="configuracoes-processo" widgetVar="modalConfigProcess" header="Configurações do Gerenciador de Processo" width="450px" height="auto" resizable="false" modal="true" showEffect="explode" hideEffect="explode" >
+		<p:dialog id="configuracoes-processo" widgetVar="modalConfigProcess" header="Configurações do Gerenciador de Processo" width="450px" height="auto" resizable="false" modal="true" showEffect="explode" hideEffect="explode" 
+			rendered="#{maquinaSessaoController.operatingSystem != null}">
 			<ui:include src="/paginas/simulacao/processos/config-process.xhtml" />
 		</p:dialog>
 		
 		<!-- SIMULAÇÃO DE DISCO -->
-		<p:dialog id="simulacao-disco" widgetVar="modalSimulationDisk" header="Cilindros requisitados" width="415px" height="auto" resizable="false" modal="true" showEffect="explode" hideEffect="explode" >
+		<p:dialog id="simulacao-disco" widgetVar="modalSimulationDisk" header="Cilindros requisitados" width="415px" height="auto" resizable="false" modal="true" showEffect="explode" hideEffect="explode" 
+			rendered="#{maquinaSessaoController.operatingSystem != null}">
 			<ui:include src="/paginas/simulacao/disco/disk-simulation.xhtml" />
 		</p:dialog>
 	</ui:define>

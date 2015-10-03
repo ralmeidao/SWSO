@@ -22,38 +22,41 @@
 	<p:commandButton value="Criar Arquivo" icon="ui-icon-plus" styleClass="btn" onclick="modalNovoArquivo.show()" rendered="#{!viewOnly}"/>
 	<p:commandButton value="Configurações" icon="ui-icon-gear" styleClass="btn" onclick="modalConfigDisk.show()" rendered="#{!viewOnly}"/>		
 		
-	<p:dataTable var="arquivo" value="#{discoController.sistemaArquivo.allFiles}" id="dataFat" emptyMessage="Nenhum item encontrado.">
-		<f:facet name="header">
-	        #{bundle['simulacao.title.tabela.arquivo']}
-	    </f:facet>
-        <p:column headerText="ID" width="20%">
-        	<h:outputText value="#{arquivo.fileID}" />
-        </p:column>
-        <p:column headerText="Nome" width="65%">
-        	<b><h:outputText value="#{arquivo.fileName}" style="color: ##{arquivo.color}"/></b>
-        </p:column>
-        <p:column headerText="Ações" width="15%" rendered="#{!viewOnly}">
-        	<p:commandButton icon="ui-icon-trash" title="Excluir" actionListener="#{discoController.deleteFile(arquivo.fileID)}" update=":formSimulacao :formSimulacaoMessage" />
-        </p:column>
-    </p:dataTable>
-
-	<!-- GRID PRATOS -->
-    <p:spacer height="15px"/>
+	<p:spacer height="15px"/>
 	<div class="tempo-simulacao" >
 		Tamanho do setor: #{discoController.sectorSize} bytes | Tamanho do disco: #{discoController.diskSize/1024} KB. | Quantidade de setores: #{discoController.qtdSectors}
 	</div>
+	<p:panelGrid columns="2" style="width: 100%" styleClass="align-top-panel-grid"> 
+		<p:dataTable var="arquivo" value="#{discoController.sistemaArquivo.allFiles}" id="dataFat" emptyMessage="Nenhum item encontrado."
+			styleClass="min-width400px" >
+			<f:facet name="header">
+		        #{bundle['simulacao.title.tabela.arquivo']}
+		    </f:facet>
+	        <p:column headerText="ID" width="20%">
+	        	<h:outputText value="#{arquivo.fileID}" />
+	        </p:column>
+	        <p:column headerText="Nome" width="65%">
+	        	<b><h:outputText value="#{arquivo.fileName}" style="color: ##{arquivo.color}"/></b>
+	        </p:column>
+	        <p:column headerText="Ações" width="15%" rendered="#{!viewOnly}">
+	        	<p:commandButton icon="ui-icon-trash" title="Excluir" actionListener="#{discoController.deleteFile(arquivo.fileID)}" update=":formSimulacao :formSimulacaoMessage" />
+	        </p:column>
+	    </p:dataTable>
 	
-    <p:dataGrid var="prato" value="#{discoController.hardDisk.hd}" rows="3" paginator="true" id="dataPrato" styleClass="min-width750px"
-        paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-        paginatorPosition="bottom" rowsPerPageTemplate="3,9,18" rowIndexVar="index">
- 
-        <f:facet name="header">Disco Rígido</f:facet>
-        
-        <p:panel header="Prato #{index+1}" style="text-align:center">
-        	<canvas id="canvas#{index}" width="200px" height="200px" />
-        	<script>#{discoController.drawPlates(prato, index)}</script>				        	
-        </p:panel>
-    </p:dataGrid>
+		<!-- GRID PRATOS -->
+	    <p:dataGrid var="prato" value="#{discoController.hardDisk.hd}" rows="3" paginator="true" id="dataPrato" styleClass="min-width750px"
+	        paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+	        paginatorPosition="bottom" rowsPerPageTemplate="3,9,18" rowIndexVar="index">
+	 
+	        <f:facet name="header">Disco Rígido</f:facet>
+	        
+	        <p:panel header="Prato #{index+1}" style="text-align:center">
+	        	<canvas id="canvas#{index}" width="200px" height="200px" />
+	        	<script>#{discoController.drawPlates(prato, index)}</script>				        	
+	        </p:panel>
+	    </p:dataGrid>
+	</p:panelGrid>
+	<p:spacer height="10"/>
 	    
     <!-- MOVIMENTAÇÃO DO CABEÇOTE DE LEITURA -->
     <p:panel id="panelMoveCabecote" header="Movimentação do cabeçote" style="text-align:center" styleClass="min-width750px">

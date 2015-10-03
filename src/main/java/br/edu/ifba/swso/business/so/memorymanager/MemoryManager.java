@@ -65,7 +65,7 @@ public class MemoryManager {
 			
 			int virtualPosition = virtualMemory.foundFreePosition();
 			pagetable.getListaEtp().add(new ETP(nPagina, allocatedSectorsPerPage));
-			virtualMemory.blockPosition(virtualPosition);
+			virtualMemory.blockPosition(virtualPosition, process.getPid());
 		}
 		
 		pageList.put(process.getPid(), pagetable);

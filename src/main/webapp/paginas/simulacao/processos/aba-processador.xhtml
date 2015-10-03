@@ -19,11 +19,13 @@
         	</p:outputLabel>
         	<p:outputLabel value="IR">
         		<br/>
-	        	<p:inputText value="#{maquinaSessaoController.coreVirtualMachine.centralProcessingUnit.registers.instructionRegister.realValue()}" readonly="true" styleClass="tam_p"/>
+	        	<p:inputText value="#{maquinaSessaoController.coreVirtualMachine.centralProcessingUnit.registers.instructionRegister.realValue()}" readonly="true" disabled="true" 
+	        		styleClass="tam_p" style="font-weight: bold;" />
 			</p:outputLabel>
 			<p:outputLabel value="PC">
         		<br/>
-	        	<p:inputText value="#{maquinaSessaoController.coreVirtualMachine.centralProcessingUnit.registers.programCounter.realValue()}" readonly="true" styleClass="tam_p"/>
+	        	<p:inputText value="#{maquinaSessaoController.coreVirtualMachine.centralProcessingUnit.registers.programCounter.realValue()}" readonly="true" disabled="true" 
+	        		styleClass="tam_p" style="font-weight: bold;" />
        		</p:outputLabel>
        	</p:panelGrid>
 	</p:fieldset>
