@@ -1,11 +1,12 @@
 package br.edu.ifba.swso.business.virtualmachine.cpu;
 
 import br.edu.ifba.swso.business.abstractions.Word;
+import br.edu.ifba.swso.business.so.memorymanager.exception.PageFault;
 import br.edu.ifba.swso.business.virtualmachine.MemoryManagementUnit;
 
 public class ControlUnit {
 
-	public Word seekInstruction(Registers registers, MemoryManagementUnit mmu) throws Exception {
+	public Word seekInstruction(Registers registers, MemoryManagementUnit mmu) throws PageFault {
 		System.out.println("Buscando Instrução");
 		Word instruction = mmu.getWord(registers.getProgramCounter().realValue());
 		

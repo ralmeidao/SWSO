@@ -3,6 +3,7 @@ package br.edu.ifba.swso.business.virtualmachine;
 
 import br.edu.ifba.swso.business.abstractions.Word;
 import br.edu.ifba.swso.business.so.memorymanager.PageTable;
+import br.edu.ifba.swso.business.so.memorymanager.exception.PageFault;
 import br.edu.ifba.swso.business.virtualmachine.cpu.ArithmeticLogicUnit;
 import br.edu.ifba.swso.business.virtualmachine.cpu.ControlUnit;
 import br.edu.ifba.swso.business.virtualmachine.cpu.InstructionDecoder;
@@ -31,7 +32,7 @@ public class CentralProcessingUnit {
 		this.cpuTime = 0;
 	}
     
-    public void execute() throws Exception {
+    public void execute() throws PageFault {
     	if(registers.getProgramCounter().realValue() != -1) {
     		Word instruction = controlUnit.seekInstruction(registers, memoryManagementUnit);
     		int tipoInstrucao = controlUnit.decode(instruction, instructionDecoder);

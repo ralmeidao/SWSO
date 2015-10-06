@@ -24,6 +24,8 @@ public class MemoryManager {
 	
 	private RealMemory realMemory;
 	
+	private int paginaSubstituir;
+	
 	public MemoryManager(CoreVirtualMachine coreVirtualMachine) {
 		this.pageList = new HashMap<Integer, PageTable>();
 		this.realMemory = new RealMemory(coreVirtualMachine.getVirtualMachineParameters().getMemorySize());
@@ -74,18 +76,31 @@ public class MemoryManager {
 
 	}
 	
-	
-	public void alocaPaginaMemoriaReal(int pid, int pageNumber) throws MemoryFullException {
+	public void alocaPaginaMemoriaReal(int pid, int pageNumber) {
 		PageTable pageTableProcess = pageList.get(pid);
 		ETP etp = pageTableProcess.getListaEtp().get(pageNumber);
 		if (etp.getBitV() == '0') {
-			int realPosition = realMemory.foundFreePosition();
-			//virtualToReal.put(etp.getPpv(), realPosition);
+			
+			int realPosition;
+			try {
+				realPosition = realMemory.foundFreePosition();
+			} catch (MemoryFullException e) {
+				realPosition =  encontrarPaginaParaSubstituir();
+			}
+			
 			realMemory.blockPosition(realPosition, pid);
 			etp.setPpr(realPosition);
 			copiarDoDiscoParaRAM(etp.getAllocatedSectors(), realPosition);
 			etp.setBitV('1');
 		}
+	}
+	
+	//TODO RODAR ALGORITMO DE SUBSTITUIÇÃO DE PÁGINA
+	public int encontrarPaginaParaSubstituir() {
+		if (paginaSubstituir >= realMemory.getRealMemory().size()) {
+			paginaSubstituir = 0;
+		}
+		return paginaSubstituir++;
 	}
 	
 	public void updatePageTable() {

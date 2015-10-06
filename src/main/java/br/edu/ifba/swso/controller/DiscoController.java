@@ -39,78 +39,75 @@ public class DiscoController extends BaseController implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	@Inject
 	private MaquinaSessaoController maquinaSessaoController;
-	
-	//BUSINESS DATA - START
+
+	// BUSINESS DATA - START
 	private IDiskScheduler[] arrayDiskSchedule;
-	
+
 	private IDiskScheduler diskSchedule;
-	
+
 	private KernelOperatingSystem kernelOperatingSystem;
-	
-	//VIEW DATA - START
+
+	// VIEW DATA - START
 	private UploadedFile uploadFile;
-	
+
 	private String color;
-	
+
 	private String colorPersonalizar;
-	
+
 	private String movimentacaoSimulada;
-	
-	
+
 	@PostConstruct
 	public void init() throws IOException {
 		if (maquinaSessaoController.getOperatingSystem() != null) {
 			VirtualMachineParameters virtualMachineParameters = maquinaSessaoController.getVirtualMachineParameters();
 			kernelOperatingSystem = maquinaSessaoController.getOperatingSystem();
-			arrayDiskSchedule = new IDiskScheduler[]{new SSTF(virtualMachineParameters), 
-													 new FCFS(virtualMachineParameters), 
-													 new SCAN(virtualMachineParameters),
-													 new CSCAN(virtualMachineParameters)};
+			arrayDiskSchedule = new IDiskScheduler[] { new SSTF(virtualMachineParameters), new FCFS(virtualMachineParameters),
+					new SCAN(virtualMachineParameters), new CSCAN(virtualMachineParameters) };
 			diskSchedule = arrayDiskSchedule[0];
 			kernelOperatingSystem.setDiskSchedule(diskSchedule);
 		}
 	}
-	
-    public void salvarConfiguracoesDisco() {
-    	kernelOperatingSystem.setDiskSchedule(diskSchedule);
-    }
-    
-    public void doUploadFile() {
-    	if (validarUploadArquivo()) {
-    		FileInput fileInput = criarInputFile();
-    		kernelOperatingSystem.getFileSystem().allocateFile(fileInput, kernelOperatingSystem.getDiskSchedule());
-    		clearUpload();
-    		updateComponentes(":formSimulacao");
-    	}		
-    }
-    
-    public void updateComboColor() {
+
+	public void salvarConfiguracoesDisco() {
+		kernelOperatingSystem.setDiskSchedule(diskSchedule);
+	}
+
+	public void doUploadFile() {
+		if (validarUploadArquivo()) {
+			FileInput fileInput = criarInputFile();
+			kernelOperatingSystem.getFileSystem().allocateFile(fileInput, kernelOperatingSystem.getDiskSchedule());
+			clearUpload();
+			updateComponentes(":formSimulacao");
+		}
+	}
+
+	public void updateComboColor() {
 		updateComponentes(":uploadForm:selectColors");
 	}
-    
-    public void simularMovimentacao() {
-    	kernelOperatingSystem.getFileSystem().simularMovimentacao(movimentacaoSimulada, kernelOperatingSystem.getDiskSchedule());
-    }
-    
-    public void deleteFile(Integer id) {
-    	kernelOperatingSystem.getFileSystem().deallocateFile(id);
-    }
-    
+
+	public void simularMovimentacao() {
+		kernelOperatingSystem.getFileSystem().simularMovimentacao(movimentacaoSimulada, kernelOperatingSystem.getDiskSchedule());
+	}
+
+	public void deleteFile(Integer id) {
+		kernelOperatingSystem.getFileSystem().deallocateFile(id);
+	}
+
 	private FileInput criarInputFile() {
 		byte[] arquivo = uploadFile.getContents();
 		int lastIndexOf = uploadFile.getFileName().lastIndexOf('.');
-		
+
 		String colorReal = "XXXXXX".equals(color) ? colorPersonalizar : color;
-		
+
 		FileInput fileInput = new FileInput(uploadFile.getFileName().substring(0, lastIndexOf), colorReal);
-		
+
 		String arqString = new String(arquivo);
 		arqString = arqString.replace("\r\n", "");
 		arqString = arqString.replace(" ", "");
-		for(String instrucao : arqString.split(";")){
+		for (String instrucao : arqString.split(";")) {
 			Word word = new Word(instrucao);
 			for (int i = 0; i < Constantes.WORD_SIZE; i++) {
 				fileInput.writeBytes(word.getIoWord()[i]);
@@ -118,19 +115,18 @@ public class DiscoController extends BaseController implements Serializable {
 		}
 		return fileInput;
 	}
-	
+
 	private void clearUpload() {
 		uploadFile = null;
 		color = null;
 	}
-	
-	private boolean validarUploadArquivo(){
+
+	private boolean validarUploadArquivo() {
 		String message = "";
-		if(uploadFile == null || Util.isNullOuVazio(uploadFile.getFileName())) {
+		if (uploadFile == null || Util.isNullOuVazio(uploadFile.getFileName())) {
 			message += "É necessário selecionar um arquivo! <br/>";
-		} 
-		if (color == null || color.equals("")
-				|| (color.equals("XXXXXX") && (colorPersonalizar == null || colorPersonalizar.equals("")))) {
+		}
+		if (color == null || color.equals("") || (color.equals("XXXXXX") && (colorPersonalizar == null || colorPersonalizar.equals("")))) {
 			message += "É necessário selecionar uma cor!";
 		}
 		if (!Util.isNullOuVazio(message)) {
@@ -138,8 +134,8 @@ public class DiscoController extends BaseController implements Serializable {
 		}
 		return Util.isNullOuVazio(message);
 	}
-    
-	//ACCESS METHODS
+
+	// ACCESS METHODS
 	public IDiskScheduler getDiskSchedule() {
 		return diskSchedule;
 	}
@@ -163,7 +159,7 @@ public class DiscoController extends BaseController implements Serializable {
 	public void setUploadFile(UploadedFile uploadFile) {
 		this.uploadFile = uploadFile;
 	}
-	
+
 	public String getColor() {
 		return color;
 	}
@@ -188,20 +184,20 @@ public class DiscoController extends BaseController implements Serializable {
 		this.movimentacaoSimulada = movimentacaoSimulada;
 	}
 
-    //PARTE GRAFICA
+	// PARTE GRAFICA
 	/**
 	 * Utilizado para obter o arquivo por meio do número inicial do setor
 	 * 
 	 * @param nSector
 	 * @return File
 	 */
-	private File obterArquivo(int nSector){
+	private File obterArquivo(int nSector) {
 		int idFile = getSistemaArquivo().seekIdFilePerSector(nSector);
 		File arquivo = null;
-		if(idFile != -1) {
+		if (idFile != -1) {
 			arquivo = getSistemaArquivo().seekFilePerId(idFile);
 		}
-		
+
 		if (arquivo == null) {
 			arquivo = new File("Vazio");
 			arquivo.setColor("FFFFFF");
@@ -217,23 +213,26 @@ public class DiscoController extends BaseController implements Serializable {
 	 * @return String
 	 */
 	public String drawPlates(Plate plate, int i) {
-		String script = "plateDraw(\"canvas"+i+"\", new Array(";
+		String script = "plateDraw(\"canvas" + i + "\", new Array(";
 		int j = 0;
 		for (Track track : plate.getTracks()) {
 			String color = "new Array(";
 			for (int k = 0; k < track.getSectors().length; k++) {
-				color += "\"#"+obterArquivo((i * getVirtualMachineParameters().getPlateSize() * getVirtualMachineParameters().getTrackSize()) + (j*getVirtualMachineParameters().getTrackSize()) + k).getColor()+"\"";
-				color+= (track.getSectors().length == k+1) ? ")" : ",";
+				color += "\"#"
+						+ obterArquivo(
+								(i * getVirtualMachineParameters().getPlateSize() * getVirtualMachineParameters().getTrackSize())
+										+ (j * getVirtualMachineParameters().getTrackSize()) + k).getColor() + "\"";
+				color += (track.getSectors().length == k + 1) ? ")" : ",";
 			}
-			script+= color + ", ";
+			script += color + ", ";
 			j++;
 		}
 		script = script.subSequence(0, script.length() - 2) + "))";
-		
+
 		return script;
-		
+
 	}
-	
+
 	/**
 	 * Utilizado para desenhar o movimento do cabeçote
 	 * 
@@ -243,24 +242,24 @@ public class DiscoController extends BaseController implements Serializable {
 		String script = "";
 		if (getHardDisk().getListMoveReaderHead().size() > 0) {
 			script = "movesDraw(\"canvasMoveReaderHead\", new Array(";
-			
+
 			for (MovimentoCabecoteHD move : getHardDisk().getListMoveReaderHead()) {
-				script += "new Array( \"" + move.getPosicaoDe() + "\", \"" + move.getPosicaoPara() + "\"), "; 
+				script += "new Array( \"" + move.getPosicaoDe() + "\", \"" + move.getPosicaoPara() + "\"), ";
 			}
 			script = script.subSequence(0, script.length() - 2) + "))";
 		}
-		
+
 		return script;
-		
+
 	}
-	
+
 	/**
 	 * Método utilizado para limpar a lista de movimentos
 	 */
 	public void limparListMoveReaderHead() {
 		getHardDisk().getListMoveReaderHead().clear();
 	}
-	
+
 	/**
 	 * Obtém ao HD
 	 * 
@@ -278,55 +277,55 @@ public class DiscoController extends BaseController implements Serializable {
 	public IFileSystem getSistemaArquivo() {
 		return kernelOperatingSystem.getFileSystem();
 	}
-		
+
 	/**
 	 * Obtém o tamanho do disco em KB
 	 * 
 	 * @return
 	 */
-	public int getDiskSizeKB(){
-		return getDiskSize()/1024;
+	public int getDiskSizeKB() {
+		return getDiskSize() / 1024;
 	}
-	
+
 	/**
 	 * Obtém o tamanho do disco em bytes
 	 * 
 	 * @return
 	 */
-	public int getDiskSize(){
-		return getVirtualMachineParameters().getDiskSize() * getVirtualMachineParameters().getPlateSize()* getVirtualMachineParameters().getTrackSize() * getSectorSize();
+	public int getDiskSize() {
+		return getVirtualMachineParameters().getDiskSize() * getVirtualMachineParameters().getPlateSize() * getVirtualMachineParameters().getTrackSize()
+				* getSectorSize();
 	}
-	
-	
+
 	/**
 	 * Obtém o tamanho do setor em bytes
 	 * 
 	 * @return
 	 */
-	public int getSectorSize(){
+	public int getSectorSize() {
 		return getVirtualMachineParameters().getSectorSize();
 	}
-	
+
 	/**
 	 * Obtém a quantidade de setores do disco
 	 * 
 	 * @return
 	 */
-	public int getQtdSectors(){
-		return getDiskSize()/getSectorSize();
+	public int getQtdSectors() {
+		return getDiskSize() / getSectorSize();
 	}
-	
+
 	/**
 	 * Obtém a altura do canvas baseado na quantidade de movimentos
 	 * 
 	 * @return
 	 */
-	public int getCanvasHeight(){
+	public int getCanvasHeight() {
 		return 50 + getHardDisk().getListMoveReaderHead().size() * 20;
 	}
-	
+
 	private VirtualMachineParameters getVirtualMachineParameters() {
 		return maquinaSessaoController.getVirtualMachineParameters();
 	}
-	
+
 }

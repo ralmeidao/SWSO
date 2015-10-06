@@ -41,6 +41,10 @@ public class KernelOperatingSystem {
 		}
 	}
 
+	public void tratarPageFault(int pid, int page) {
+		memoryManager.alocaPaginaMemoriaReal(pid, page);
+	}
+	
 	// METHODS OF ACCESS
 	public IFileSystem getFileSystem() {
 		return fileSystem;
