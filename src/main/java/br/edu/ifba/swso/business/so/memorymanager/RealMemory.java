@@ -5,16 +5,15 @@ import java.util.List;
 
 import br.edu.ifba.swso.business.so.memorymanager.exception.MemoryFullException;
 import br.edu.ifba.swso.display.PageDisplay;
-import br.edu.ifba.swso.util.Constantes;
 
 public class RealMemory {
 	
 	private char[] realMemory;
 	private int[] processAlloc;
 	
-	public RealMemory() {
-		realMemory = new char[Constantes.MEMORY_SIZE];
-		processAlloc = new int[Constantes.MEMORY_SIZE];
+	public RealMemory(int memorySize) {
+		realMemory = new char[memorySize];
+		processAlloc = new int[memorySize];
 		for (int i = 0; i < realMemory.length; i++) {
 			realMemory[i] = '0';
 			processAlloc[i] = -1;
@@ -50,25 +49,27 @@ public class RealMemory {
 	
 	public List<PageDisplay> getWordList() {
 		List<PageDisplay> lista = new ArrayList<PageDisplay>();
+		int fator = processAlloc.length/4;
+		
 		for (int i = 0; i < processAlloc.length; i++) {
 			PageDisplay wd = new PageDisplay();
 			
 			wd.setPositionColumn01(i);
 			wd.setValorColumn01(processAlloc[i]);
 			
-			wd.setPositionColumn02(i+(1*8));
-			wd.setValorColumn02(processAlloc[i+(1*8)]);
+			wd.setPositionColumn02(i+(1*fator));
+			wd.setValorColumn02(processAlloc[i+(1*fator)]);
 			
-			wd.setPositionColumn03(i+(2*8));
-			wd.setValorColumn03(processAlloc[i+(2*8)]);
+			wd.setPositionColumn03(i+(2*fator));
+			wd.setValorColumn03(processAlloc[i+(2*fator)]);
 			
-			wd.setPositionColumn04(i+(3*8));
-			wd.setValorColumn04(processAlloc[i+(3*8)]);
+			wd.setPositionColumn04(i+(3*fator));
+			wd.setValorColumn04(processAlloc[i+(3*fator)]);
 			
 			lista.add(wd);
 			
-			if ((i+1) % 8 == 0) {
-				i = i + (3*8);
+			if ((i+1) % fator == 0) {
+				i = i + (3*fator);
 			}
 		}
 	

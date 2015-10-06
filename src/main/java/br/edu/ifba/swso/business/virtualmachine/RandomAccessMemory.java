@@ -13,8 +13,8 @@ public class RandomAccessMemory {
 	
 	private ByteSWSO[] memory;
 
-	public RandomAccessMemory() {
-		memory = new ByteSWSO[Constantes.MEMORY_SIZE * 1024];
+	public RandomAccessMemory(int memorySize) {
+		memory = new ByteSWSO[memorySize * 1024];
 	}
 
 	public Word getWord(int index) {

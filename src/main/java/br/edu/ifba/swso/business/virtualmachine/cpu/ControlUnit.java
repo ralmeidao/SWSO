@@ -5,7 +5,7 @@ import br.edu.ifba.swso.business.virtualmachine.MemoryManagementUnit;
 
 public class ControlUnit {
 
-	public Word seekInstruction(Registers registers, MemoryManagementUnit mmu) {
+	public Word seekInstruction(Registers registers, MemoryManagementUnit mmu) throws Exception {
 		System.out.println("Buscando Instrução");
 		Word instruction = mmu.getWord(registers.getProgramCounter().realValue());
 		

@@ -2,7 +2,6 @@ package br.edu.ifba.swso.business.so.memorymanager;
 
 import br.edu.ifba.swso.business.so.memorymanager.exception.InvalidPositionException;
 import br.edu.ifba.swso.business.so.memorymanager.exception.MemoryFullException;
-import br.edu.ifba.swso.util.Constantes;
 
 
 
@@ -15,11 +14,11 @@ public class AdressConvertion implements IAdressInterface {
 	private int memoryLength;
     
 	private AdressConvertion() {
-		bitMapMemory = new int[Constantes.MEMORY_SIZE];
+		/*bitMapMemory = new int[Constantes.MEMORY_SIZE];
 		for (int i = 0; i < bitMapMemory.length; i++) {
 			bitMapMemory[i] = 0;
 		}
-		setores = new int[2];
+		setores = new int[2];*/
 	}
 
     /**
