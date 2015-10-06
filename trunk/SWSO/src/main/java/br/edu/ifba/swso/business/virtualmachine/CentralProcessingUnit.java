@@ -22,8 +22,8 @@ public class CentralProcessingUnit {
     
     private int cpuTime;
     
-	public CentralProcessingUnit(RandomAccessMemory ram) {
-		this.memoryManagementUnit = new MemoryManagementUnit(ram, this);
+	public CentralProcessingUnit(RandomAccessMemory ram, int tamanhoPagina) {
+		this.memoryManagementUnit = new MemoryManagementUnit(ram, this, tamanhoPagina);
 		this.registers = new Registers();
 		this.arithmeticLogicUnit = new ArithmeticLogicUnit();
 		this.controlUnit = new ControlUnit();
@@ -31,7 +31,7 @@ public class CentralProcessingUnit {
 		this.cpuTime = 0;
 	}
     
-    public void execute() {
+    public void execute() throws Exception {
     	if(registers.getProgramCounter().realValue() != -1) {
     		Word instruction = controlUnit.seekInstruction(registers, memoryManagementUnit);
     		int tipoInstrucao = controlUnit.decode(instruction, instructionDecoder);

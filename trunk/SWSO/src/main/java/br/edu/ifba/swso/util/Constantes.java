@@ -24,7 +24,6 @@ public class Constantes {
 	
 	public static int BYTE_SIZE = 8; // tamanho do byte.
 	public static int WORD_SIZE = 2; // tamanho da palavra por Bytes.
-	public static int BYTE_PER_PAGE = 512; // quantidade de bytes por páginas
 	
 	public static int DISK_SIZE = 9; // tamanho do disco. (32 pratos)
 	public static int PLATE_SIZE = 10; // tamanho do prato. (4 trilhas) 
@@ -39,8 +38,8 @@ public class Constantes {
 	public static int TIME_SLICE = 5;
 	
 	//GERENCIA DE MEMORIA
-	public static int MEMORY_SIZE = 32; // quantidade total da memória.
-	public static int VIRTUAL_MEMORY_SIZE = MEMORY_SIZE*2; // quantidade total da memória virtual.
+	//public static int MEMORY_SIZE = 32; // quantidade total da memória.
+	//public static int VIRTUAL_MEMORY_SIZE = MEMORY_SIZE*2; // quantidade total da memória virtual.
 	public static int RAM_TAXA_DE_OCUPACAO_MAX = 80; //De 0 à 100%
 	
 }

@@ -5,16 +5,15 @@ import java.util.List;
 
 import br.edu.ifba.swso.business.so.memorymanager.exception.VirtualMemoryFullException;
 import br.edu.ifba.swso.display.PageDisplay;
-import br.edu.ifba.swso.util.Constantes;
 
 public class VirtualMemory {
 	
 	private char[] virtualMemory;
 	private int[] processAlloc;
 	
-	public VirtualMemory() {
-		virtualMemory = new char[Constantes.VIRTUAL_MEMORY_SIZE];
-		processAlloc = new int[Constantes.VIRTUAL_MEMORY_SIZE];
+	public VirtualMemory(int virtualMemorySize) {
+		virtualMemory = new char[virtualMemorySize];
+		processAlloc = new int[virtualMemorySize];
 		for (int i = 0; i < virtualMemory.length; i++) {
 			virtualMemory[i] = '0';
 			processAlloc[i] = -1;
@@ -47,25 +46,28 @@ public class VirtualMemory {
 	
 	public List<PageDisplay> getWordList() {
 		List<PageDisplay> lista = new ArrayList<PageDisplay>();
+		
+		int fator = processAlloc.length/4;
+		
 		for (int i = 0; i < processAlloc.length; i++) {
 			PageDisplay wd = new PageDisplay();
 			
 			wd.setPositionColumn01(i);
 			wd.setValorColumn01(processAlloc[i]);
 			
-			wd.setPositionColumn02(i+(1*16));
-			wd.setValorColumn02(processAlloc[i+(1*16)]);
+			wd.setPositionColumn02(i+(1*fator));
+			wd.setValorColumn02(processAlloc[i+(1*fator)]);
 			
-			wd.setPositionColumn03(i+(2*16));
-			wd.setValorColumn03(processAlloc[i+(2*16)]);
+			wd.setPositionColumn03(i+(2*fator));
+			wd.setValorColumn03(processAlloc[i+(2*fator)]);
 			
-			wd.setPositionColumn04(i+(3*16));
-			wd.setValorColumn04(processAlloc[i+(3*16)]);
+			wd.setPositionColumn04(i+(3*fator));
+			wd.setValorColumn04(processAlloc[i+(3*fator)]);
 			
 			lista.add(wd);
 			
-			if ((i+1) % 16 == 0) {
-				i = i + (3*16);
+			if ((i+1) % fator == 0) {
+				i = i + (3*fator);
 			}
 		}
 	

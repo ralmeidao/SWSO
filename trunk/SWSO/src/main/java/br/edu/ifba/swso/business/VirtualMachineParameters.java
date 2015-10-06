@@ -5,12 +5,12 @@ public class VirtualMachineParameters {
 	private String name;
 	
 	//PARAMETROS INICIAIS
-	public int sectorSize; // tamanho do setor.
-	public int diskSize; // tamanho do disco.
-	public int plateSize; // tamanho do prato. 
-	public int trackSize;// tamanho da trilha.
-	public int memorySize; // quantidade total da memória.
-	public int bytePerPage; // quantidade de bytes por páginas
+	private int sectorSize; // tamanho do setor.
+	private int diskSize; // tamanho do disco.
+	private int plateSize; // tamanho do prato. 
+	private int trackSize;// tamanho da trilha.
+	private int memorySize; // quantidade total da memória.
+	private int bytePerPage; // quantidade de bytes por páginas
 	
 	//GERENCIA DO PROCESSADOR	
 	public static int NUM_QUATUM = 64; // quatum é medido por palavras (neste caso).
@@ -82,6 +82,10 @@ public class VirtualMachineParameters {
 		this.memorySize = memorySize;
 	}
 
+	public int getVirtualMemorySize() {
+		return memorySize*2;
+	}
+	
 	public int getBytePerPage() {
 		return bytePerPage;
 	}

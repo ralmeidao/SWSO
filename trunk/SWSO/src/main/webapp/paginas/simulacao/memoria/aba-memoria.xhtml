@@ -8,7 +8,9 @@
 		
 	<p:fieldset legend="Gerência de Memória">
 		<p:panelGrid columns="1" styleClass="panelgrid" id="painelConfigMemoria">
-			<b>Algoritmo:</b> FIFO | 
+			<b>Algoritmo:</b> FIFO |
+			<b>Tamanho da Memória:</b> #{memoriaController.virtualMachineParameters.memorySize*1024/memoriaController.virtualMachineParameters.bytePerPage} páginas | 
+			<b>Tamanho das Páginas:</b> #{memoriaController.virtualMachineParameters.bytePerPage} bytes |
 		</p:panelGrid>
 	</p:fieldset> 
 	<p:commandButton value="Configurações" icon="ui-icon-gear" styleClass="btn" onclick="modalConfigProcess.show()" rendered="#{!viewOnly}"/>

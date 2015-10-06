@@ -26,8 +26,8 @@ public class MemoryManager {
 	
 	public MemoryManager(CoreVirtualMachine coreVirtualMachine) {
 		this.pageList = new HashMap<Integer, PageTable>();
-		this.realMemory = new RealMemory();
-		this.virtualMemory = new VirtualMemory();
+		this.realMemory = new RealMemory(coreVirtualMachine.getVirtualMachineParameters().getMemorySize());
+		this.virtualMemory = new VirtualMemory(coreVirtualMachine.getVirtualMachineParameters().getVirtualMemorySize());
 		this.coreVirtualMachine = coreVirtualMachine;
 	}
 	
@@ -94,7 +94,7 @@ public class MemoryManager {
 	}
 	
 	public void copiarDoDiscoParaRAM(List<Integer> setores, int realPosition) {
-		int ini = realPosition*Constantes.BYTE_PER_PAGE;
+		int ini = realPosition*coreVirtualMachine.getVirtualMachineParameters().getBytePerPage();
 		for (Integer nSector : setores) {
 			this.coreVirtualMachine.getRandomAccessMemory().alloc(ini, coreVirtualMachine.getHardDisk().getData(nSector));
 			ini+=Constantes.SECTOR_SIZE;

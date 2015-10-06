@@ -75,7 +75,7 @@ public class MaquinaSessaoController extends BaseController implements Serializa
 		return "";	
 	}
 	
-	public void executarCiclo() {
+	public void executarCiclo() throws Exception {
 		int loop = qtdCiclos != null ? qtdCiclos : 1;
 		for (int i = 0; i < loop; i++) {
 			kernelOperatingSystem.execute();
