@@ -10,6 +10,7 @@ import javax.inject.Named;
 
 import br.edu.ifba.swso.business.VirtualMachineParameters;
 import br.edu.ifba.swso.business.so.KernelOperatingSystem;
+import br.edu.ifba.swso.business.so.memorymanager.exception.PageFault;
 import br.edu.ifba.swso.business.virtualmachine.CoreVirtualMachine;
 import br.edu.ifba.swso.display.TimelineDisplay;
 import br.edu.ifba.swso.util.Util;
@@ -77,18 +78,22 @@ public class MaquinaSessaoController extends BaseController implements Serializa
 	
 	public void executarCiclo() throws Exception {
 		int loop = qtdCiclos != null ? qtdCiclos : 1;
-		for (int i = 0; i < loop; i++) {
-			kernelOperatingSystem.execute();
-			coreVirtualMachine.getCentralProcessingUnit().execute();
-			timelineDisplay.incrementList(kernelOperatingSystem.getProcessManager().getEmExecucao());
-			
-			if (coreVirtualMachine.getCentralProcessingUnit().getRegisters().getProgramCounter().realValue() == (kernelOperatingSystem.getProcessManager().getEmExecucao().getQuantidadeInstrucoes()*2)) {
-				kernelOperatingSystem.finalizarProcesso(kernelOperatingSystem.getProcessManager().getEmExecucao());	
+		try {
+			for (int contadorDeLoop = 0; contadorDeLoop < loop; contadorDeLoop++) {
+				kernelOperatingSystem.execute();
+				coreVirtualMachine.getCentralProcessingUnit().execute();
+				timelineDisplay.incrementList(kernelOperatingSystem.getProcessManager().getEmExecucao());
+				
+				if (coreVirtualMachine.getCentralProcessingUnit().getRegisters().getProgramCounter().realValue() == (kernelOperatingSystem.getProcessManager().getEmExecucao().getQuantidadeInstrucoes()*2)) {
+					kernelOperatingSystem.finalizarProcesso(kernelOperatingSystem.getProcessManager().getEmExecucao());	
+				}
 			}
+		} catch (PageFault pageFault) {
+			kernelOperatingSystem.tratarPageFault(kernelOperatingSystem.getProcessManager().getEmExecucao().getPid(), pageFault.getPage());
+			kernelOperatingSystem.getProcessManager().bloquearProcesso();//PAREI AQUI
 		}
 	}
-	
-	
+
 	private boolean validarName() {
 		String message = "";
 		if(Util.isNullOuVazio(virtualMachineParameters.getName())) {

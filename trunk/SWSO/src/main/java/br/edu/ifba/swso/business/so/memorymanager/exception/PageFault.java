@@ -1,29 +1,25 @@
 package br.edu.ifba.swso.business.so.memorymanager.exception;
 
-import br.edu.ifba.swso.business.so.memorymanager.Pagina;
-
 public class PageFault extends Exception {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -6255089864958106055L;
-	/**
-	 * retorna os dados para tratamento quando ocorre o pageFault
-	 */
-	public PageFault(Pagina pg, String ri) {
-		this.pg = pg;
-		this.ri = ri;
+
+	
+	private int page;
+	
+	public PageFault(int page) {
+		this.page = page;
 	}
 
-	public Pagina infoPageFault() {
-		return pg;
+	public int getPage() {
+		return page;
 	}
 
-	public String riInfo() {
-		return this.ri;
+	public void setPage(int page) {
+		this.page = page;
 	}
-
-	private String ri;
-	private Pagina pg;
+	
 }

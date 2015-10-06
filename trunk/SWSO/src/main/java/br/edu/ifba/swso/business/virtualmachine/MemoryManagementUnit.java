@@ -2,6 +2,7 @@ package br.edu.ifba.swso.business.virtualmachine;
 
 import br.edu.ifba.swso.business.abstractions.Word;
 import br.edu.ifba.swso.business.so.memorymanager.ETP;
+import br.edu.ifba.swso.business.so.memorymanager.exception.PageFault;
 
 public class MemoryManagementUnit {
 	
@@ -15,14 +16,14 @@ public class MemoryManagementUnit {
 		this.tamanhoPagina = tamanhoPagina;
 	}
 
-	public Word getWord(int index) throws Exception {
+	public Word getWord(int index) throws PageFault {
 		int paginaLogica = index/tamanhoPagina;
 		
 		ETP etp = cpu.getPageTable().getEtp(paginaLogica);
 		
 		if (etp.getBitV() == '0') {
 			//PAGE FAULT
-			throw new Exception("PAGE FAULT");
+			throw new PageFault(paginaLogica);
 		}
 		int deslocamento = index % tamanhoPagina;
 		return randomAccessMemory.getWord((etp.getPpr() * tamanhoPagina) + deslocamento);
