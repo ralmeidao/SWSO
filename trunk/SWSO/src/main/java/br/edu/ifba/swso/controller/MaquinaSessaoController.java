@@ -46,28 +46,33 @@ public class MaquinaSessaoController extends BaseController implements Serializa
 	public void init() {
 		qtdCiclos = 1;
 		virtualMachineParameters = new VirtualMachineParameters();
-		timelineDisplay = new TimelineDisplay();
+		timelineDisplay = new TimelineDisplay(); 
 	}
 	
 	@PreDestroy
 	public void destroy() {
-		applicationController.getMaquinasAtivas().remove(virtualMachineParameters.getName());
+		applicationController.remove(this);
+		restart();
 	}
 	
 	public String initSimulation() {
 		if(validarName()) {
 			coreVirtualMachine = new CoreVirtualMachine(virtualMachineParameters);
 			kernelOperatingSystem = new KernelOperatingSystem(coreVirtualMachine);
-			applicationController.getMaquinasAtivas().put(virtualMachineParameters.getName(), this);
+			applicationController.put(this);
 			return includeRedirect("/paginas/simulacao/simulacao");
 		}
 		
 		return "";
 	}
 	
+	public void restart() {
+		
+	}
+	
 	public String searchSimulation() {
 		if(searchMachine()) {
-			MaquinaSessaoController maquina = applicationController.getMaquinasAtivas().get(virtualMachineParameters.getName());
+			MaquinaSessaoController maquina = applicationController.get(virtualMachineParameters.getName());
 			coreVirtualMachine = maquina.getCoreVirtualMachine();
 			kernelOperatingSystem = maquina.getOperatingSystem();
 			return includeRedirect("/paginas/simulacao/simulacao-view-aluno");
@@ -99,7 +104,7 @@ public class MaquinaSessaoController extends BaseController implements Serializa
 			message += "É necessário informar o nome da máquina!";
 			facesMessager.addMessageError(message);
 			return false;
-		} else if (applicationController.getMaquinasAtivas().containsKey(virtualMachineParameters.getName())) {
+		} else if (applicationController.contemMaquina(virtualMachineParameters.getName())) {
 			message += "Já existe uma máquina executando com o nome informado.";
 			facesMessager.addMessageError(message);
 			return false;
@@ -109,7 +114,7 @@ public class MaquinaSessaoController extends BaseController implements Serializa
 	
 	private boolean searchMachine() {
 		String message = "";
-		if(!applicationController.getMaquinasAtivas().containsKey(virtualMachineParameters.getName())) {
+		if(!applicationController.contemMaquina(virtualMachineParameters.getName())) {
 			message += "A máquina informada não existe!";
 			facesMessager.addMessageError(message);
 			return false;
