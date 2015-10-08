@@ -10,6 +10,7 @@ import javax.inject.Named;
 import br.edu.ifba.swso.algorithms.IProcessesScheduler;
 import br.edu.ifba.swso.algorithms.impl.process.FIFO;
 import br.edu.ifba.swso.algorithms.impl.process.RoundRobin;
+import br.edu.ifba.swso.business.VirtualMachineParameters;
 import br.edu.ifba.swso.business.abstractions.File;
 import br.edu.ifba.swso.business.so.KernelOperatingSystem;
 import br.edu.ifba.swso.business.so.memorymanager.PageTable;
@@ -25,6 +26,9 @@ public class ProcessoController extends BaseController implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	@Inject
+	private ApplicationController applicationController;
 	
 	@Inject
 	private MaquinaSessaoController maquinaSessaoController;
@@ -45,6 +49,7 @@ public class ProcessoController extends BaseController implements Serializable {
 	
 	@PostConstruct
 	public void init() {
+		applicationController.put(this);
 		this.timeslice = 5;
 		this.priority = 5;
 		this.kernelOperatingSystem = maquinaSessaoController.getOperatingSystem();
@@ -52,6 +57,10 @@ public class ProcessoController extends BaseController implements Serializable {
 		this.kernelOperatingSystem.setTimeslice(timeslice);
 		this.processesScheduler = arrayProcessesScheduler[0];
 		this.kernelOperatingSystem.setProcessesScheduler(processesScheduler);
+	}
+	
+	public void restart() {
+		
 	}
 
 	public void salvarConfiguracoesProcesso() {
@@ -126,6 +135,10 @@ public class ProcessoController extends BaseController implements Serializable {
 
 	public void setPageTable(PageTable pageTable) {
 		this.pageTable = pageTable;
+	}
+	
+	public VirtualMachineParameters getVirtualMachineParameters() {
+		return maquinaSessaoController.getVirtualMachineParameters();
 	}
 
 }

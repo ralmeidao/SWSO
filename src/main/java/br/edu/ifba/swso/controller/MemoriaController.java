@@ -29,6 +29,9 @@ public class MemoriaController extends BaseController implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Inject
+	private ApplicationController applicationController;
+	
+	@Inject
 	private MaquinaSessaoController maquinaSessaoController;
 	
 	//BUSINESS DATA - START
@@ -42,6 +45,7 @@ public class MemoriaController extends BaseController implements Serializable {
 	
 	@PostConstruct
 	public void init() throws IOException {
+		applicationController.put(this);
 		if (maquinaSessaoController.getOperatingSystem() != null) {
 			VirtualMachineParameters virtualMachineParameters = maquinaSessaoController.getVirtualMachineParameters();
 			kernelOperatingSystem = maquinaSessaoController.getOperatingSystem();
@@ -52,6 +56,10 @@ public class MemoriaController extends BaseController implements Serializable {
 			diskSchedule = arrayDiskSchedule[0];
 			kernelOperatingSystem.setDiskSchedule(diskSchedule);
 		}
+	}
+	
+	public void restart() {
+		
 	}
 	
     public void salvarConfiguracoesDisco() {

@@ -41,6 +41,9 @@ public class DiscoController extends BaseController implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Inject
+	private ApplicationController applicationController;
+	
+	@Inject
 	private MaquinaSessaoController maquinaSessaoController;
 
 	// BUSINESS DATA - START
@@ -61,6 +64,7 @@ public class DiscoController extends BaseController implements Serializable {
 
 	@PostConstruct
 	public void init() throws IOException {
+		applicationController.put(this);
 		if (maquinaSessaoController.getOperatingSystem() != null) {
 			VirtualMachineParameters virtualMachineParameters = maquinaSessaoController.getVirtualMachineParameters();
 			kernelOperatingSystem = maquinaSessaoController.getOperatingSystem();
@@ -71,6 +75,10 @@ public class DiscoController extends BaseController implements Serializable {
 		}
 	}
 
+	public void restart() {
+		
+	}
+	
 	public void salvarConfiguracoesDisco() {
 		kernelOperatingSystem.setDiskSchedule(diskSchedule);
 	}
@@ -324,7 +332,7 @@ public class DiscoController extends BaseController implements Serializable {
 		return 50 + getHardDisk().getListMoveReaderHead().size() * 20;
 	}
 
-	private VirtualMachineParameters getVirtualMachineParameters() {
+	public VirtualMachineParameters getVirtualMachineParameters() {
 		return maquinaSessaoController.getVirtualMachineParameters();
 	}
 
