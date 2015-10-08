@@ -49,11 +49,23 @@ public class ApplicationController {
 	public boolean contemMaquina(String name) {
 		return maquinasAtivas.containsKey(name);
 	}
+
+	public void remove(String s){
+		maquinasAtivas.remove(s);
+		discoControllers.remove(s);
+		processoControllers.remove(s);
+		memoriaControllers.remove(s);
+	}
 	
 	public void restart(String name) {
-		maquinasAtivas.get(name).restart();
-		discoControllers.get(name).restart(); 
-		processoControllers.get(name).restart();
-		memoriaControllers.get(name) .restart();
+		if (discoControllers.containsKey(name)) {
+			discoControllers.get(name).restart(); 
+		}
+		if (processoControllers.containsKey(name)) {
+			processoControllers.get(name).restart();
+		}
+		if (memoriaControllers.containsKey(name)) {
+			memoriaControllers.get(name).restart();
+		}
 	}
 }
