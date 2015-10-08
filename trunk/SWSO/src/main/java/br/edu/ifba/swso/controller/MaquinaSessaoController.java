@@ -35,24 +35,25 @@ public class MaquinaSessaoController extends BaseController implements Serializa
 	private KernelOperatingSystem kernelOperatingSystem;
 	
 	private VirtualMachineParameters virtualMachineParameters;
+	//DATA OF VIEW - START
 	
 	private TimelineDisplay timelineDisplay;
-	
-	//DATA OF VIEW - START
 	private int activeAba;
 	
 	//BUSINESS METHODS
 	@PostConstruct
 	public void init() {
+		activeAba = 0;
 		qtdCiclos = 1;
+		coreVirtualMachine = null;
+		kernelOperatingSystem = null;
 		virtualMachineParameters = new VirtualMachineParameters();
-		timelineDisplay = new TimelineDisplay(); 
+		timelineDisplay = new TimelineDisplay();
 	}
 	
 	@PreDestroy
 	public void destroy() {
 		applicationController.remove(this);
-		restart();
 	}
 	
 	public String initSimulation() {
@@ -62,12 +63,14 @@ public class MaquinaSessaoController extends BaseController implements Serializa
 			applicationController.put(this);
 			return includeRedirect("/paginas/simulacao/simulacao");
 		}
-		
 		return "";
 	}
 	
 	public void restart() {
-		
+		coreVirtualMachine = new CoreVirtualMachine(virtualMachineParameters);
+		kernelOperatingSystem = new KernelOperatingSystem(coreVirtualMachine);
+		timelineDisplay = new TimelineDisplay();
+		applicationController.restart(virtualMachineParameters.getName());
 	}
 	
 	public String searchSimulation() {

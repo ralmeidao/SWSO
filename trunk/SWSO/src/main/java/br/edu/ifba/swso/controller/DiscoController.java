@@ -76,7 +76,10 @@ public class DiscoController extends BaseController implements Serializable {
 	}
 
 	public void restart() {
-		
+		kernelOperatingSystem = maquinaSessaoController.getOperatingSystem();
+		diskSchedule = arrayDiskSchedule[0];
+		kernelOperatingSystem.setDiskSchedule(diskSchedule);
+		limparListMoveReaderHead();
 	}
 	
 	public void salvarConfiguracoesDisco() {

@@ -60,7 +60,12 @@ public class ProcessoController extends BaseController implements Serializable {
 	}
 	
 	public void restart() {
-		
+		this.timeslice = 5;
+		this.priority = 5;
+		this.kernelOperatingSystem = maquinaSessaoController.getOperatingSystem();
+		this.kernelOperatingSystem.setTimeslice(timeslice);
+		this.processesScheduler = arrayProcessesScheduler[0];
+		this.kernelOperatingSystem.setProcessesScheduler(processesScheduler);
 	}
 
 	public void salvarConfiguracoesProcesso() {

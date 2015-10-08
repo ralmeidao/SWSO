@@ -71,6 +71,8 @@
 			<h:panelGroup id="groupAuto" rendered="true">
 				<p:inputText value="#{maquinaSessaoController.qtdCiclos}" styleClass="tam_p" />
 				<p:commandButton icon="ui-icon-play" value="Executar" actionListener="#{maquinaSessaoController.executarCiclo()}" update="@form" styleClass="btn"/>
+				
+				<p:commandButton id="restartSimulacao" value="Reiniciar Simulação" actionListener="#{maquinaSessaoController.restart()}" update="@form" styleClass="btn" />
 			</h:panelGroup>
 	        
 			<p:tabView activeIndex="#{maquinaSessaoController.activeAba}" styleClass="min-width1280px">
