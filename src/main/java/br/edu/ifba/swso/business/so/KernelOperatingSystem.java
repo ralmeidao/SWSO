@@ -42,6 +42,7 @@ public class KernelOperatingSystem {
 	}
 
 	public void tratarPageFault(int pid, int page) {
+		processManager.bloquearProcesso();
 		memoryManager.alocaPaginaMemoriaReal(pid, page);
 	}
 	

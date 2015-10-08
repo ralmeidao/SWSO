@@ -79,38 +79,6 @@
 	        	<h:outputText value="#{word.valorColumn04}"/>
 	        </p:column>
 	    </p:dataTable>
-	    <p:spacer height="10"/>
-   		<p:dataTable var="word" value="#{maquinaSessaoController.operatingSystem.memoryManager.virtualMemory.wordList}" id="memoryVirtual" emptyMessage="Nenhum item encontrado."
-					paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-	        		paginatorPosition="bottom" rowIndexVar="index" rows="32">
-	    	<f:facet name="header">
-		        Memória Virtual
-		    </f:facet>
-	        <p:column width="15%" headerText="Nº da Página" style="background-color: #EEEEEE;">
-	        	<h:outputText value="#{word.positionColumn01}" style="font-weight: bold;"/>
-	        </p:column>
-	        <p:column width="10%" headerText="Processo">
-	        	<h:outputText value="#{word.valorColumn01}"/>
-	        </p:column>
-	        <p:column width="15%" headerText="Nº da Página" style="background-color: #EEEEEE;">
-	        	<h:outputText value="#{word.positionColumn02}" style="font-weight: bold;"/>
-	        </p:column>
-	        <p:column width="10%" headerText="Processo">
-	        	<h:outputText value="#{word.valorColumn02}"/>
-	        </p:column>
-	        <p:column width="15%" headerText="Nº da Página" style="background-color: #EEEEEE;">
-	        	<h:outputText value="#{word.positionColumn03}" style="font-weight: bold;"/>
-	        </p:column>
-	        <p:column width="10%" headerText="Processo">
-	        	<h:outputText value="#{word.valorColumn03}"/>
-	        </p:column>
-	        <p:column width="15%" headerText="Nº da Página" style="background-color: #EEEEEE;">
-	        	<h:outputText value="#{word.positionColumn04}" style="font-weight: bold;"/>
-	        </p:column>
-	        <p:column width="10%" headerText="Processo">
-	        	<h:outputText value="#{word.valorColumn04}"/>
-	        </p:column>
-	    </p:dataTable>
     </p:panelGrid>
 
 </html>
