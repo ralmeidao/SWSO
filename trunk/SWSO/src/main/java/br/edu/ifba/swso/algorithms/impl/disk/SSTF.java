@@ -39,14 +39,17 @@ public class SSTF extends DiskScheduler implements IDiskScheduler {
 		int minPos = -1;
 		
 		for (int i = 0; i < requests.length; i++) {
-			if (requests[i] == -1)
+			if (requests[i] == -1) {
 				continue;
-			else if (Math.abs(now - queueAux[i]) < min) {
+			} else if (Math.abs(now - queueAux[i]) < min) {
 				minPos = i;
-				min = Math.abs(now - queueAux[i]);//min = Math.abs(k - queueAux[i++]);
+				min = Math.abs(now - queueAux[i]);
+			} else if  (Math.abs(now - queueAux[i]) == min && queueAux[i] > now) {
+				minPos = i;
+				min = Math.abs(now - queueAux[i]);
 			}
 		}
-		int nearestSector = queue[minPos];//int nearestCylinder = requests[minPos];
+		int nearestSector = queue[minPos];
 		requests[minPos] = -1;
 		return nearestSector;
 	}

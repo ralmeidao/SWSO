@@ -94,8 +94,7 @@ public class MemoryManager {
 			etp.setBitV('1');
 		}
 	}
-	
-	//TODO RODAR ALGORITMO DE SUBSTITUIÇÃO DE PÁGINA
+
 	public int encontrarPaginaParaSubstituir() {
 		if (paginaSubstituir >= realMemory.getRealMemory().size()) {
 			paginaSubstituir = 0;

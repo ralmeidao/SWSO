@@ -90,7 +90,6 @@ public class MaquinaSessaoController extends BaseController implements Serializa
 			}
 		} catch (PageFault pageFault) {
 			kernelOperatingSystem.tratarPageFault(kernelOperatingSystem.getProcessManager().getEmExecucao().getPid(), pageFault.getPage());
-			kernelOperatingSystem.getProcessManager().bloquearProcesso();//PAREI AQUI
 		}
 	}
 
