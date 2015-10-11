@@ -7,26 +7,16 @@ import br.edu.ifba.swso.business.VirtualMachineParameters;
  * @author Ramon
  *
  */
-public class SCAN extends DiskScheduler implements IDiskScheduler {
+public class CLOOK extends DiskScheduler implements IDiskScheduler {
 
-	private final String nome = "SCAN";
+	private final String nome = "C-LOOK";
 	
-	public SCAN(VirtualMachineParameters virtualMachineParameters) {
+	public CLOOK(VirtualMachineParameters virtualMachineParameters) {
 		super(virtualMachineParameters);
 	}
 	
 	@Override
 	public int[] escalonar(int[] queue, int initialCylinder) {
-		
-/*		int[] newQueue = new int[queue.length+2];
-		newQueue[0] = 0;
-		newQueue[newQueue.length - 1] = 9;
-		
-		for (int i = 0; i < queue.length; i++) {
-			newQueue[i+1] = queue[i];
-		}*/
-		
-		
 		int[] resultPath = new int[queue.length];
 		int now = initialCylinder;
 		int[] requests = new int[queue.length];
@@ -46,6 +36,7 @@ public class SCAN extends DiskScheduler implements IDiskScheduler {
 	
 	private int closest(int now, int[] requests, int[] queue, int[] queueAux) {
 		int min = 5000000;
+		int max = -1;
 		int minPos = -1;
 		
 		for (int i = 0; i < requests.length; i++) {
@@ -61,9 +52,9 @@ public class SCAN extends DiskScheduler implements IDiskScheduler {
 			for (int i = 0; i < requests.length; i++) {
 				if (requests[i] == -1)
 					continue;
-				else if (Math.abs(now - queueAux[i]) < min) {
+				else if (Math.abs(now - queueAux[i]) > max) {
 					minPos = i;
-					min = Math.abs(now - queueAux[i]);
+					max = Math.abs(now - queueAux[i]);
 				}
 			}
 		}
@@ -108,7 +99,7 @@ public class SCAN extends DiskScheduler implements IDiskScheduler {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		SCAN other = (SCAN) obj;
+		CLOOK other = (CLOOK) obj;
 		if (nome == null) {
 			if (other.nome != null)
 				return false;

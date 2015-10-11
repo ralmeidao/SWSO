@@ -7,26 +7,16 @@ import br.edu.ifba.swso.business.VirtualMachineParameters;
  * @author Ramon
  *
  */
-public class SCAN extends DiskScheduler implements IDiskScheduler {
+public class LOOK extends DiskScheduler implements IDiskScheduler {
 
-	private final String nome = "SCAN";
+	private final String nome = "LOOK";
 	
-	public SCAN(VirtualMachineParameters virtualMachineParameters) {
+	public LOOK(VirtualMachineParameters virtualMachineParameters) {
 		super(virtualMachineParameters);
 	}
 	
 	@Override
 	public int[] escalonar(int[] queue, int initialCylinder) {
-		
-/*		int[] newQueue = new int[queue.length+2];
-		newQueue[0] = 0;
-		newQueue[newQueue.length - 1] = 9;
-		
-		for (int i = 0; i < queue.length; i++) {
-			newQueue[i+1] = queue[i];
-		}*/
-		
-		
 		int[] resultPath = new int[queue.length];
 		int now = initialCylinder;
 		int[] requests = new int[queue.length];
@@ -108,7 +98,7 @@ public class SCAN extends DiskScheduler implements IDiskScheduler {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		SCAN other = (SCAN) obj;
+		LOOK other = (LOOK) obj;
 		if (nome == null) {
 			if (other.nome != null)
 				return false;
