@@ -68,7 +68,7 @@ public class DiscoController extends BaseController implements Serializable {
 		if (maquinaSessaoController.getOperatingSystem() != null) {
 			VirtualMachineParameters virtualMachineParameters = maquinaSessaoController.getVirtualMachineParameters();
 			kernelOperatingSystem = maquinaSessaoController.getOperatingSystem();
-			arrayDiskSchedule = new IDiskScheduler[] { new SSTF(virtualMachineParameters), new FCFS(virtualMachineParameters),
+			arrayDiskSchedule = new IDiskScheduler[] {new FCFS(virtualMachineParameters), new SSTF(virtualMachineParameters),
 					//new SCAN(virtualMachineParameters), new CSCAN(virtualMachineParameters),
 					new LOOK(virtualMachineParameters), new CLOOK(virtualMachineParameters)};
 			diskSchedule = arrayDiskSchedule[0];
