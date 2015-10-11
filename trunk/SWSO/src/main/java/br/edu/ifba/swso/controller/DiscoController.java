@@ -11,9 +11,9 @@ import javax.inject.Named;
 import org.primefaces.model.UploadedFile;
 
 import br.edu.ifba.swso.algorithms.IDiskScheduler;
-import br.edu.ifba.swso.algorithms.impl.disk.CSCAN;
+import br.edu.ifba.swso.algorithms.impl.disk.CLOOK;
 import br.edu.ifba.swso.algorithms.impl.disk.FCFS;
-import br.edu.ifba.swso.algorithms.impl.disk.SCAN;
+import br.edu.ifba.swso.algorithms.impl.disk.LOOK;
 import br.edu.ifba.swso.algorithms.impl.disk.SSTF;
 import br.edu.ifba.swso.business.VirtualMachineParameters;
 import br.edu.ifba.swso.business.abstractions.File;
@@ -69,7 +69,8 @@ public class DiscoController extends BaseController implements Serializable {
 			VirtualMachineParameters virtualMachineParameters = maquinaSessaoController.getVirtualMachineParameters();
 			kernelOperatingSystem = maquinaSessaoController.getOperatingSystem();
 			arrayDiskSchedule = new IDiskScheduler[] { new SSTF(virtualMachineParameters), new FCFS(virtualMachineParameters),
-					new SCAN(virtualMachineParameters), new CSCAN(virtualMachineParameters) };
+					//new SCAN(virtualMachineParameters), new CSCAN(virtualMachineParameters),
+					new LOOK(virtualMachineParameters), new CLOOK(virtualMachineParameters)};
 			diskSchedule = arrayDiskSchedule[0];
 			kernelOperatingSystem.setDiskSchedule(diskSchedule);
 		}

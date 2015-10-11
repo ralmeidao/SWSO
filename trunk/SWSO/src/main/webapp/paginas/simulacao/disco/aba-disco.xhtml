@@ -23,9 +23,6 @@
 	<p:commandButton value="Configurações" icon="ui-icon-gear" styleClass="btn" onclick="modalConfigDisk.show()" rendered="#{!viewOnly}"/>		
 		
 	<p:spacer height="15px"/>
-	<div class="tempo-simulacao" >
-		Tamanho do setor: #{discoController.sectorSize} bytes | Tamanho do disco: #{discoController.diskSize/1024} KB. | Quantidade de setores: #{discoController.qtdSectors}
-	</div>
 	<p:panelGrid columns="2" style="width: 100%" styleClass="align-top-panel-grid"> 
 		<p:dataTable var="arquivo" value="#{discoController.sistemaArquivo.allFiles}" id="dataFat" emptyMessage="Nenhum item encontrado."
 			styleClass="min-width400px" >
