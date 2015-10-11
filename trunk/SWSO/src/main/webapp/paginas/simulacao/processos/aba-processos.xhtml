@@ -14,9 +14,13 @@
 	</h:panelGroup>
 	
 	<p:fieldset legend="Escalonamento de Processo">
-		<p:panelGrid columns="1" styleClass="panelgrid" id="panelConfigProcess">
-			<b>Algoritmo:</b> #{processoController.processesScheduler} | 
-			<b>Fatia de Tempo:</b> #{processoController.timeslice}
+		<p:panelGrid columns="2" styleClass="panelgrid" id="panelConfigProcess">
+			<p:outputPanel>
+				<b>Algoritmo:</b> #{processoController.processesScheduler}
+			</p:outputPanel>
+			<p:outputPanel rendered="#{processoController.processesScheduler.preemptivo}">
+				<b>Fatia de Tempo:</b> #{processoController.timeslice}
+			</p:outputPanel>
 		</p:panelGrid>
 	</p:fieldset> 
 	
@@ -30,16 +34,29 @@
 		<f:facet name="header">
 	        Tabela de Processo
 	    </f:facet>
-        <p:column headerText="Nome" width="30%">
+        <p:column headerText="Nome" width="20%">
         	<h:outputText value="#{processo.nome}"/>
         </p:column>
         <p:column headerText="Prioridade" width="20%" rendered="#{processoController.processesScheduler.prioridade}">
         	<h:outputText value="#{processo.priority}"/>
         </p:column>
-        <p:column headerText="Estado" width="30%">
+        <p:column headerText="Estado" width="12%">
         	<h:outputText value="#{processo.state}"/>
         </p:column>
-        <p:column headerText="Ações" width="10%">
+		<p:column headerText="Chegada" width="10%">
+        	<h:outputText value="#{processo.timeInitCpu}"/>
+        </p:column>
+        <p:column headerText="Espera (u.t.)" width="10%">
+        	<h:outputText value="#{processo.timeWaiting}"/>
+        </p:column>
+        <p:column headerText="Processando (u.t.)" width="10%">
+        	<h:outputText value="#{processo.timeRunning}"/>
+        </p:column>
+        <p:column headerText="Turnaround (u.t.)" width="10%">
+        	<h:outputText value="#{processo.timeTurnaround}" rendered="#{processo.ending}"/>
+        	<h:outputText value="-" rendered="#{!processo.ending}"/>
+        </p:column>
+        <p:column headerText="" width="7%">
 			<p:commandButton title="Bloquear Processo" 
         		icon="ui-icon-cancel"
         		rendered="#{processo.running}" 
@@ -83,13 +100,13 @@
 	
 	<p:spacer height="10"/>
 	
-	<p:dataTable var="processo" value="#{maquinaSessaoController.operatingSystem.processManager.tabelaProcesso}" 
+<!--<p:dataTable var="processo" value="#{maquinaSessaoController.operatingSystem.processManager.tabelaProcesso}" 
 				 id="processTableStatistcs" emptyMessage="Nenhum item encontrado."
 				 rendered="#{maquinaSessaoController.operatingSystem.processManager.tabelaProcesso.size() != 0}">
 		<f:facet name="header">
 	        Estatísticas
 	    </f:facet>
-         <p:column headerText="Nome" width="20%">
+        <p:column headerText="Nome" width="20%">
         	<h:outputText value="#{processo.nome}"/>
         </p:column>
         <p:column headerText="Chegada" width="20%">
@@ -105,5 +122,5 @@
         	<h:outputText value="#{processo.timeTurnaround}" rendered="#{processo.ending}"/>
         	<h:outputText value="-" rendered="#{!processo.ending}"/>
         </p:column>
-    </p:dataTable>
+    </p:dataTable> -->
 </html>

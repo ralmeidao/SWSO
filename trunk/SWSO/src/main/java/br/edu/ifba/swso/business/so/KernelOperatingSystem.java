@@ -89,7 +89,6 @@ public class KernelOperatingSystem {
 
 		if (running.getPid() == -1 || running.isBlocked() || running.isEnding()
 				|| (processesScheduler.isPreemptivo() && running.getTimeRunning() != 0 && running.getTimeRunning() % timeslice == 0)) {
-			// TROCA DE CONTEXTO
 			running = processManager.escalonamento();
 			memoryManager.updatePageTable();
 		}
