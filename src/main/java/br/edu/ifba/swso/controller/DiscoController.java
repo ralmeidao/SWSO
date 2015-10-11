@@ -272,6 +272,14 @@ public class DiscoController extends BaseController implements Serializable {
 		getHardDisk().getListMoveReaderHead().clear();
 	}
 
+	public String drawPositionReaderHead(int coluna) {
+		if (getHardDisk().getPositionReaderHead() == coluna) {
+			return "background: #7EE272";
+		} else {
+			return "background: #FFF";
+		}
+	}
+	
 	/**
 	 * Obtém ao HD
 	 * 
