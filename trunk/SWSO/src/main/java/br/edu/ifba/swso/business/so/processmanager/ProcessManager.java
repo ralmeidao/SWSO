@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import br.edu.ifba.swso.algorithms.IProcessesScheduler;
 import br.edu.ifba.swso.business.abstractions.File;
 import br.edu.ifba.swso.business.virtualmachine.CoreVirtualMachine;
 import br.edu.ifba.swso.enumerator.ProcessStateEnum;
@@ -43,13 +44,13 @@ public class ProcessManager {
         return process;
     }
     
-    public Process escalonamento() {
+    public Process escalonamento(IProcessesScheduler processesScheduler) {
     	if(emExecucao.getPid() != -1 && !emExecucao.isBlocked() && !emExecucao.isEnding()) {
 			emExecucao.setState(ProcessStateEnum.PRONTO);
 			listaPronto.add(emExecucao);
 		}
     	
-    	Process proximo = escolherProximo(listaPronto);
+    	Process proximo = escolherProximo(processesScheduler);
 
     	if(emExecucao.getPid() != proximo.getPid()) {
     		executaTrocaDeContexto(proximo);
@@ -92,9 +93,9 @@ public class ProcessManager {
 		coreVirtualMachine.getCentralProcessingUnit().getRegisters().setPid(emExecucao.getPid());
 	}
 	
-    private Process escolherProximo(LinkedList<Process> listaPronto) {
+    private Process escolherProximo(IProcessesScheduler processesScheduler) {
     	if (listaPronto.size() > 0) {
-    		return listaPronto.getFirst();
+    		return processesScheduler.escalonar(listaPronto);
 		} else {
 			return tempoOcisoso;
 		}

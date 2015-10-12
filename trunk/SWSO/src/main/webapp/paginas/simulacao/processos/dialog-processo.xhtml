@@ -17,7 +17,7 @@
 	    			<f:selectItems  value="#{discoController.sistemaArquivo.allFiles}" var="arquivo" itemLabel="#{arquivo.fileName}" itemValue="#{arquivo}" />
 				</p:selectOneMenu>
 	    	</p:outputLabel>
-    		<p:outputLabel id="labelTimeslice" rendered="#{processoController.processesScheduler.preemptivo}">
+    		<p:outputLabel id="labelTimeslice" rendered="#{processoController.processesScheduler.prioridade}">
 		        <h:outputText id="output" value="Prioridade: #{processoController.priority}" />
 		        <h:inputHidden id="timeslice" value="#{processoController.priority}" />
 		        <p:slider minValue="1" maxValue="10" for="timeslice" display="output" style="width: 200px" displayTemplate="Prioridade: {value}" />

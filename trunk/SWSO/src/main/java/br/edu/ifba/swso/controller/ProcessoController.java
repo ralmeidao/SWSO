@@ -9,6 +9,7 @@ import javax.inject.Named;
 
 import br.edu.ifba.swso.algorithms.IProcessesScheduler;
 import br.edu.ifba.swso.algorithms.impl.process.FIFO;
+import br.edu.ifba.swso.algorithms.impl.process.Prioridade;
 import br.edu.ifba.swso.algorithms.impl.process.RoundRobin;
 import br.edu.ifba.swso.business.VirtualMachineParameters;
 import br.edu.ifba.swso.business.abstractions.File;
@@ -53,7 +54,7 @@ public class ProcessoController extends BaseController implements Serializable {
 		this.timeslice = 5;
 		this.priority = 5;
 		this.kernelOperatingSystem = maquinaSessaoController.getOperatingSystem();
-		this.arrayProcessesScheduler = new IProcessesScheduler[]{new FIFO(), new RoundRobin()};
+		this.arrayProcessesScheduler = new IProcessesScheduler[]{new FIFO(), new RoundRobin(), new Prioridade()};
 		this.kernelOperatingSystem.setTimeslice(timeslice);
 		this.processesScheduler = arrayProcessesScheduler[0];
 		this.kernelOperatingSystem.setProcessesScheduler(processesScheduler);
