@@ -20,7 +20,7 @@
 	<p:commandButton value="Configurações" icon="ui-icon-gear" styleClass="btn" onclick="modalConfigDisk.show()" rendered="#{!viewOnly}"/>		
 		
 	<p:spacer height="15px"/>
-	<p:panelGrid columns="2" style="width: 100%" styleClass="align-top-panel-grid"> 
+	<p:panelGrid columns="2" style="width: 100%" styleClass="align-top-panel-grid" rendered="#{discoController.sistemaArquivo.allFiles.isEmpty() == false}">
 		<p:dataTable var="arquivo" value="#{discoController.sistemaArquivo.allFiles}" id="dataFat" emptyMessage="Nenhum item encontrado."
 			styleClass="min-width400px" >
 			<f:facet name="header">
@@ -62,16 +62,16 @@
 		    			<th align="center" colspan="10" style="border: solid; border-color: black;">Cilindros</th>
 		    		</tr>
 		    		<tr>
-			    		<th align="center" style="border: solid; border-color: black; #{discoController.drawPositionReaderHead(0)}">0</th>
-			    		<th align="center" style="border: solid; border-color: black; #{discoController.drawPositionReaderHead(1)}">1</th>
-			    		<th align="center" style="border: solid; border-color: black; #{discoController.drawPositionReaderHead(2)}">2</th>
-			    		<th align="center" style="border: solid; border-color: black; #{discoController.drawPositionReaderHead(3)}">3</th>
-			    		<th align="center" style="border: solid; border-color: black; #{discoController.drawPositionReaderHead(4)}">4</th>
-			    		<th align="center" style="border: solid; border-color: black; #{discoController.drawPositionReaderHead(5)}">5</th>
-			    		<th align="center" style="border: solid; border-color: black; #{discoController.drawPositionReaderHead(6)}">6</th>
-			    		<th align="center" style="border: solid; border-color: black; #{discoController.drawPositionReaderHead(7)}">7</th>
-			    		<th align="center" style="border: solid; border-color: black; #{discoController.drawPositionReaderHead(8)}">8</th>
-			    		<th align="center" style="border: solid; border-color: black; #{discoController.drawPositionReaderHead(9)}">9</th>
+			    		<th align="center" title="#{discoController.drawPositionTitle(0)}" style="border: solid; border-color: black; #{discoController.drawPositionReaderHead(0)}">0</th>
+			    		<th align="center" title="#{discoController.drawPositionTitle(1)}" style="border: solid; border-color: black; #{discoController.drawPositionReaderHead(1)}">1</th>
+			    		<th align="center" title="#{discoController.drawPositionTitle(2)}" style="border: solid; border-color: black; #{discoController.drawPositionReaderHead(2)}">2</th>
+			    		<th align="center" title="#{discoController.drawPositionTitle(3)}" style="border: solid; border-color: black; #{discoController.drawPositionReaderHead(3)}">3</th>
+			    		<th align="center" title="#{discoController.drawPositionTitle(4)}" style="border: solid; border-color: black; #{discoController.drawPositionReaderHead(4)}">4</th>
+			    		<th align="center" title="#{discoController.drawPositionTitle(5)}" style="border: solid; border-color: black; #{discoController.drawPositionReaderHead(5)}">5</th>
+			    		<th align="center" title="#{discoController.drawPositionTitle(6)}" style="border: solid; border-color: black; #{discoController.drawPositionReaderHead(6)}">6</th>
+			    		<th align="center" title="#{discoController.drawPositionTitle(7)}" style="border: solid; border-color: black; #{discoController.drawPositionReaderHead(7)}">7</th>
+			    		<th align="center" title="#{discoController.drawPositionTitle(8)}" style="border: solid; border-color: black; #{discoController.drawPositionReaderHead(8)}">8</th>
+			    		<th align="center" title="#{discoController.drawPositionTitle(9)}" style="border: solid; border-color: black; #{discoController.drawPositionReaderHead(9)}">9</th>
 			    	</tr>
 		    	</thead>
 			    <tbody>

@@ -7,24 +7,45 @@ import br.edu.ifba.swso.business.so.processmanager.Process;
 
 public class Prioridade implements IProcessesScheduler {
 	
-	private final String nome = "Prioridade (Preemptivo)";
-
+	private final String nome = "Prioridade (não preemptivo)";
+	
 	public Prioridade() {
 	}
 	
 	@Override
-	public void escalonar(LinkedList<Process> listaPronto) {
-		
+	public Process escalonar(LinkedList<Process> listaPronto) {
+		int maiorPrioridade = 99;
+		Process selected = null;
+		for (Process process : listaPronto) {
+			if(process.getPriority() < maiorPrioridade) {
+				maiorPrioridade = process.getPriority();
+				selected = process;
+			}
+		}
+		return selected;
+	}
+	
+	@Override
+	public boolean isInterromper(LinkedList<Process> listaPronto, Process running, int timeslice) {
+		if (running.getPid() == -1 || running.isBlocked() || running.isEnding()) {
+			return true;
+		}
+		for (Process pronto : listaPronto) {
+			if (pronto.getPriority() > running.getPriority()) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	@Override
 	public boolean isPreemptivo() {
-		return true;
+		return false;
 	}
 	
 	@Override
 	public boolean isPrioridade() {
-		return false;
+		return true;
 	}
 	
 	@Override

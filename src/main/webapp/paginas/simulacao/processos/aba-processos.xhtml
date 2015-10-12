@@ -37,33 +37,37 @@
         <p:column headerText="Nome" width="20%">
         	<h:outputText value="#{processo.nome}"/>
         </p:column>
-        <p:column headerText="Prioridade" width="20%" rendered="#{processoController.processesScheduler.prioridade}">
+        <p:column headerText="Prioridade" width="12%" rendered="#{processoController.processesScheduler.prioridade}">
         	<h:outputText value="#{processo.priority}"/>
         </p:column>
         <p:column headerText="Estado" width="12%">
         	<h:outputText value="#{processo.state}"/>
         </p:column>
-		<p:column headerText="Chegada" width="10%">
+		<p:column headerText="Chegada" width="12%">
         	<h:outputText value="#{processo.timeInitCpu}"/>
         </p:column>
-        <p:column headerText="Espera (u.t.)" width="10%">
+        <p:column headerText="Espera (u.t.)" width="12%">
         	<h:outputText value="#{processo.timeWaiting}"/>
         </p:column>
-        <p:column headerText="Processando (u.t.)" width="10%">
+        <p:column headerText="Processando (u.t.)" width="13%">
         	<h:outputText value="#{processo.timeRunning}"/>
         </p:column>
-        <p:column headerText="Turnaround (u.t.)" width="10%">
+        <p:column headerText="Turnaround (u.t.)" width="12%">
         	<h:outputText value="#{processo.timeTurnaround}" rendered="#{processo.ending}"/>
         	<h:outputText value="-" rendered="#{!processo.ending}"/>
         </p:column>
         <p:column headerText="" width="7%">
-			<p:commandButton title="Bloquear Processo" 
+			<p:commandButton title="Tabela de Páginas"
+        		icon="ui-icon-clipboard"
+        		rendered="#{!processo.ending}"
+        		action="#{processoController.abrirModalPbc(processo.pid)}"
+        		style="width: 30px; height: 30px;"/>
+			<p:commandButton title="Bloquear Processo"
         		icon="ui-icon-cancel"
         		rendered="#{processo.running}" 
         		action="#{processoController.bloquearProcesso()}"
         		update="@form"
         		style="width: 30px; height: 30px;"/>
-        	
         	<p:commandButton title="Liberar Processo"
         		icon="ui-icon-play"
         		action="#{processoController.desbloquearProcesso(processo.pid)}"

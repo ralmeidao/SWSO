@@ -31,9 +31,10 @@ public class KernelOperatingSystem {
 	}
 
 	// CHAMADAS AO SISTEMA
-	public void criarProcesso(File file, int prioridade) {
+	public void criarProcesso(File file, int priority) {
 		try {
 			Process process = processManager.criarProcesso(file);
+			process.setPriority(priority);
 			memoryManager.alocaProcesso(process);
 			System.out.println("Processo criado - PID:" + process.getPid());
 		} catch (Exception e) {
@@ -87,16 +88,15 @@ public class KernelOperatingSystem {
 	public void execute() {
 		Process running = processManager.getEmExecucao();
 
-		if (running.getPid() == -1 || running.isBlocked() || running.isEnding()
-				|| (processesScheduler.isPreemptivo() && running.getTimeRunning() != 0 && running.getTimeRunning() % timeslice == 0)) {
-			running = processManager.escalonamento();
+		if (processesScheduler.isInterromper(processManager.getListaPronto(), running, timeslice)) {
+			running = processManager.escalonamento(processesScheduler);
 			memoryManager.updatePageTable();
 		}
 
 		running.incrementTimeRunning();
 		processManager.incrementarTimeWaitingPronto();
 	}
-
+	
 	public void finalizarProcesso(Process process) {
 		processManager.finalizarProcesso(process);
 	}

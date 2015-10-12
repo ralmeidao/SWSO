@@ -280,6 +280,14 @@ public class DiscoController extends BaseController implements Serializable {
 		}
 	}
 	
+	public String drawPositionTitle(int coluna) {
+		if (getHardDisk().getPositionReaderHead() == coluna) {
+			return "Posição atual do cabeçote de leitura/gravação";
+		} else {
+			return "";
+		}
+	}
+	
 	/**
 	 * Obtém ao HD
 	 * 

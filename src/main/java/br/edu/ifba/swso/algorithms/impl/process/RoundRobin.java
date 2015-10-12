@@ -13,10 +13,18 @@ public class RoundRobin implements IProcessesScheduler {
 	}
 	
 	@Override
-	public void escalonar(LinkedList<Process> listaPronto) {
-		
+	public Process escalonar(LinkedList<Process> listaPronto) {
+		return listaPronto.getFirst();
 	}
 
+	@Override
+	public boolean isInterromper(LinkedList<Process> listaPronto, Process running, int timeslice) {
+		if (running.getPid() == -1 || running.isBlocked() || running.isEnding()) {
+			return true;
+		}
+		return running.getTimeRunning() != 0 && running.getTimeRunning() % timeslice == 0;
+	}
+	
 	@Override
 	public boolean isPreemptivo() {
 		return true;

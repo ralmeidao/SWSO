@@ -6,7 +6,8 @@ import br.edu.ifba.swso.business.so.processmanager.Process;
 
 public interface IProcessesScheduler {
 	
-	void escalonar(LinkedList<Process> listaPronto);
+	Process escalonar(LinkedList<Process> listaPronto);
 	boolean isPreemptivo();
 	boolean isPrioridade();
+	boolean isInterromper(LinkedList<Process> listaPronto, Process emExecucao, int timeslice);
 }

@@ -7,16 +7,21 @@ import br.edu.ifba.swso.business.so.processmanager.Process;
 
 public class FIFO implements IProcessesScheduler {
 	
-	private final String nome = "FIFO (Não Preemptivo)";
+	private final String nome = "FIFO (não preemptivo)";
 
 	public FIFO() {
 	}
 	
 	@Override
-	public void escalonar(LinkedList<Process> listaPronto) {
-		
+	public Process escalonar(LinkedList<Process> listaPronto) {
+		return listaPronto.getFirst();
 	}
 
+	@Override
+	public boolean isInterromper(LinkedList<Process> listaPronto, Process running, int timeslice) {
+		return running.getPid() == -1 || running.isBlocked() || running.isEnding();
+	}
+	
 	@Override
 	public boolean isPreemptivo() {
 		return false;
@@ -24,7 +29,6 @@ public class FIFO implements IProcessesScheduler {
 	
 	@Override
 	public boolean isPrioridade() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 	

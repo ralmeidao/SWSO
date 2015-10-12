@@ -13,10 +13,15 @@ public class FilasMultiplas implements IProcessesScheduler {
 	}
 	
 	@Override
-	public void escalonar(LinkedList<Process> listaPronto) {
-		
+	public Process escalonar(LinkedList<Process> listaPronto) {
+		return listaPronto.getFirst();
 	}
 
+	@Override
+	public boolean isInterromper(LinkedList<Process> listaPronto, Process running, int timeslice) {
+		return running.getPid() == -1 || running.isBlocked() || running.isEnding();
+	}
+	
 	@Override
 	public boolean isPreemptivo() {
 		return true;
