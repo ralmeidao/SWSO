@@ -94,36 +94,36 @@
 					<ui:include src="/paginas/simulacao/dashboard/aba-dashboard.xhtml" />
 		        </p:tab> -->
 			
-<!-- 		        MÁQUINA VIRTUAL -->
+				<!-- MÁQUINA VIRTUAL -->
 		        <p:tab title="Máquina Virtual">
 					<ui:include src="/paginas/simulacao/processos/aba-processador.xhtml" />
 		        </p:tab>
 		    </p:tabView>
 		</h:form>
-
 		
 		<!-- MODAL UPLOAD -->
 		<p:dialog id="novo-arquivo" widgetVar="modalNovoArquivo" header="Adicionar arquivo ao disco" width="600px" height="auto" resizable="false" modal="true" showEffect="explode" hideEffect="explode" 
 			rendered="#{maquinaSessaoController.operatingSystem != null}">
 			<ui:include src="/paginas/simulacao/disco/dialog-upload.xhtml" />
 		</p:dialog>
+
+		<!-- CONFIGURAÇÕES DE DISCO -->
+		<p:dialog id="configuracoes-disco" widgetVar="modalConfigDisk" header="Configurações de Disco" width="300px" height="auto" resizable="false" modal="true" showEffect="explode" hideEffect="explode" 
+			rendered="#{maquinaSessaoController.operatingSystem != null}">
+			<ui:include src="/paginas/simulacao/disco/config-disk.xhtml" />
+		</p:dialog>
+
+		<!-- SIMULAÇÃO DE DISCO -->
+		<p:dialog id="simulacao-disco" widgetVar="modalSimulationDisk" header="Cilindros requisitados" width="415px" height="auto" resizable="false" modal="true" showEffect="explode" hideEffect="explode" 
+			rendered="#{maquinaSessaoController.operatingSystem != null}">
+			<ui:include src="/paginas/simulacao/disco/disk-simulation.xhtml" />
+		</p:dialog>
+
 		
 		<!-- MODAL CRIAR PROCESSO -->
 		<p:dialog id="novo-processo" widgetVar="modalNovoProcesso" header="Criar Processo" width="600px" height="auto" resizable="false" modal="true" showEffect="explode" hideEffect="explode" 
 			rendered="#{maquinaSessaoController.operatingSystem != null}">
 			<ui:include src="/paginas/simulacao/processos/dialog-processo.xhtml" />
-		</p:dialog>
-
-		<!-- MODAL PBC -->
-		<p:dialog id="modal-pbc" widgetVar="modalPbc" header="Tabela de Páginas" width="600px" height="auto" resizable="false" modal="true" showEffect="explode" hideEffect="explode"
-			rendered="#{maquinaSessaoController.operatingSystem != null}">
-			<ui:include src="/paginas/simulacao/processos/dialog-pbc.xhtml" />
-		</p:dialog>
-		
-		<!-- CONFIGURAÇÕES DE DISCO -->
-		<p:dialog id="configuracoes-disco" widgetVar="modalConfigDisk" header="Configurações de Disco" width="300px" height="auto" resizable="false" modal="true" showEffect="explode" hideEffect="explode" 
-			rendered="#{maquinaSessaoController.operatingSystem != null}">
-			<ui:include src="/paginas/simulacao/disco/config-disk.xhtml" />
 		</p:dialog>
 
 		<!-- CONFIGURAÇÕES DE PROCESSO -->
@@ -132,10 +132,18 @@
 			<ui:include src="/paginas/simulacao/processos/config-process.xhtml" />
 		</p:dialog>
 		
-		<!-- SIMULAÇÃO DE DISCO -->
-		<p:dialog id="simulacao-disco" widgetVar="modalSimulationDisk" header="Cilindros requisitados" width="415px" height="auto" resizable="false" modal="true" showEffect="explode" hideEffect="explode" 
+		<!-- MODAL PBC -->
+		<p:dialog id="modal-pbc" widgetVar="modalPbc" header="Tabela de Páginas" width="600px" height="auto" resizable="false" modal="true" showEffect="explode" hideEffect="explode"
 			rendered="#{maquinaSessaoController.operatingSystem != null}">
-			<ui:include src="/paginas/simulacao/disco/disk-simulation.xhtml" />
+			<ui:include src="/paginas/simulacao/processos/dialog-pbc.xhtml" />
 		</p:dialog>
+		
+		<!-- CONFIGURAÇÕES DE MEMÓRIA -->
+		<p:dialog id="configuracoes-memoria" widgetVar="modalConfigMemoria" header="Configurações do Gerenciador de Memória" width="450px" height="auto" resizable="false" modal="true" showEffect="explode" hideEffect="explode" 
+			rendered="#{maquinaSessaoController.operatingSystem != null}">
+			<ui:include src="/paginas/simulacao/memoria/config-memoria.xhtml" />
+		</p:dialog>
+		
+
 	</ui:define>
 </ui:composition>

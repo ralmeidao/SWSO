@@ -13,8 +13,7 @@
 			<b>Tamanho das Páginas:</b> #{memoriaController.virtualMachineParameters.bytePerPage} bytes |
 		</p:panelGrid>
 	</p:fieldset> 
-	<p:commandButton value="Configurações" icon="ui-icon-gear" styleClass="btn" onclick="modalConfigProcess.show()" rendered="#{!viewOnly}"/>
-	
+	<p:commandButton value="Configurações" icon="ui-icon-gear" styleClass="btn" onclick="modalConfigMemoria.show()" rendered="#{!viewOnly}"/>
 	<p:panelGrid columns="2" style="width: 100%;" styleClass="align-top-panel-grid">
 		<div class="ui-datatable-header ui-widget-header ui-corner-top" style="text-align: center;">Ocorrências</div>
 		<table class="ocorrencias-table inner" style="width: 400px;">

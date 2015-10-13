@@ -12,7 +12,6 @@ import br.edu.ifba.swso.business.so.memorymanager.exception.PageNotFoundExceptio
 import br.edu.ifba.swso.business.so.memorymanager.exception.VirtualMemoryFullException;
 import br.edu.ifba.swso.business.so.processmanager.Process;
 import br.edu.ifba.swso.business.virtualmachine.CoreVirtualMachine;
-import br.edu.ifba.swso.util.Constantes;
 
 public class MemoryManager {
 	
@@ -24,9 +23,16 @@ public class MemoryManager {
 	
 	private RealMemory realMemory;
 	
+	private int politicaBusca;
+
+	private int politicaAlocacao;
+	
+	private int numeroMaxFrames;
+	
 	private int paginaSubstituir;
 	
 	public MemoryManager(CoreVirtualMachine coreVirtualMachine) {
+		this.numeroMaxFrames = 1;
 		this.pageList = new HashMap<Integer, PageTable>();
 		this.realMemory = new RealMemory(coreVirtualMachine.getVirtualMachineParameters().getMemorySize());
 		this.virtualMemory = new VirtualMemory(coreVirtualMachine.getVirtualMachineParameters().getVirtualMemorySize());
@@ -45,7 +51,7 @@ public class MemoryManager {
 		return realMemory;
 	}
 
-	public void alocaProcesso(Process process) throws PageNotFoundException, InvalidPositionException, VirtualMemoryFullException, MemoryFullException {
+	public void allocateProcess(Process process) throws PageNotFoundException, InvalidPositionException, VirtualMemoryFullException, MemoryFullException {
 		PageTable pagetable = new PageTable(process.getPid());
 		
 		int nPaginas = (process.getQuantidadeInstrucoes()*2)/getVirtualMachineParameters().getBytePerPage();
@@ -64,19 +70,28 @@ public class MemoryManager {
 					allocatedSectorsPerPage.add(process.getFile().getAllocatedSectors().get((nPagina*setoresPorPaginas)+nSetor));
 				}
 			}
-			
-			int virtualPosition = virtualMemory.foundFreePosition();
 			pagetable.getListaEtp().add(new ETP(nPagina, allocatedSectorsPerPage));
-			virtualMemory.blockPosition(virtualPosition, process.getPid());
 		}
 		
 		pageList.put(process.getPid(), pagetable);
 
-		alocaPaginaMemoriaReal(process.getPid(), 0);
+		if (politicaBusca == 0) {
+			allocatePage(process.getPid(), 0);
+		} else if (politicaAlocacao == 0) {
+			int qtdCarregar = numeroMaxFrames < pagetable.getListaEtp().size() ? numeroMaxFrames : pagetable.getListaEtp().size();
+			for (int i = 0; i < qtdCarregar; i++) {
+				allocatePage(process.getPid(), i);	
+			}
+		} else {
+			int qtdCarregar = process.getNumeroMaxFrames() < pagetable.getListaEtp().size() ? process.getNumeroMaxFrames() : pagetable.getListaEtp().size();
+			for (int i = 0; i < qtdCarregar; i++) {
+				allocatePage(process.getPid(), i);
+			}
+		}
 
 	}
 	
-	public void alocaPaginaMemoriaReal(int pid, int pageNumber) {
+	public void allocatePage(int pid, int pageNumber) {
 		PageTable pageTableProcess = pageList.get(pid);
 		ETP etp = pageTableProcess.getListaEtp().get(pageNumber);
 		if (etp.getBitV() == '0') {
@@ -85,7 +100,7 @@ public class MemoryManager {
 			try {
 				realPosition = realMemory.foundFreePosition();
 			} catch (MemoryFullException e) {
-				realPosition =  encontrarPaginaParaSubstituir();
+				realPosition =  searchPageToReplace();
 			}
 			
 			realMemory.blockPosition(realPosition, pid);
@@ -95,7 +110,7 @@ public class MemoryManager {
 		}
 	}
 
-	public int encontrarPaginaParaSubstituir() {
+	public int searchPageToReplace() {
 		if (paginaSubstituir >= realMemory.getRealMemory().size()) {
 			paginaSubstituir = 0;
 		}
@@ -111,11 +126,36 @@ public class MemoryManager {
 		int ini = realPosition*coreVirtualMachine.getVirtualMachineParameters().getBytePerPage();
 		for (Integer nSector : setores) {
 			this.coreVirtualMachine.getRandomAccessMemory().alloc(ini, coreVirtualMachine.getHardDisk().getData(nSector));
-			ini+=Constantes.SECTOR_SIZE;
+			ini+=coreVirtualMachine.getVirtualMachineParameters().getSectorSize();
 		}
 	}
 	
 	public VirtualMachineParameters getVirtualMachineParameters() {
 		return coreVirtualMachine.getVirtualMachineParameters();
 	}
+
+	public int getPoliticaBusca() {
+		return politicaBusca;
+	}
+
+	public void setPoliticaBusca(int politicaBusca) {
+		this.politicaBusca = politicaBusca;
+	}
+
+	public int getPoliticaAlocacao() {
+		return politicaAlocacao;
+	}
+
+	public void setPoliticaAlocacao(int politicaAlocacao) {
+		this.politicaAlocacao = politicaAlocacao;
+	}
+
+	public int getNumeroMaxFrames() {
+		return numeroMaxFrames;
+	}
+
+	public void setNumeroMaxFrames(int numeroMaxFrames) {
+		this.numeroMaxFrames = numeroMaxFrames;
+	}
+	
 }

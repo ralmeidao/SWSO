@@ -1,6 +1,7 @@
 package br.edu.ifba.swso.business.so;
 
 import br.edu.ifba.swso.algorithms.IDiskScheduler;
+import br.edu.ifba.swso.algorithms.IPageReplacementAlgorithm;
 import br.edu.ifba.swso.algorithms.IProcessesScheduler;
 import br.edu.ifba.swso.business.abstractions.File;
 import br.edu.ifba.swso.business.so.filemanager.FileSystem;
@@ -16,9 +17,11 @@ public class KernelOperatingSystem {
 
 	private IDiskScheduler diskSchedule;
 
-	private int timeslice;
-
 	private IProcessesScheduler processesScheduler;
+
+	private IPageReplacementAlgorithm pageReplacementAlgorithm;
+	
+	private int timeslice;
 
 	private MemoryManager memoryManager;
 
@@ -35,7 +38,7 @@ public class KernelOperatingSystem {
 		try {
 			Process process = processManager.criarProcesso(file);
 			process.setPriority(priority);
-			memoryManager.alocaProcesso(process);
+			memoryManager.allocateProcess(process);
 			System.out.println("Processo criado - PID:" + process.getPid());
 		} catch (Exception e) {
 
@@ -44,7 +47,7 @@ public class KernelOperatingSystem {
 
 	public void tratarPageFault(int pid, int page) {
 		processManager.bloquearProcesso();
-		memoryManager.alocaPaginaMemoriaReal(pid, page);
+		memoryManager.allocatePage(pid, page);
 	}
 	
 	// METHODS OF ACCESS
@@ -75,6 +78,14 @@ public class KernelOperatingSystem {
 
 	public void setProcessesScheduler(IProcessesScheduler processesScheduler) {
 		this.processesScheduler = processesScheduler;
+	}
+
+	public IPageReplacementAlgorithm getPageReplacement() {
+		return pageReplacementAlgorithm;
+	}
+
+	public void setPageReplacement(IPageReplacementAlgorithm pageReplacementAlgorithm) {
+		this.pageReplacementAlgorithm = pageReplacementAlgorithm;
 	}
 
 	public int getTimeslice() {

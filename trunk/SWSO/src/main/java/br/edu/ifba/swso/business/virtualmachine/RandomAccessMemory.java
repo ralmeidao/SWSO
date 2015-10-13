@@ -12,9 +12,11 @@ import br.edu.ifba.swso.util.Constantes;
 public class RandomAccessMemory {
 	
 	private ByteSWSO[] memory;
+	private int tamanhoPagina;
 
-	public RandomAccessMemory(int memorySize) {
+	public RandomAccessMemory(int memorySize, int tamanhoPagina) {
 		memory = new ByteSWSO[memorySize * 1024];
+		this.tamanhoPagina = tamanhoPagina;
 	}
 
 	public Word getWord(int index) {
@@ -40,37 +42,39 @@ public class RandomAccessMemory {
 
 	public List<WordsDisplay> getWordList() {
 		List<WordsDisplay> lista = new ArrayList<WordsDisplay>();
+		int fator = tamanhoPagina/8;
+		
 		for (int i = 0; i < memory.length; i++) {
 			WordsDisplay wd = new WordsDisplay();
 			
 			wd.setPositionColumn01(i);
 			wd.setValorColumn01(memory[i]);
 			
-			wd.setPositionColumn02(i+(1*64));
-			wd.setValorColumn02(memory[i+(1*64)]);
+			wd.setPositionColumn02(i+(1*fator));
+			wd.setValorColumn02(memory[i+(1*fator)]);
 			
-			wd.setPositionColumn03(i+(2*64));
-			wd.setValorColumn03(memory[i+(2*64)]);
+			wd.setPositionColumn03(i+(2*fator));
+			wd.setValorColumn03(memory[i+(2*fator)]);
 			
-			wd.setPositionColumn04(i+(3*64));
-			wd.setValorColumn04(memory[i+(3*64)]);
+			wd.setPositionColumn04(i+(3*fator));
+			wd.setValorColumn04(memory[i+(3*fator)]);
 			
-			wd.setPositionColumn05(i+(4*64));
-			wd.setValorColumn05(memory[i+(4*64)]);
+			wd.setPositionColumn05(i+(4*fator));
+			wd.setValorColumn05(memory[i+(4*fator)]);
 			
-			wd.setPositionColumn06(i+(5*64));
-			wd.setValorColumn06(memory[i+(5*64)]);
+			wd.setPositionColumn06(i+(5*fator));
+			wd.setValorColumn06(memory[i+(5*fator)]);
 			
-			wd.setPositionColumn07(i+(6*64));
-			wd.setValorColumn07(memory[i+(6*64)]);
+			wd.setPositionColumn07(i+(6*fator));
+			wd.setValorColumn07(memory[i+(6*fator)]);
 			
-			wd.setPositionColumn08(i+(7*64));
-			wd.setValorColumn08(memory[i+(7*64)]);
+			wd.setPositionColumn08(i+(7*fator));
+			wd.setValorColumn08(memory[i+(7*fator)]);
 			
 			lista.add(wd);
 			
-			if ((i+1) % 64 == 0) {
-				i = i + (7*64);
+			if ((i+1) % fator == 0) {
+				i = i + (7*fator);
 			}
 			
 		}

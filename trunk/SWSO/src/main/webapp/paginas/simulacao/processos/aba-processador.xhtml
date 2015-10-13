@@ -56,7 +56,7 @@
 	<p:dataTable var="word" value="#{maquinaSessaoController.coreVirtualMachine.randomAccessMemory.wordList}" id="memoryRam" emptyMessage="Nenhum item encontrado."
     	paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
         paginatorPosition="bottom" rowIndexVar="index"
-    	rows="64">
+    	rows="#{maquinaSessaoController.virtualMachineParameters.bytePerPage/8}">
     	
     	<f:facet name="header">
 	        Memória Ram
