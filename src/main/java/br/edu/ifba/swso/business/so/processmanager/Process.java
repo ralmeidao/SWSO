@@ -24,6 +24,8 @@ public class Process {
 	private int tamanhoProcessoBit;
 	private int quantidadeInstrucoes;
 	
+	private int numeroMaxFrames;
+	
 	private File File;
 	
 	public Process(int pid) {
@@ -38,6 +40,7 @@ public class Process {
 		this.timeRunning = 0;
 		this.pc = 0;
 		this.ri = null;
+		this.numeroMaxFrames = 4;
 	}
 
 	public void incrementTimeRunning() {
@@ -164,6 +167,14 @@ public class Process {
 		File = file;
 	}
 	
+	public int getNumeroMaxFrames() {
+		return numeroMaxFrames;
+	}
+
+	public void setNumeroMaxFrames(int numeroMaxFrames) {
+		this.numeroMaxFrames = numeroMaxFrames;
+	}
+
 	public boolean isBlocked() {
 		return ProcessStateEnum.BLOQUEADO.equals(state);
 	}

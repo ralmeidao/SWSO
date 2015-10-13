@@ -15,7 +15,7 @@ public class CoreVirtualMachine  {
 	
     public CoreVirtualMachine(VirtualMachineParameters virtualMachineParameters) {
     	this.virtualMachineParameters = virtualMachineParameters;
-        randomAccessMemory = new RandomAccessMemory(virtualMachineParameters.getMemorySize());
+        randomAccessMemory = new RandomAccessMemory(virtualMachineParameters.getMemorySize(), virtualMachineParameters.getBytePerPage());
         centralProcessingUnit = new CentralProcessingUnit(randomAccessMemory, virtualMachineParameters.getBytePerPage());
         hardDisk = new HardDisk(virtualMachineParameters); 
     }

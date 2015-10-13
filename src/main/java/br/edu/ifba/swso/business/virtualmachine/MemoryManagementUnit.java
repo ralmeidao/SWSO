@@ -22,7 +22,6 @@ public class MemoryManagementUnit {
 		ETP etp = cpu.getPageTable().getEtp(paginaLogica);
 		
 		if (etp.getBitV() == '0') {
-			//PAGE FAULT
 			throw new PageFault(paginaLogica);
 		}
 		int deslocamento = index % tamanhoPagina;

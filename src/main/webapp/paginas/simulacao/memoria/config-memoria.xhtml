@@ -1,0 +1,49 @@
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+	
+	<h:form id="configMemoriaManagerForm">
+		<p:panelGrid columns="1" styleClass="panelgrid" id="panelConfigMemoria">
+
+			<p:outputLabel value="Política de busca de páginas">
+				<br/>
+				<p:selectOneMenu id="selectPoliticaBusca" value="#{memoriaController.politicaBusca}" styleClass="tam_gg">
+					<f:selectItem itemLabel="Por demanda" itemValue="0" />
+					<f:selectItem itemLabel="Antecipada"  itemValue="1" />
+					<p:ajax event="change" update="@form"/>
+				</p:selectOneMenu>			
+			</p:outputLabel>
+
+			<p:outputLabel value="Política de alocação de páginas">
+				<br/>
+				<p:selectOneMenu id="selectPoliticaAlocacao" value="#{memoriaController.politicaAlocacao}" styleClass="tam_gg">
+					<f:selectItem itemLabel="Fixa" itemValue="0" />
+					<f:selectItem itemLabel="Fixa(Por processo)" itemValue="1" />
+					<f:selectItem itemLabel="Variável"  itemValue="2" />
+					<p:ajax event="change" update="@form"/>
+				</p:selectOneMenu>			
+			</p:outputLabel>
+
+			<p:outputLabel id="labelNumeroFrames" rendered="#{memoriaController.politicaAlocacao == 0}">
+		        <h:outputText id="output" value="Frames por processo: #{memoriaController.numeroMaxFrames}" />
+		        <h:inputHidden id="numeroMaxFrames" value="#{memoriaController.numeroMaxFrames}" />
+		        <p:slider minValue="1" maxValue="10" for="numeroMaxFrames" display="output" style="width: 200px" displayTemplate="Frames por processo: {value}" />
+			</p:outputLabel>
+
+			<p:outputLabel value="Algoritmo de substituição de páginas">
+				<br/>
+				<p:selectOneMenu id="selectPageReplacement" value="#{memoriaController.pageReplacement}" styleClass="tam_gg" converter="omnifaces.SelectItemsConverter">
+					<f:selectItems value="#{memoriaController.arrayPageReplacement}" var="algorithm" itemLabel="#{algorithm}" itemValue="#{algorithm}"/>
+					<p:ajax event="change" update="@form"/>
+				</p:selectOneMenu>			
+			</p:outputLabel>
+
+
+			<p:commandButton value="Confirmar" ajax="false" id="btnOk" actionListener="#{memoriaController.salvarConfiguracoesMemoria}" />
+		</p:panelGrid>
+	</h:form>
+</html>

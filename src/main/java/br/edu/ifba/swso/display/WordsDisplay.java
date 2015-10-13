@@ -28,6 +28,7 @@ public class WordsDisplay {
 	private int positionColumn08;
 	private ByteSWSO valorColumn08;
 	
+	//COLUNA 01
 	public String getPositionColumn01() {
 		return converterIntToString(positionColumn01, 4);
 	}
@@ -40,6 +41,8 @@ public class WordsDisplay {
 	public void setValorColumn01(ByteSWSO valorColumn01) {
 		this.valorColumn01 = valorColumn01;
 	}
+	
+	//COLUNA 02
 	public String getPositionColumn02() {
 		return converterIntToString(positionColumn02, 4);
 	}
@@ -52,6 +55,8 @@ public class WordsDisplay {
 	public void setValorColumn02(ByteSWSO valorColumn02) {
 		this.valorColumn02 = valorColumn02;
 	}
+	
+	//COLUNA 03
 	public String getPositionColumn03() {
 		return converterIntToString(positionColumn03, 4);
 	}
@@ -64,6 +69,8 @@ public class WordsDisplay {
 	public void setValorColumn03(ByteSWSO valorColumn03) {
 		this.valorColumn03 = valorColumn03;
 	}
+	
+	//COLUNA 04
 	public String getPositionColumn04() {
 		return converterIntToString(positionColumn04, 4);
 	}
@@ -76,6 +83,8 @@ public class WordsDisplay {
 	public void setValorColumn04(ByteSWSO valorColumn04) {
 		this.valorColumn04 = valorColumn04;
 	}
+	
+	//COLUNA 05
 	public String getPositionColumn05() {
 		return converterIntToString(positionColumn05, 4);
 	}
@@ -88,6 +97,8 @@ public class WordsDisplay {
 	public void setValorColumn05(ByteSWSO valorColumn05) {
 		this.valorColumn05 = valorColumn05;
 	}
+	
+	//COLUNA 06
 	public String getPositionColumn06() {
 		return converterIntToString(positionColumn06, 4);
 	}
@@ -100,6 +111,8 @@ public class WordsDisplay {
 	public void setValorColumn06(ByteSWSO valorColumn06) {
 		this.valorColumn06 = valorColumn06;
 	}
+	
+	//COLUNA 07
 	public String getPositionColumn07() {
 		return converterIntToString(positionColumn07, 4);
 	}
@@ -112,6 +125,8 @@ public class WordsDisplay {
 	public void setValorColumn07(ByteSWSO valorColumn07) {
 		this.valorColumn07 = valorColumn07;
 	}
+	
+	//COLUNA 08
 	public String getPositionColumn08() {
 		return converterIntToString(positionColumn08, 4);
 	}
@@ -125,13 +140,13 @@ public class WordsDisplay {
 		this.valorColumn08 = valorColumn08;
 	}
 	
+	
+	//CONVERSOR
 	private String converterIntToString(int numero, int precisao) {
 		String hexa = Integer.toHexString(numero).toUpperCase();
-		
 		while (hexa.length() < precisao){
 			hexa = "0" + hexa;
 		}
-		
 		return hexa;
 	}
 	
