@@ -55,7 +55,7 @@
 	<p:spacer height="10"/>
 	<p:dataTable var="word" value="#{maquinaSessaoController.coreVirtualMachine.randomAccessMemory.wordList}" id="memoryRam" emptyMessage="Nenhum item encontrado."
     	paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-        paginatorPosition="bottom" rowIndexVar="index"
+        paginatorPosition="bottom" rowIndexVar="index" stickyHeader="true"
     	rows="#{maquinaSessaoController.virtualMachineParameters.bytePerPage/8}">
     	
     	<f:facet name="header">
