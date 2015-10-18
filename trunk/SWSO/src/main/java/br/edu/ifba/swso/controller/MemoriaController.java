@@ -12,6 +12,9 @@ import br.edu.ifba.swso.algorithms.IPageReplacementAlgorithm;
 import br.edu.ifba.swso.algorithms.impl.memory.FIFO;
 import br.edu.ifba.swso.business.VirtualMachineParameters;
 import br.edu.ifba.swso.business.so.KernelOperatingSystem;
+import br.edu.ifba.swso.business.so.memorymanager.ETP;
+import br.edu.ifba.swso.business.so.memorymanager.PageTable;
+import br.edu.ifba.swso.business.so.processmanager.Process;
 
 /**
  * @author Ramon
@@ -55,6 +58,46 @@ public class MemoriaController extends BaseController implements Serializable {
 	
     public void salvarConfiguracoesMemoria() {
     }
+    
+    public Integer obterQuantidadePaginasProcesso(int pid){
+    	PageTable pageTable = kernelOperatingSystem.getMemoryManager().getPageList().get(pid);
+    	return pageTable.getListaEtp().size();
+    }
+    
+    public Integer obterQuantidadeFramesProcesso(int pid){
+    	PageTable pageTable = kernelOperatingSystem.getMemoryManager().getPageList().get(pid);
+    	int qtdFrames = 0;
+    	for (ETP etp : pageTable.getListaEtp()) {
+    		if (etp.getBitV() == '1') qtdFrames++;
+    	}
+    	return qtdFrames;
+    }
+    
+	public String obterProcessFontColor(int pid) {
+		String color = obterProcessBackgroundColor(pid);
+		
+		int r = Integer.valueOf( color.substring( 0, 2 ), 16 );
+        int g = Integer.valueOf( color.substring( 2, 4 ), 16 );
+        int b = Integer.valueOf( color.substring( 4, 6 ), 16 ); 
+        int grayLevel = (r + g + b) / 3;
+        if (grayLevel < 128) {
+        	return "FFFFFF";
+        } else {
+        	return "000000";
+        }
+		
+    }
+    
+	public String obterProcessBackgroundColor(int pid) {
+		String color = "FFFFFF";
+		for (Process process : kernelOperatingSystem.getProcessManager().getTabelaProcesso()) {
+			if (process.getPid() == pid) {
+				color = process.getFile().getColor();	
+			}
+		}
+		return color;
+    }
+    
     
 	//ACCESS METHODS
 	public IPageReplacementAlgorithm getPageReplacement() {
