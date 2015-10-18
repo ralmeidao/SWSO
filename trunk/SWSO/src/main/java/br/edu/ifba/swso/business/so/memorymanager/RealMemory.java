@@ -76,4 +76,8 @@ public class RealMemory {
 		return lista;
 	}
 
+	public int size() {
+		return realMemory.length;
+	}
+	
 }

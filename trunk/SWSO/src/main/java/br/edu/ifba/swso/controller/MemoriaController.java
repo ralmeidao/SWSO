@@ -2,6 +2,7 @@ package br.edu.ifba.swso.controller;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
@@ -15,6 +16,8 @@ import br.edu.ifba.swso.business.so.KernelOperatingSystem;
 import br.edu.ifba.swso.business.so.memorymanager.ETP;
 import br.edu.ifba.swso.business.so.memorymanager.PageTable;
 import br.edu.ifba.swso.business.so.processmanager.Process;
+import br.edu.ifba.swso.enumerator.PoliticaAlocacaoEnum;
+import br.edu.ifba.swso.enumerator.PoliticaBuscaEnum;
 
 /**
  * @author Ramon
@@ -98,7 +101,6 @@ public class MemoriaController extends BaseController implements Serializable {
 		return color;
     }
     
-    
 	//ACCESS METHODS
 	public IPageReplacementAlgorithm getPageReplacement() {
 		return pageReplacementAlgorithm;
@@ -120,19 +122,19 @@ public class MemoriaController extends BaseController implements Serializable {
 		return maquinaSessaoController.getVirtualMachineParameters();
 	}
 
-	public int getPoliticaBusca() {
+	public PoliticaBuscaEnum getPoliticaBusca() {
 		return maquinaSessaoController.getOperatingSystem().getMemoryManager().getPoliticaBusca();
 	}
 
-	public void setPoliticaBusca(int politicaBusca) {
+	public void setPoliticaBusca(PoliticaBuscaEnum politicaBusca) {
 		this.maquinaSessaoController.getOperatingSystem().getMemoryManager().setPoliticaBusca(politicaBusca);
 	}
 
-	public int getPoliticaAlocacao() {
+	public PoliticaAlocacaoEnum getPoliticaAlocacao() {
 		return maquinaSessaoController.getOperatingSystem().getMemoryManager().getPoliticaAlocacao();
 	}
 
-	public void setPoliticaAlocacao(int politicaAlocacao) {
+	public void setPoliticaAlocacao(PoliticaAlocacaoEnum politicaAlocacao) {
 		this.maquinaSessaoController.getOperatingSystem().getMemoryManager().setPoliticaAlocacao(politicaAlocacao);
 	}
 
@@ -144,4 +146,19 @@ public class MemoriaController extends BaseController implements Serializable {
 		this.maquinaSessaoController.getOperatingSystem().getMemoryManager().setNumeroMaxFrames(numeroMaxFrames);
 	}
 	
+	public Integer getTamanhoMemoriaReal() {
+		return this.maquinaSessaoController.getOperatingSystem().getMemoryManager().getRealMemory().size();
+	}
+	
+	public List<PoliticaBuscaEnum> getPoliticasBusca() {
+		return PoliticaBuscaEnum.getListaValues();
+	}
+	
+	public List<PoliticaAlocacaoEnum> getPoliticasAlocacao() {
+		return PoliticaAlocacaoEnum.getListaValues();
+	}
+	
+	public boolean isPoliticaAlocacaoFixa() { 
+		return PoliticaAlocacaoEnum.FIXA.equals(getPoliticaAlocacao());
+	}
 }

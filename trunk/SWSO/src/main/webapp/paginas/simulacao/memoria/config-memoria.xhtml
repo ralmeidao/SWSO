@@ -11,24 +11,23 @@
 
 			<p:outputLabel value="Política de busca de páginas">
 				<br/>
-				<p:selectOneMenu id="selectPoliticaBusca" value="#{memoriaController.politicaBusca}" styleClass="tam_gg">
-					<f:selectItem itemLabel="Por demanda" itemValue="0" />
-					<f:selectItem itemLabel="Antecipada"  itemValue="1" />
+				<p:selectOneMenu id="selectPoliticaBusca" value="#{memoriaController.politicaBusca}" styleClass="tam_gg" converter="omnifaces.SelectItemsConverter">
+					<f:selectItems value="#{memoriaController.politicasBusca}"  var="politica" itemLabel="#{politica.descricao}" 
+						itemValue="#{politica}"/>
 					<p:ajax event="change" update="@form"/>
 				</p:selectOneMenu>			
 			</p:outputLabel>
 
 			<p:outputLabel value="Política de alocação de páginas">
 				<br/>
-				<p:selectOneMenu id="selectPoliticaAlocacao" value="#{memoriaController.politicaAlocacao}" styleClass="tam_gg">
-					<f:selectItem itemLabel="Fixa" itemValue="0" />
-					<f:selectItem itemLabel="Fixa(Por processo)" itemValue="1" />
-					<f:selectItem itemLabel="Variável"  itemValue="2" />
+				<p:selectOneMenu id="selectPoliticaAlocacao" value="#{memoriaController.politicaAlocacao}" styleClass="tam_gg" converter="omnifaces.SelectItemsConverter">
+					<f:selectItems value="#{memoriaController.politicasAlocacao}"  var="politica" itemLabel="#{politica.descricao}" 
+						itemValue="#{politica}"/>
 					<p:ajax event="change" update="@form"/>
 				</p:selectOneMenu>			
 			</p:outputLabel>
 
-			<p:outputLabel id="labelNumeroFrames" rendered="#{memoriaController.politicaAlocacao == 0}">
+			<p:outputLabel id="labelNumeroFrames" rendered="#{memoriaController.politicaAlocacaoFixa}">
 		        <h:outputText id="output" value="Frames por processo: #{memoriaController.numeroMaxFrames}" />
 		        <h:inputHidden id="numeroMaxFrames" value="#{memoriaController.numeroMaxFrames}" />
 		        <p:slider minValue="1" maxValue="10" for="numeroMaxFrames" display="output" style="width: 200px" displayTemplate="Frames por processo: {value}" />
