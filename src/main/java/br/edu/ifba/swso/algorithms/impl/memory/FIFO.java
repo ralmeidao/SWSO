@@ -1,6 +1,8 @@
 package br.edu.ifba.swso.algorithms.impl.memory;
 
 import br.edu.ifba.swso.algorithms.IPageReplacementAlgorithm;
+import br.edu.ifba.swso.business.so.memorymanager.PageTable;
+import br.edu.ifba.swso.business.so.memorymanager.RealMemory;
 
 public class FIFO implements IPageReplacementAlgorithm {
 	
@@ -9,6 +11,10 @@ public class FIFO implements IPageReplacementAlgorithm {
 	public FIFO() {
 	}
 	
+	@Override
+	public int findPageToReplace(RealMemory memory, Process process, PageTable pageTable) {
+		return 0;
+	}
 	
 	@Override
 	public String toString() {

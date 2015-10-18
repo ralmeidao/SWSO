@@ -12,6 +12,8 @@ import br.edu.ifba.swso.business.so.memorymanager.exception.PageNotFoundExceptio
 import br.edu.ifba.swso.business.so.memorymanager.exception.VirtualMemoryFullException;
 import br.edu.ifba.swso.business.so.processmanager.Process;
 import br.edu.ifba.swso.business.virtualmachine.CoreVirtualMachine;
+import br.edu.ifba.swso.enumerator.PoliticaAlocacaoEnum;
+import br.edu.ifba.swso.enumerator.PoliticaBuscaEnum;
 
 public class MemoryManager {
 	
@@ -23,9 +25,9 @@ public class MemoryManager {
 	
 	private RealMemory realMemory;
 	
-	private int politicaBusca;
+	private PoliticaBuscaEnum politicaBusca;
 
-	private int politicaAlocacao;
+	private PoliticaAlocacaoEnum politicaAlocacao;
 	
 	private int numeroMaxFrames;
 	
@@ -37,6 +39,8 @@ public class MemoryManager {
 		this.realMemory = new RealMemory(coreVirtualMachine.getVirtualMachineParameters().getMemorySize());
 		this.virtualMemory = new VirtualMemory(coreVirtualMachine.getVirtualMachineParameters().getVirtualMemorySize());
 		this.coreVirtualMachine = coreVirtualMachine;
+		politicaBusca = PoliticaBuscaEnum.POR_DEMANDA;
+		politicaAlocacao = PoliticaAlocacaoEnum.FIXA;
 	}
 	
 	public Map<Integer, PageTable> getPageList() {
@@ -75,9 +79,9 @@ public class MemoryManager {
 		
 		pageList.put(process.getPid(), pagetable);
 
-		if (politicaBusca == 0) {
+		if (PoliticaBuscaEnum.POR_DEMANDA.equals(politicaBusca)) {
 			allocatePage(process.getPid(), 0);
-		} else if (politicaAlocacao == 0) {
+		} else if (PoliticaAlocacaoEnum.FIXA.equals(politicaAlocacao)) {
 			int qtdCarregar = numeroMaxFrames < pagetable.getListaEtp().size() ? numeroMaxFrames : pagetable.getListaEtp().size();
 			for (int i = 0; i < qtdCarregar; i++) {
 				allocatePage(process.getPid(), i);	
@@ -134,19 +138,19 @@ public class MemoryManager {
 		return coreVirtualMachine.getVirtualMachineParameters();
 	}
 
-	public int getPoliticaBusca() {
+	public PoliticaBuscaEnum getPoliticaBusca() {
 		return politicaBusca;
 	}
 
-	public void setPoliticaBusca(int politicaBusca) {
-		this.politicaBusca = politicaBusca;
+	public void setPoliticaBusca(PoliticaBuscaEnum politicaBusca) {
+		 this.politicaBusca = politicaBusca;
 	}
 
-	public int getPoliticaAlocacao() {
+	public PoliticaAlocacaoEnum getPoliticaAlocacao() {
 		return politicaAlocacao;
 	}
 
-	public void setPoliticaAlocacao(int politicaAlocacao) {
+	public void setPoliticaAlocacao(PoliticaAlocacaoEnum politicaAlocacao) {
 		this.politicaAlocacao = politicaAlocacao;
 	}
 

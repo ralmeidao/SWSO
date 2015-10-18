@@ -5,16 +5,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public enum TipoSimulacaoEnum {
+public enum PoliticaBuscaEnum {
 	
-	PROCESSOS("Processos",1L),
-	MEMORIA("Memória", 2L),
-	DISCO("Disco",3L);
+	ANTECIPADA("Antecipada", 0),
+	POR_DEMANDA("Por demanda", 1);
 	
 	private String descricao;
-	private Long valor;
+	private Integer valor;
 	
-	private TipoSimulacaoEnum(String descricao,Long valor){
+	private PoliticaBuscaEnum(String descricao,Integer valor){
 		this.descricao = descricao;
 		this.valor = valor;
 	}
@@ -27,11 +26,11 @@ public enum TipoSimulacaoEnum {
 		this.descricao = descricao;
 	}
 
-	public Long getValor() {
+	public Integer getValor() {
 		return valor;
 	}
 
-	public void setValor(Long valor) {
+	public void setValor(Integer valor) {
 		this.valor = valor;
 	}
 	
@@ -39,10 +38,10 @@ public enum TipoSimulacaoEnum {
 	 * Método responsável por retornar todos os tipos de simulacao em forma de mapa(Valor,Descricao)
 	 * @return
 	 */
-	public static Map<Long,String> getValues(){
-		Map<Long,String> mapa = new HashMap<Long, String>();
+	public static Map<Integer,String> getValues(){
+		Map<Integer,String> mapa = new HashMap<Integer, String>();
 		
-		TipoSimulacaoEnum[] values = TipoSimulacaoEnum.values();
+		PoliticaBuscaEnum[] values = PoliticaBuscaEnum.values();
 		for(int i = 0; i < values.length;i++){
 			mapa.put(values[i].getValor(), values[i].getDescricao());
 		}
@@ -53,12 +52,12 @@ public enum TipoSimulacaoEnum {
 	 * Método responsável por retornar todos os tipos de simulacao em forma uma Lista
 	 * @return
 	 */
-	public static List<TipoSimulacaoEnum> getListaValues(){
-		List<TipoSimulacaoEnum> lista = new ArrayList<TipoSimulacaoEnum>();
+	public static List<PoliticaBuscaEnum> getListaValues(){
+		List<PoliticaBuscaEnum> lista = new ArrayList<PoliticaBuscaEnum>();
 		
-		TipoSimulacaoEnum[] values = TipoSimulacaoEnum.values();
+		PoliticaBuscaEnum[] values = PoliticaBuscaEnum.values();
 		
-		for (TipoSimulacaoEnum tipoSimulacaoEnum : values) {
+		for (PoliticaBuscaEnum tipoSimulacaoEnum : values) {
 			lista.add(tipoSimulacaoEnum);
 		}
 		
