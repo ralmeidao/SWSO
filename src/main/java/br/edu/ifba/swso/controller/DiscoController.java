@@ -113,7 +113,7 @@ public class DiscoController extends BaseController implements Serializable {
 		int lastIndexOf = uploadFile.getFileName().lastIndexOf('.');
 
 		String colorReal = "XXXXXX".equals(color) ? colorPersonalizar : color;
-
+		
 		FileInput fileInput = new FileInput(uploadFile.getFileName().substring(0, lastIndexOf), colorReal);
 
 		String arqString = new String(arquivo);

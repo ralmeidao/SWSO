@@ -15,37 +15,30 @@
 	</p:fieldset> 
 	<p:commandButton value="Configurações" icon="ui-icon-gear" styleClass="btn" onclick="modalConfigMemoria.show()" rendered="#{!viewOnly}"/>
 	<p:panelGrid columns="2" style="width: 100%;" styleClass="align-top-panel-grid">
-		<div class="ui-datatable-header ui-widget-header ui-corner-top" style="text-align: center;">Ocorrências</div>
-		<table class="ocorrencias-table inner" style="width: 400px;">
-			<thead>
-			<tr>
-				<th class="ui-state-default ocorrencias-table-th-ocorrencia">Ocorrência</th>
-				<th class="ui-state-default ocorrencias-table-th-ocorrencia">Processo</th>
-				<th class="ui-state-default ocorrencias-table-th-ocorrencia">Página</th>
-				<th class="ui-state-default ocorrencias-table-th-ocorrencia">Frame</th>
-			</tr>
-			</thead>
-			<tbody class="ui-datatable-data ui-widget-content">
-				<tr class="ui-widget-content">
-					<td>Page Fault</td>
-					<td>0</td>
-					<td>1</td>
-					<td>-</td>
-				</tr>
-				<tr class="ui-widget-content">
-					<td>Page Out</td>
-					<td>1</td>
-					<td>3</td>
-					<td>11</td>
-				</tr>
-				<tr class="ui-widget-content">
-					<td>Page In</td>
-					<td>0</td>
-					<td>1</td>
-					<td>11</td>
-				</tr>
-			</tbody>
-		</table>		
+		<p:dataTable var="processo" value="#{maquinaSessaoController.operatingSystem.processManager.tabelaProcesso}" 
+			 id="processTable4" emptyMessage="Nenhum item encontrado.">
+				 
+			<f:facet name="header">
+		        Tabela de Processo
+		    </f:facet>
+	        <p:column headerText="Nome" width="20%">
+	        	<h:outputText value="#{processo.nome}"/>
+	        </p:column>
+	        <p:column headerText="Qtd. Páginas" width="20%">
+	        	<h:outputText value="#{memoriaController.obterQuantidadePaginasProcesso(processo.pid)}"/>
+	        </p:column>
+			<p:column headerText="Qtd. Frames Ocupados" width="20%">
+	        	<h:outputText value="#{memoriaController.obterQuantidadeFramesProcesso(processo.pid)}"/>
+	        </p:column>
+	        <p:column headerText="" width="7%">
+				<p:commandButton title="Tabela de Páginas"
+	        		icon="ui-icon-clipboard"
+	        		rendered="#{!processo.ending}"
+	        		action="#{processoController.abrirModalPbc(processo.pid)}"
+	        		style="width: 30px; height: 30px;"/>
+	        </p:column>
+	    </p:dataTable>
+		
 		
 		<p:dataTable var="word" value="#{maquinaSessaoController.operatingSystem.memoryManager.realMemory.wordList}" id="memoryReal" emptyMessage="Nenhum item encontrado."
 					paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
@@ -56,28 +49,60 @@
 	        <p:column width="15%" headerText="Nº da Página" style="background-color: #EEEEEE;">
 	        	<h:outputText value="#{word.positionColumn01}" style="font-weight: bold;"/>
 	        </p:column>
-	        <p:column width="10%" headerText="Processo">
-	        	<h:outputText value="#{word.valorColumn01}"/>
+	        <p:column width="10%" headerText="Processo" style="background-color: ##{memoriaController.obterProcessBackgroundColor(word.valorColumn01)};">
+	        	<h:outputText value="#{word.valorColumn01}" style="font-weight: bold; color: ##{memoriaController.obterProcessFontColor(word.valorColumn01)}"/>
 	        </p:column>
 	        <p:column width="15%" headerText="Nº da Página" style="background-color: #EEEEEE;">
 	        	<h:outputText value="#{word.positionColumn02}" style="font-weight: bold;"/>
 	        </p:column>
-	        <p:column width="10%" headerText="Processo">
-	        	<h:outputText value="#{word.valorColumn02}"/>
+	        <p:column width="10%" headerText="Processo" style="background-color: ##{memoriaController.obterProcessBackgroundColor(word.valorColumn02)}">
+	        	<h:outputText value="#{word.valorColumn02}" style="font-weight: bold; color: ##{memoriaController.obterProcessFontColor(word.valorColumn02)}"/>
 	        </p:column>
 	        <p:column width="15%" headerText="Nº da Página" style="background-color: #EEEEEE;">
 	        	<h:outputText value="#{word.positionColumn03}" style="font-weight: bold;"/>
 	        </p:column>
-	        <p:column width="10%" headerText="Processo">
-	        	<h:outputText value="#{word.valorColumn03}"/>
+	        <p:column width="10%" headerText="Processo" style="background-color: ##{memoriaController.obterProcessBackgroundColor(word.valorColumn03)}">
+	        	<h:outputText value="#{word.valorColumn03}" style="font-weight: bold; color: ##{memoriaController.obterProcessFontColor(word.valorColumn03)}"/>
 	        </p:column>
 	        <p:column width="15%" headerText="Nº da Página" style="background-color: #EEEEEE;">
 	        	<h:outputText value="#{word.positionColumn04}" style="font-weight: bold;"/>
 	        </p:column>
-	        <p:column width="10%" headerText="Processo">
-	        	<h:outputText value="#{word.valorColumn04}"/>
+	        <p:column width="10%" headerText="Processo" style="background-color: ##{memoriaController.obterProcessBackgroundColor(word.valorColumn04)}">
+	        	<h:outputText value="#{word.valorColumn04}" style="font-weight: bold; color: ##{memoriaController.obterProcessFontColor(word.valorColumn04)}"/>
 	        </p:column>
 	    </p:dataTable>
+
+		<!--<div class="ui-datatable-header ui-widget-header ui-corner-top" style="text-align: center;">Ocorrências</div>
+			<table class="ocorrencias-table inner" style="width: 400px;">
+				<thead>
+				<tr>
+					<th class="ui-state-default ocorrencias-table-th-ocorrencia">Ocorrência</th>
+					<th class="ui-state-default ocorrencias-table-th-ocorrencia">Processo</th>
+					<th class="ui-state-default ocorrencias-table-th-ocorrencia">Página</th>
+					<th class="ui-state-default ocorrencias-table-th-ocorrencia">Frame</th>
+				</tr>
+				</thead>
+				<tbody class="ui-datatable-data ui-widget-content">
+					<tr class="ui-widget-content">
+						<td>Page Fault</td>
+						<td>0</td>
+						<td>1</td>
+						<td>-</td>
+					</tr>
+					<tr class="ui-widget-content">
+						<td>Page Out</td>
+						<td>1</td>
+						<td>3</td>
+						<td>11</td>
+					</tr>
+					<tr class="ui-widget-content">
+						<td>Page In</td>
+						<td>0</td>
+						<td>1</td>
+						<td>11</td>
+					</tr>
+				</tbody>
+			</table> -->
     </p:panelGrid>
 
 </html>
