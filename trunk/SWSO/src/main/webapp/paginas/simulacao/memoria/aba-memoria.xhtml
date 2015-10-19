@@ -5,14 +5,7 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:c="http://java.sun.com/jsp/jstl/core">
-		
-	<h:panelGroup id="groupAutoMemoria">
-		<p:outputLabel>
-			Incrementar <p:inputText value="#{maquinaSessaoController.qtdCiclos}" styleClass="tam_p" /> u.t.
-		</p:outputLabel>
-		<p:commandButton icon="ui-icon-play" value="Executar" actionListener="#{maquinaSessaoController.executarCiclo()}" update="@form" styleClass="btn"/>
-	</h:panelGroup>
-		
+	
 		
 	<p:fieldset legend="Gerência de Memória">
 		<p:panelGrid columns="1" styleClass="panelgrid" id="painelConfigMemoria">
@@ -59,25 +52,25 @@
 	    	<f:facet name="header">
 		        Memória Principal
 		    </f:facet>
-	        <p:column width="15%" headerText="Nº da Página" style="background-color: #EEEEEE;">
+	        <p:column width="15%" headerText="Nº do Frame" style="background-color: #EEEEEE;">
 	        	<h:outputText value="#{word.positionColumn01}" style="font-weight: bold;"/>
 	        </p:column>
 	        <p:column width="10%" headerText="Processo" style="background-color: ##{memoriaController.obterProcessBackgroundColor(word.valorColumn01)};">
 	        	<h:outputText value="#{word.valorColumn01}" style="font-weight: bold; color: ##{memoriaController.obterProcessFontColor(word.valorColumn01)}"/>
 	        </p:column>
-	        <p:column width="15%" headerText="Nº da Página" style="background-color: #EEEEEE;">
+	        <p:column width="15%" headerText="Nº do Frame" style="background-color: #EEEEEE;">
 	        	<h:outputText value="#{word.positionColumn02}" style="font-weight: bold;"/>
 	        </p:column>
 	        <p:column width="10%" headerText="Processo" style="background-color: ##{memoriaController.obterProcessBackgroundColor(word.valorColumn02)}">
 	        	<h:outputText value="#{word.valorColumn02}" style="font-weight: bold; color: ##{memoriaController.obterProcessFontColor(word.valorColumn02)}"/>
 	        </p:column>
-	        <p:column width="15%" headerText="Nº da Página" style="background-color: #EEEEEE;">
+	        <p:column width="15%" headerText="Nº do Frame" style="background-color: #EEEEEE;">
 	        	<h:outputText value="#{word.positionColumn03}" style="font-weight: bold;"/>
 	        </p:column>
 	        <p:column width="10%" headerText="Processo" style="background-color: ##{memoriaController.obterProcessBackgroundColor(word.valorColumn03)}">
 	        	<h:outputText value="#{word.valorColumn03}" style="font-weight: bold; color: ##{memoriaController.obterProcessFontColor(word.valorColumn03)}"/>
 	        </p:column>
-	        <p:column width="15%" headerText="Nº da Página" style="background-color: #EEEEEE;">
+	        <p:column width="15%" headerText="Nº do Frame" style="background-color: #EEEEEE;">
 	        	<h:outputText value="#{word.positionColumn04}" style="font-weight: bold;"/>
 	        </p:column>
 	        <p:column width="10%" headerText="Processo" style="background-color: ##{memoriaController.obterProcessBackgroundColor(word.valorColumn04)}">
