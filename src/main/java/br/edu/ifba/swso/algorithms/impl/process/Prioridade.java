@@ -31,7 +31,7 @@ public class Prioridade implements IProcessesScheduler {
 			return true;
 		}
 		for (Process pronto : listaPronto) {
-			if (pronto.getPriority() > running.getPriority()) {
+			if (pronto.getPriority() < running.getPriority()) {
 				return true;
 			}
 		}
