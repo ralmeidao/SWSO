@@ -5,39 +5,31 @@ import java.util.LinkedList;
 import br.edu.ifba.swso.algorithms.IProcessesScheduler;
 import br.edu.ifba.swso.business.so.processmanager.Process;
 
-public class Prioridade implements IProcessesScheduler {
+public class ShortestJobFirst implements IProcessesScheduler {
 	
-	private final String nome = "Prioridade (Preemptivo)";
-	
-	public Prioridade() {
+	private final String nome = "Shortest Job First(não preemptivo)";
+
+	public ShortestJobFirst() {
 	}
 	
 	@Override
 	public Process escalonar(LinkedList<Process> listaPronto) {
-		int maiorPrioridade = 99;
+		int menorJob = 999999999;
 		Process selected = null;
 		for (Process process : listaPronto) {
-			if(process.getPriority() < maiorPrioridade) {
-				maiorPrioridade = process.getPriority();
+			if(process.getQuantidadeInstrucoes() < menorJob) {
+				menorJob = process.getQuantidadeInstrucoes();
 				selected = process;
 			}
 		}
 		return selected;
 	}
-	
+
 	@Override
 	public boolean isInterromper(LinkedList<Process> listaPronto, Process running, int timeslice) {
-		if (running.getPid() == -1 || running.isBlocked() || running.isEnding()) {
-			return true;
-		}
-		for (Process pronto : listaPronto) {
-			if (pronto.getPriority() < running.getPriority()) {
-				return true;
-			}
-		}
-		return false;
+		return running.getPid() == -1 || running.isBlocked() || running.isEnding();
 	}
-
+	
 	@Override
 	public boolean isPreemptivo() {
 		return false;
@@ -45,7 +37,7 @@ public class Prioridade implements IProcessesScheduler {
 	
 	@Override
 	public boolean isPrioridade() {
-		return true;
+		return false;
 	}
 	
 	@Override
@@ -69,7 +61,7 @@ public class Prioridade implements IProcessesScheduler {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Prioridade other = (Prioridade) obj;
+		ShortestJobFirst other = (ShortestJobFirst) obj;
 		if (nome == null) {
 			if (other.nome != null)
 				return false;
@@ -77,4 +69,5 @@ public class Prioridade implements IProcessesScheduler {
 			return false;
 		return true;
 	}
+
 }
